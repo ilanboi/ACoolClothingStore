@@ -1,3 +1,6 @@
+const userDataCookieName = "userdata";
+const userTypeCookieName = "usertype";
+
 function addToCookies(cookie_key, cookie_val, exp) {
     document.cookie = `${cookie_key}=${cookie_val}; expires=${exp}; path=/;`;
 }
@@ -27,3 +30,5 @@ function addYears(date, years) {
     date.setFullYear(date.getFullYear() + years);
     return date;
 }
+
+
