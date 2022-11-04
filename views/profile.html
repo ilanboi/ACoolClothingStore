@@ -124,7 +124,7 @@
                         <ul class="top_tools">
                             <li>
                                 <div class="dropdown dropdown-cart">
-                                    <a href="cart.html" class="cart_bt"><strong>2</strong></a>
+                                    <a href="cart.html" class="cart_bt"></a>
                                     <div class="dropdown-menu">
                                         <ul>
                                             <li>
@@ -156,11 +156,10 @@
                                 <!-- /dropdown-cart-->
                             </li>
                             <li>
-                                <a href="#0" class="wishlist"><span>Wishlist</span></a>
                             </li>
                             <li>
                                 <div class="dropdown dropdown-access">
-                                    <a href="login.html" class="access_link"><span>Account</span></a>
+<!--                                    <a href="login.html" class="access_link"><span>Account</span></a>-->
                                     <div class="dropdown-menu">
                                         <a href="login.html" class="btn_1">Sign In or Sign Up</a>
                                         <ul>
@@ -227,6 +226,7 @@
                                     <h5>Edit Profile: </h5>
                                     <p>Hello! here you can edit your personal information and data, modify your settings
                                         and change it as you wish!</p>
+                                    <button type="button" id="logoutBTN" name="submit" class="btn btn-primary">Logout</button>
                                 </div>
                             </div>
                         </div>
@@ -390,7 +390,7 @@
 <script>
 
     const entitydata = JSON.parse(getCookie('userdata'))
-    if (getCookie('usertype') === 'user') {
+    if (getCookie(userTypeCookieName) === 'user') {
         if (entitydata) {
             // logged in....
             $('#fname').val(entitydata.fname)
@@ -404,7 +404,7 @@
             //not logged in
             document.getElementById("account_menu").href = "/login.html";
         }
-    } else if (getCookie('usertype') === 'supplier') {
+    } else if (getCookie(userTypeCookieName) === 'supplier') {
         if (entitydata) {
             document.getElementById("account_menu").href = "/profile.html";
             // supplier logged in
@@ -426,7 +426,7 @@
                     postal: $('#zIp').val(),
                 })
             };
-            console.log(updateData)
+            // console.log(updateData)
             $.ajax({
                 url: '/api/user/updateUser',
                 type: 'post',
@@ -435,12 +435,18 @@
                 success: function (res) {
 
                     const user_details = JSON.stringify(res['userDetails'])
-                    addToCookies("userdata", user_details, addYears(new Date(), 1))
+                    addToCookies(userDataCookieName, user_details, addYears(new Date(), 1))
                     alert("works login comp")
                 }
             });
             // e.preventDefault();
         });
+
+        $('#logoutBTN').click(function () {
+            deleteCookie(userDataCookieName)
+            deleteCookie(userTypeCookieName)
+            window.location = "/";
+        })
     });
 
 </script>
