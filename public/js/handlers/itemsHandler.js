@@ -119,6 +119,8 @@ $(document).ready(function () {
         setItemsOnAlbum(searchTextQueryParam);
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'items') {
         setItemsOnAlbum("");
+    } else if(searchTextQueryParam === '') {
+        setItemsOnAlbum("");
     } else {
         showAllItemsHomeGrid();
     }
