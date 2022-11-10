@@ -6,5 +6,5 @@ const router = express.Router();
 router.post('/createItem', itemController.createItem);
 router.get('/getAllItems', itemController.getAllItems);
 router.get('/getSpecificItem/:itemId', itemController.getSpecificItem);
-router.get('/search/:searchText', itemController.getSearchedItems);
+router.get('/search', itemController.getSearchedItems);
 module.exports = router;

@@ -19,6 +19,11 @@ function get_request(path) {
     }
     xhr.open('GET', path, false);
     xhr.send(null);
-    return JSON.parse(readBody(xhr))
+    try {
+        return JSON.parse(readBody(xhr))
+    } catch (e) {
+        return readBody(xhr)
+    }
+    // return JSON.parse(readBody(xhr))
 
 }

@@ -14,6 +14,7 @@ const User = require("../models/user");
  */
 module.exports.createUser = function (req, res) {
     console.log(req.body)
+
     const user = new User({
         _id: mongoose.Types.ObjectId(),
         email: req.body.email,

@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shoey 2 colman</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link href="../public/css/account.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../public/css/carousel.css" rel="stylesheet">
+    <style>
+
+        .page_header {
+            margin-bottom: 30px;
+        }
+        .page_header h1 {
+            font-size: 24px;
+            font-size: 1.5rem;
+            margin: 0 0 5px 0;
+        }
+
+        .breadcrumbs {
+            line-height: 1;
+            color: #555;
+        }
+        .breadcrumbs ul {
+            margin: 0 0 10px 0;
+            padding: 0;
+            font-size: 12px;
+            font-size: 0.75rem;
+        }
+        .breadcrumbs ul li {
+            display: inline-block;
+            margin-right: 7px;
+            padding-right: 8px;
+            position: relative;
+        }
+        .breadcrumbs ul li a {
+            color: #777;
+        }
+        .breadcrumbs ul li a:hover {
+            color: #004dda;
+        }
+        .breadcrumbs ul li:after {
+            font-family: 'themify';
+            content: "\e649";
+            font-size: 10px;
+            font-size: 0.625rem;
+            position: absolute;
+            display: inline-block;
+            top: 2px;
+            margin-left: 3px;
+        }
+        .breadcrumbs ul li:last-child {
+            font-weight: 500;
+        }
+        .breadcrumbs ul li:last-child:after {
+            content: '';
+            margin-right: 0;
+        }
+        .container_radio {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            line-height: 1.7;
+            margin-bottom: 8px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .container_radio input {
+            position: absolute;
+            opacity: 0;
+        }
+        .container_radio input:checked ~ .checkmark:after {
+            opacity: 1;
+        }
+        .container_radio .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            border: 1px solid #dddddd;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        .container_radio .checkmark:after {
+            display: block;
+            content: "";
+            position: absolute;
+            opacity: 0;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            top: 3px;
+            left: 3px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #004dda;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #sign-in-dialog .form-group {
+            position: relative;
+        }
+
+        #sign-in-dialog .form-group input.form-control {
+            padding-left: 40px;
+        }
+
+        #sign-in-dialog .form-group > i {
+            font-size: 21px;
+            font-size: 1.3125rem;
+            position: absolute;
+            left: 10px;
+            top: 32px;
+            color: #ccc;
+            width: 25px;
+            height: 25px;
+            display: block;
+            font-weight: 400 !important;
+        }
+
+        .my-toggle {
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            margin-right: 5px;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            outline: none !important;
+            box-shadow: none;
+            background-color: #fff;
+        }
+        .my-toggle i {
+            font-size: 14px;
+            font-size: 0.875rem;
+            position: static !important;
+            color: #777;
+        }
+        .my-toggle i:hover, .my-toggle i:focus {
+            color: #555;
+        }
+
+        .hideShowPassword-wrapper {
+            width: 100% !important;
+        }
+
+        .checkboxes label {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<script src="../public/js/handlers/itemsHandler.js"></script>
+<script src="../public/js/handlers/requestsHandler.js"></script>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Carousel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <button class="btn btn-outline-success" type="button" onclick="window.location = '/login'">Login</button>
+                <button class="btn btn-outline-success" type="button">Register</button>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container margin_30">
+        <div class="page_header">
+            <div class="breadcrumbs">
+            </div>
+            <h1>Sign In or Create an Account</h1>
+        </div>
+        <!-- /page_header -->
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-6 col-md-8">
+                <div class="box_account">
+                    <h3 class="client">Already Client</h3>
+                    <div class="form_container">
+                        <form id="loginForm" action="">
+
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Email*">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" id="password_in"
+                                       value=""
+                                       placeholder="Password*">
+                            </div>
+                            <!--                            <div class="clearfix add_bottom_15">-->
+                            <!--                                <div class="checkboxes float-left">-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="form-group">
+
+                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private
+                                    <input type="radio" id="private_radio_login" name="client_type_login" checked
+                                           value="private">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container_radio" style="display: inline-block;">Company
+                                    <input type="radio" id="company_radio_login" name="client_type_login"
+                                           value="company">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width">
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /form_container -->
+                </div>
+                <!-- /box_account -->
+                <!-- /row -->
+            </div>
+
+
+            <div class="col-xl-6 col-lg-6 col-md-8">
+                <div class="box_account">
+                    <h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>
+                    <div class="form_container">
+                        <form id="createUserForm" action="">
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" id="email_2"
+                                       placeholder="Email*">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" id="password_in_2"
+                                       value="" placeholder="Password*">
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private
+                                    <input type="radio" id="private_radio" name="client_type" checked
+                                           value="private">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container_radio" style="display: inline-block;">Company
+                                    <input type="radio" id="company_radio" name="client_type" value="company">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="private box">
+                                <div class="row no-gutters">
+                                    <div class="col-6 pr-1">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="fname"
+                                                   placeholder="Name*">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 pl-1">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="lname"
+                                                   placeholder="Last Name*">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="address"
+                                                   placeholder="Address*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row no-gutters">
+                                    <div class="col-6 pr-1">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="city" placeholder="City*">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 pl-1">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="postal"
+                                                   placeholder="Postal Code*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <!-- /row -->
+
+                                <div class="row no-gutters">
+                                    <div class="col-6 pl-1">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="telephone"
+                                                   placeholder="Telephone *">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+
+                            </div>
+                            <!-- /private -->
+                            <div class="company box" style="display: none;">
+                                <div class="row no-gutters">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="cname"
+                                                   placeholder="Company Name*">
+                                        </div>
+                                    </div>
+                                    <!--								<div class="col-12">-->
+                                    <!--									<div class="form-group">-->
+                                    <!--										<input type="text" class="form-control" placeholder="Full Address">-->
+                                    <!--									</div>-->
+                                    <!--								</div>-->
+                                </div>
+
+                                <!-- /row -->
+                                <div class="row no-gutters">
+                                    <div class="col-6 pl-1">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="ctelephone"
+                                                   placeholder="Telephone *">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                            </div>
+                            <!-- /company -->
+                            <hr>
+                            <div class="form-group">
+                                <label class="container_check">Accept <a href="#0">Terms and conditions</a>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width">
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /form_container -->
+                </div>
+                <!-- /box_account -->
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+</main>
+
+
+<script>
+    // Client type Panel
+    $('input[name="client_type"]').on("click", function () {
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box").not(targetBox).hide();
+        $(targetBox).show();
+    });
+
+    $('#loginForm').submit(function (e) {
+        if ($('#company_radio_login').is(":checked")) {
+            $.ajax({
+                url: '/api/supplier/login',
+                type: 'post',
+                data: $('#loginForm').serialize(),
+                success: function (res) {
+                    const supplier_details = JSON.stringify(res['supplierDetails'])
+                    addToCookies("userdata", supplier_details, addYears(new Date(), 1))
+                    addToCookies("usertype", 'supplier', addYears(new Date(), 1))
+
+                    alert("works login comp")
+                }
+            });
+
+        } else if ($('#private_radio_login').is(":checked")) {
+
+            $.ajax({
+                url: '/api/user/login',
+                type: 'post',
+                data: $('#loginForm').serialize(),
+                success: function (res) {
+                    const user_details = JSON.stringify(res['userDetails'])
+                    addToCookies("userdata", user_details, addYears(new Date(), 1))
+                    addToCookies("usertype", 'user', addYears(new Date(), 1))
+                    window.location = "/";
+
+                }
+            });
+        }
+        e.preventDefault();
+    });
+
+
+    $('#createUserForm').submit(function (e) {
+        if ($('#company_radio').is(":checked")) {
+            $.ajax({
+                url: '/api/supplier/createSupplier',
+                type: 'post',
+                data: $('#createUserForm').serialize(),
+                success: function (res) {
+                    const user_details = JSON.stringify(res['Supplier'])
+                    addToCookies("userdata", user_details, addYears(new Date(), 1))
+                    addToCookies("usertype", 'supplier', addYears(new Date(), 1))
+                    alert("works")
+                }
+            });
+
+        } else if ($('#private_radio').is(":checked")) {
+
+            $.ajax({
+                url: '/api/user/createUser',
+                type: 'post',
+                data: $('#createUserForm').serialize(),
+                success: function (res) {
+                    const user_details = JSON.stringify(res['User'])
+                    addToCookies("userdata", user_details, addYears(new Date(), 1))
+                    addToCookies("usertype", 'user', addYears(new Date(), 1))
+                    alert("works")
+                }
+            });
+        }
+        e.preventDefault();
+    });
+</script>
+</body>
+</html>

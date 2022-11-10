@@ -7,13 +7,14 @@ const supplierRoutes = require('./routes/supplierRoutes');
 const userRoutes = require('./routes/userRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const itemController = require('./controllers/itemController')
+const path = require("path");
 const app = express();
 const port = 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(logger('dev'));
 
-app.use(express.static("views"));
+app.use('/public', express.static(path.join(__dirname,"public")));
 
 app.use('/api/user/', userRoutes);
 app.use('/api/supplier/', supplierRoutes);
@@ -35,8 +36,17 @@ app.get('/health', (req, res) => {
         message: 'Hello, Team',
     });
 });
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/views/index.html');
+// });
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
+    res.sendFile(__dirname + '/views/index2.html');
+});
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/views/login2.html');
+});
+app.get('/items', (req, res) => {
+    res.sendFile(__dirname + '/views/album.html');
 });
 
 app.get('/item-listing/:searchText', (req, res) => {

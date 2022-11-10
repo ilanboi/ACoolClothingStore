@@ -55,7 +55,7 @@ module.exports.getSpecificItem = function (req, res) {
 }
 
 module.exports.getSearchedItems = function (req, res) {
-    const searchText = req.body.searchText;
+    const searchText = req.query.searchText;
     const stringSearchFields = ['title', 'description'];
     const query = {
         $or: [
