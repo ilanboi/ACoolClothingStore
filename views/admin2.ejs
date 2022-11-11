@@ -113,10 +113,7 @@
     function deleteUserAjax(userId) {
         $.ajax({
             url: '/api/user/deleteUser/'+userId,
-            type: 'delete',
-            success: function (res) {
-                console.log("deleted", res)
-            }
+            type: 'delete'
         });
     }
 </script>

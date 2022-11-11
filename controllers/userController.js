@@ -55,10 +55,15 @@ module.exports.createUser = function (req, res) {
 
     });
 }
-module.exports.deleteUser = function (req, res) {
+module.exports.deleteUser = async function (req, res) {
     //todo validation - current user capable of deleting
     console.log(req.params.userId)
-    return User.deleteUser(req.params.userId)
+    await User.deleteUser(req.params.userId)
+    return res.status(200).json({})
+}
+module.exports.deleteUser = function (userId) {
+    //todo validation - current user capable of deleting
+    return User.deleteUser(userId)
 }
 /**
  *

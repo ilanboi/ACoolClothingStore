@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Item = require("../models/item");
 
-module.exports.createItem = function (req, res) {
+const createItem = function (req, res) {
     const item = new Item({
         _id: mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -28,14 +28,15 @@ module.exports.createItem = function (req, res) {
         });
 }
 
-module.exports.getAllItems = async function (req, res) {
-    return res.status(200).json(Item.getAllItems())
-}
-module.exports.getAllItems = async function () {
-    return Item.getAllItems()
+const innerGetAllItems = async function () {
+    return await Item.getAllItems()
 }
 
-module.exports.getSpecificItem = function (req, res) {
+const getAllItems = async function (req, res) {
+    return res.status(200).json(await innerGetAllItems())
+}
+
+const getSpecificItem = function (req, res) {
     Item.findById({id: req.body.itemId}, function (err, obj) {
         if (err) {
             return res.status(500).json({
@@ -51,7 +52,7 @@ module.exports.getSpecificItem = function (req, res) {
     });
 }
 
-module.exports.getSearchedItems = function (req, res) {
+const getSearchedItems = function (req, res) {
     const searchText = req.query.searchText;
     const stringSearchFields = ['title', 'description'];
     const query = {
@@ -77,4 +78,12 @@ module.exports.getSearchedItems = function (req, res) {
             data: obj
         });
     });
+}
+
+
+module.exports = {
+    getAllItems,
+    createItem,
+    getSpecificItem,
+    getSearchedItems,
 }
