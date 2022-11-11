@@ -2,8 +2,8 @@ function showAllItemsHomeGrid() {
     let res = getAllItems()
     const items = res.data
     for (let item of items) {
-        AppendSingleShoeToElement("featured-items-sec1", item.title, item.price, item.image_url)
-        AppendSingleShoeToElement("featured-items-sec2", item.title, item.price, item.image_url)
+        AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.image_url)
+        AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.image_url)
     }
 }
 
@@ -66,9 +66,10 @@ function showSingleItemInList(item_name, item_price, item_image, item_desc) {
 // window.onload = function () {
 //     index2ShowItems()
 // }
+// <a href="/video?id=<%= videos[i].id %>" class="btn btn-primary">Watch</a>
 
 
-function AppendSingleShoeToElement(element_id, item_name, item_price, item_image, item_tag = 'sale') {
+function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, item_image, item_tag = 'sale') {
     const div_all_items_new_arrival = document.getElementById(element_id);
     const data = `<div class="col">
           <div class="card shadow-sm">
@@ -78,8 +79,7 @@ function AppendSingleShoeToElement(element_id, item_name, item_price, item_image
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <a href="/single-item?id=${item_id}" class="btn btn-primary">Watch</a>
                 </div>
                 <small class="text-muted">${item_price}</small>
               </div>
@@ -96,7 +96,7 @@ function setItemsOnAlbum(filter) {
         console.log(filteredItems)
         const items = filteredItems.data
         for (let item of items) {
-            AppendSingleShoeToElement("album-shoes", item.title, item.price, item.image_url)
+            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.image_url)
         }
     }
 
@@ -105,6 +105,23 @@ function setItemsOnAlbum(filter) {
 $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const searchTextQueryParam = urlParams.get('searchText');
+
+
+    const QueryItemId = urlParams.get('id');
+    if (QueryItemId) {
+        let response = "";
+        $.ajax({
+            url: '/api/item/getSpecificItem/' + QueryItemId,
+            type: 'get',
+            success: function (res) {
+                console.log(res);
+                $("#item_image").attr("src",res.data.image_url);
+                $("#item_description").text(res.data.description);
+                $("#item_title").text(res.data.title);
+                $("#item_price").text(res.data.price + " ₪");
+            }
+        });
+    }
     console.log(searchTextQueryParam)
     console.log(window.location.href.split('/').length)
     if (searchTextQueryParam) {
