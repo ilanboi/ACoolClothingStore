@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {model} = require("mongoose");
 
 mongoose.Promise = global.Promise;
 const userSchema = new mongoose.Schema({
@@ -46,4 +47,23 @@ const userSchema = new mongoose.Schema({
     }
 
 });
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+const getAllUsers = async function () {
+    const filter = {};
+    const all = await User.find(filter);
+    return {
+        success: true,
+        message: 'all users are found.',
+        data: all
+    };
+}
+
+const deleteUser = async function(userId) {
+    User.deleteOne({_id: userId})
+}
+
+module.exports = {
+    User,
+    getAllUsers,
+    deleteUser
+}

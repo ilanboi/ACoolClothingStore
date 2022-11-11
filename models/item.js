@@ -44,4 +44,19 @@ const itemSchema = new mongoose.Schema({
         required: false,
     },
 });
-module.exports = mongoose.model('Item', itemSchema);
+const Item = mongoose.model('Item', itemSchema);
+const getAllItems = async function () {
+    const filter = {};
+    const all = await Item.find(filter);
+    return {
+        success: true,
+        message: 'all items are found.',
+        data: all
+    };
+}
+
+module.exports = {
+    Item,
+    getAllItems
+};
+

@@ -55,7 +55,11 @@ module.exports.createUser = function (req, res) {
 
     });
 }
-
+module.exports.deleteUser = function (req, res) {
+    //todo validation - current user capable of deleting
+    console.log(req.params.userId)
+    return User.deleteUser(req.params.userId)
+}
 /**
  *
  * @param req = {
@@ -146,6 +150,8 @@ module.exports.updateUser = function (req, res) {
         })
 
 }
-
+module.exports.getAllUsers = async function () {
+    return await User.getAllUsers()
+}
 
 

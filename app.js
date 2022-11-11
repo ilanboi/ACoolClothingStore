@@ -1,20 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const supplierRoutes = require('./routes/supplierRoutes');
 const userRoutes = require('./routes/userRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const itemController = require('./controllers/itemController')
+const userController = require('./controllers/userController')
+
 const path = require("path");
 const app = express();
 const port = 8080;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(logger('dev'));
+app.set('view engine', 'ejs');
 
-app.use('/public', express.static(path.join(__dirname,"public")));
+app.use('/public', express.static(path.join(__dirname, "public")));
 
 app.use('/api/user/', userRoutes);
 app.use('/api/supplier/', supplierRoutes);
@@ -53,12 +56,15 @@ app.get('/item-listing/:searchText', (req, res) => {
     const searchText = req.params.searchText;
     const cloneRes = {}
     if (searchText) {
-        itemController.getSearchedItems({body: {searchText:searchText}}, cloneRes)
+        itemController.getSearchedItems({body: {searchText: searchText}}, cloneRes)
     }
     console.log(cloneRes)
     res.sendFile(__dirname + '/views/item-listing.html');
 })
+app.get('/admin2', async (req, res) => {
+    res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.getAllItems(), suppliers: []}});
 
+})
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', (req, res) => {
     res.status(404).sendFile(__dirname + '/views/404.html');

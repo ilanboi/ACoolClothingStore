@@ -29,13 +29,10 @@ module.exports.createItem = function (req, res) {
 }
 
 module.exports.getAllItems = async function (req, res) {
-    const filter = {};
-    const all = await Item.find(filter);
-    return res.status(201).json({
-        success: true,
-        message: 'all items are found.',
-        data: all
-    });
+    return res.status(200).json(Item.getAllItems())
+}
+module.exports.getAllItems = async function () {
+    return Item.getAllItems()
 }
 
 module.exports.getSpecificItem = function (req, res) {
