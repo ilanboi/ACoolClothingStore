@@ -59,7 +59,7 @@ const getAllUsers = async function () {
 }
 
 const deleteUser = async function(userId) {
-    User.deleteOne({_id: userId})
+    await User.deleteOne({_id: userId})
 }
 
 module.exports = {

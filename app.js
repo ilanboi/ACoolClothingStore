@@ -62,7 +62,7 @@ app.get('/item-listing/:searchText', (req, res) => {
     res.sendFile(__dirname + '/views/item-listing.html');
 })
 app.get('/admin2', async (req, res) => {
-    res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.getAllItems(), suppliers: []}});
+    res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.innerGetAllItems(), suppliers: []}});
 
 })
 //The 404 Route (ALWAYS Keep this as the last route)

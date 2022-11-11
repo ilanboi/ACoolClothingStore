@@ -83,6 +83,7 @@ const getSearchedItems = function (req, res) {
 
 module.exports = {
     getAllItems,
+    innerGetAllItems,
     createItem,
     getSpecificItem,
     getSearchedItems,

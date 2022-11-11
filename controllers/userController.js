@@ -55,16 +55,21 @@ module.exports.createUser = function (req, res) {
 
     });
 }
+const innerDeleteUser = async function (userId) {
+    //todo validation - current user capable of deleting
+    return await User.deleteUser(userId)
+}
+
 module.exports.deleteUser = async function (req, res) {
     //todo validation - current user capable of deleting
     console.log(req.params.userId)
-    await User.deleteUser(req.params.userId)
-    return res.status(200).json({})
+    await innerDeleteUser(req.params.userId)
+    return res.status(200).json({
+        success: true,
+        message: 'user deleted'
+    })
 }
-module.exports.deleteUser = function (userId) {
-    //todo validation - current user capable of deleting
-    return User.deleteUser(userId)
-}
+
 /**
  *
  * @param req = {
