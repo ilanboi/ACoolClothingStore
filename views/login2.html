@@ -12,9 +12,11 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <link href="../public/css/account.css" rel="stylesheet">
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!-- Custom styles for this template -->
     <link href="../public/css/carousel.css" rel="stylesheet">
+    <link href="../public/css/login.css" rel="stylesheet">
     <style>
 
         .page_header {
@@ -172,13 +174,13 @@
     </style>
 </head>
 <body>
-<script src="../public/js/handlers/itemsHandler.js"></script>
 <script src="../public/js/handlers/requestsHandler.js"></script>
+<script src="../public/js/handlers/loginHandler.js"></script>
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Carousel</a>
+            <a class="navbar-brand" href="/">Shoey</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -196,272 +198,316 @@
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search"
+                           aria-label="Search">
+                    <button class="btn btn-outline-primary" type="button"
+                            onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
+                    </button>
                 </form>
-                <button class="btn btn-outline-success" type="button" onclick="window.location = '/login'">Login</button>
-                <button class="btn btn-outline-success" type="button">Register</button>
+                <button class="btn btn-outline-primary" type="button" onclick="window.location = '/login'">Login
+                </button>
 
             </div>
         </div>
     </nav>
 </header>
 
-<main>
-    <div class="container margin_30">
-        <div class="page_header">
-            <div class="breadcrumbs">
-            </div>
-            <h1>Sign In or Create an Account</h1>
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>Welcome</h3>
+            <p>You are 30 seconds away from earning your own money!</p>
+            <input type="submit" name="" value="Login"/><br/>
+            <a class="nav-link active" id="home-tab1" data-toggle="tab" href="#buyer" role="tab" aria-controls="home" aria-selected="true">User</a>
         </div>
-        <!-- /page_header -->
-        <div class="row justify-content-center">
-            <div class="col-xl-6 col-lg-6 col-md-8">
-                <div class="box_account">
-                    <h3 class="client">Already Client</h3>
-                    <div class="form_container">
-                        <form id="loginForm" action="">
-
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#buyer" role="tab" aria-controls="home" aria-selected="true">User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#supplier" role="tab" aria-controls="profile" aria-selected="false">Supplier</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="buyer" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">Apply as a Employee</h3>
+                    <div class="row register-form">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email"
-                                       placeholder="Email*">
+                                <input type="text" class="form-control" placeholder="First Name *" value="" />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" name="password" id="password_in"
-                                       value=""
-                                       placeholder="Password*">
+                                <input type="text" class="form-control" placeholder="Last Name *" value="" />
                             </div>
-                            <!--                            <div class="clearfix add_bottom_15">-->
-                            <!--                                <div class="checkboxes float-left">-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                             <div class="form-group">
-
-                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private
-                                    <input type="radio" id="private_radio_login" name="client_type_login" checked
-                                           value="private">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container_radio" style="display: inline-block;">Company
-                                    <input type="radio" id="company_radio_login" name="client_type_login"
-                                           value="company">
-                                    <span class="checkmark"></span>
-                                </label>
+                                <input type="password" class="form-control" placeholder="Password *" value="" />
                             </div>
-                            <div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width">
+                            <div class="form-group">
+                                <input type="password" class="form-control"  placeholder="Confirm Password *" value="" />
                             </div>
-                        </form>
-
+                            <div class="form-group">
+                                <div class="maxl">
+                                    <label class="radio inline">
+                                        <input type="radio" name="gender" value="male" checked>
+                                        <span> Male </span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" name="gender" value="female">
+                                        <span>Female </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Your Email *" value="" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="" />
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
+                                    <option>What is your Birthdate?</option>
+                                    <option>What is Your old Phone Number</option>
+                                    <option>What is your Pet Name?</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" />
+                            </div>
+                            <input type="submit" class="btnRegister"  value="Register"/>
+                        </div>
                     </div>
-                    <!-- /form_container -->
                 </div>
-                <!-- /box_account -->
-                <!-- /row -->
-            </div>
-
-
-            <div class="col-xl-6 col-lg-6 col-md-8">
-                <div class="box_account">
-                    <h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>
-                    <div class="form_container">
-                        <form id="createUserForm" action="">
+                <div class="tab-pane fade show" id="supplier" role="tabpanel" aria-labelledby="profile-tab">
+                    <h3  class="register-heading">Apply as a Hirer</h3>
+                    <div class="row register-form">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email_2"
-                                       placeholder="Email*">
+                                <input type="text" class="form-control" placeholder="First Name *" value="" />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" name="password" id="password_in_2"
-                                       value="" placeholder="Password*">
+                                <input type="text" class="form-control" placeholder="Last Name *" value="" />
                             </div>
-                            <hr>
                             <div class="form-group">
-                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private
-                                    <input type="radio" id="private_radio" name="client_type" checked
-                                           value="private">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container_radio" style="display: inline-block;">Company
-                                    <input type="radio" id="company_radio" name="client_type" value="company">
-                                    <span class="checkmark"></span>
-                                </label>
+                                <input type="email" class="form-control" placeholder="Email *" value="" />
                             </div>
-                            <div class="private box">
-                                <div class="row no-gutters">
-                                    <div class="col-6 pr-1">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="fname"
-                                                   placeholder="Name*">
-                                        </div>
-                                    </div>
-                                    <div class="col-6 pl-1">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="lname"
-                                                   placeholder="Last Name*">
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="address"
-                                                   placeholder="Address*">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /row -->
-                                <div class="row no-gutters">
-                                    <div class="col-6 pr-1">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="city" placeholder="City*">
-                                        </div>
-                                    </div>
-                                    <div class="col-6 pl-1">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="postal"
-                                                   placeholder="Postal Code*">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /row -->
-                                <!-- /row -->
-
-                                <div class="row no-gutters">
-                                    <div class="col-6 pl-1">
-                                        <div class="form-group">
-                                            <input type="number" class="form-control" name="telephone"
-                                                   placeholder="Telephone *">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /row -->
-
-                            </div>
-                            <!-- /private -->
-                            <div class="company box" style="display: none;">
-                                <div class="row no-gutters">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="cname"
-                                                   placeholder="Company Name*">
-                                        </div>
-                                    </div>
-                                    <!--								<div class="col-12">-->
-                                    <!--									<div class="form-group">-->
-                                    <!--										<input type="text" class="form-control" placeholder="Full Address">-->
-                                    <!--									</div>-->
-                                    <!--								</div>-->
-                                </div>
-
-                                <!-- /row -->
-                                <div class="row no-gutters">
-                                    <div class="col-6 pl-1">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="ctelephone"
-                                                   placeholder="Telephone *">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /row -->
-                            </div>
-                            <!-- /company -->
-                            <hr>
                             <div class="form-group">
-                                <label class="container_check">Accept <a href="#0">Terms and conditions</a>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
+                                <input type="text" maxlength="10" minlength="10" class="form-control" placeholder="Phone *" value="" />
                             </div>
-                            <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width">
+
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password *" value="" />
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
+                                    <option>What is your Birthdate?</option>
+                                    <option>What is Your old Phone Number</option>
+                                    <option>What is your Pet Name?</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="`Answer *" value="" />
+                            </div>
+                            <input type="submit" class="btnRegister"  value="Register"/>
+                        </div>
                     </div>
-                    <!-- /form_container -->
                 </div>
-                <!-- /box_account -->
             </div>
         </div>
-        <!-- /row -->
     </div>
 
-    <!-- FOOTER -->
-    <footer class="container">
-        <p class="float-end"><a href="#">Back to top</a></p>
-        <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-    </footer>
-</main>
+</div>
+<!--<main>-->
+<!--    <div class="container margin_30">-->
+<!--        <div class="page_header">-->
+<!--            <div class="breadcrumbs">-->
+<!--            </div>-->
+<!--            <h1>Sign In or Create an Account</h1>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; /page_header &ndash;&gt;-->
+<!--        <div class="row justify-content-center">-->
+<!--            <div class="col-xl-6 col-lg-6 col-md-8">-->
+<!--                <div class="box_account">-->
+<!--                    <h3 class="client">Already Client</h3>-->
+<!--                    <div class="form_container">-->
+<!--                        <form id="loginForm" action="">-->
+
+<!--                            <div class="form-group">-->
+<!--                                <input type="email" class="form-control" name="email" id="email"-->
+<!--                                       placeholder="Email*">-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <input type="password" class="form-control" name="password" id="password_in"-->
+<!--                                       value=""-->
+<!--                                       placeholder="Password*">-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;                            <div class="clearfix add_bottom_15">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                <div class="checkboxes float-left">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                            <div class="form-group">-->
+
+<!--                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private-->
+<!--                                    <input type="radio" id="private_radio_login" name="client_type_login" checked-->
+<!--                                           value="private">-->
+<!--                                    <span class="checkmark"></span>-->
+<!--                                </label>-->
+<!--                                <label class="container_radio" style="display: inline-block;">Company-->
+<!--                                    <input type="radio" id="company_radio_login" name="client_type_login"-->
+<!--                                           value="company">-->
+<!--                                    <span class="checkmark"></span>-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <div class="text-center"><button type="submit" value="Log In" class="btn-outline-primary btn_1 full-width">Log In</button>-->
+<!--                            </div>-->
+<!--                        </form>-->
+
+<!--                    </div>-->
+<!--                    &lt;!&ndash; /form_container &ndash;&gt;-->
+<!--                </div>-->
+<!--                &lt;!&ndash; /box_account &ndash;&gt;-->
+<!--                &lt;!&ndash; /row &ndash;&gt;-->
+<!--            </div>-->
 
 
-<script>
-    // Client type Panel
-    $('input[name="client_type"]').on("click", function () {
-        var inputValue = $(this).attr("value");
-        var targetBox = $("." + inputValue);
-        $(".box").not(targetBox).hide();
-        $(targetBox).show();
-    });
+<!--            <div class="col-xl-6 col-lg-6 col-md-8">-->
+<!--                <div class="box_account">-->
+<!--                    <h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>-->
+<!--                    <div class="form_container">-->
+<!--                        <form id="createUserForm" action="">-->
+<!--                            <div class="form-group">-->
+<!--                                <input type="email" class="form-control" name="email" id="email_2"-->
+<!--                                       placeholder="Email*">-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <input type="password" class="form-control" name="password" id="password_in_2"-->
+<!--                                       value="" placeholder="Password*">-->
+<!--                            </div>-->
+<!--                            <hr>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private-->
+<!--                                    <input type="radio" id="private_radio" name="client_type" checked-->
+<!--                                           value="private">-->
+<!--                                    <span class="checkmark"></span>-->
+<!--                                </label>-->
+<!--                                <label class="container_radio" style="display: inline-block;">Company-->
+<!--                                    <input type="radio" id="company_radio" name="client_type" value="company">-->
+<!--                                    <span class="checkmark"></span>-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <div class="private box">-->
+<!--                                <div class="row no-gutters">-->
+<!--                                    <div class="col-6 pr-1">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="fname"-->
+<!--                                                   placeholder="Name*">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-6 pl-1">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="lname"-->
+<!--                                                   placeholder="Last Name*">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="address"-->
+<!--                                                   placeholder="Address*">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; /row &ndash;&gt;-->
+<!--                                <div class="row no-gutters">-->
+<!--                                    <div class="col-6 pr-1">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="city" placeholder="City*">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-6 pl-1">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="postal"-->
+<!--                                                   placeholder="Postal Code*">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; /row &ndash;&gt;-->
+<!--                                &lt;!&ndash; /row &ndash;&gt;-->
 
-    $('#loginForm').submit(function (e) {
-        if ($('#company_radio_login').is(":checked")) {
-            $.ajax({
-                url: '/api/supplier/login',
-                type: 'post',
-                data: $('#loginForm').serialize(),
-                success: function (res) {
-                    const supplier_details = JSON.stringify(res['supplierDetails'])
-                    addToCookies("userdata", supplier_details, addYears(new Date(), 1))
-                    addToCookies("usertype", 'supplier', addYears(new Date(), 1))
+<!--                                <div class="row no-gutters">-->
+<!--                                    <div class="col-6 pl-1">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="number" class="form-control" name="telephone"-->
+<!--                                                   placeholder="Telephone *">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; /row &ndash;&gt;-->
 
-                    alert("works login comp")
-                }
-            });
+<!--                            </div>-->
+<!--                            &lt;!&ndash; /private &ndash;&gt;-->
+<!--                            <div class="company box" style="display: none;">-->
+<!--                                <div class="row no-gutters">-->
+<!--                                    <div class="col-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="cname"-->
+<!--                                                   placeholder="Company Name*">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;								<div class="col-12">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;									<div class="form-group">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;										<input type="text" class="form-control" placeholder="Full Address">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;									</div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;								</div>&ndash;&gt;-->
+<!--                                </div>-->
 
-        } else if ($('#private_radio_login').is(":checked")) {
+<!--                                &lt;!&ndash; /row &ndash;&gt;-->
+<!--                                <div class="row no-gutters">-->
+<!--                                    <div class="col-6 pl-1">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" class="form-control" name="ctelephone"-->
+<!--                                                   placeholder="Telephone *">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; /row &ndash;&gt;-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash; /company &ndash;&gt;-->
+<!--                            <hr>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="container_check">Accept <a href="#0">Terms and conditions</a>-->
+<!--                                    <input type="checkbox">-->
+<!--                                    <span class="checkmark"></span>-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width">-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; /form_container &ndash;&gt;-->
+<!--                </div>-->
+<!--                &lt;!&ndash; /box_account &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; /row &ndash;&gt;-->
+<!--    </div>-->
 
-            $.ajax({
-                url: '/api/user/login',
-                type: 'post',
-                data: $('#loginForm').serialize(),
-                success: function (res) {
-                    const user_details = JSON.stringify(res['userDetails'])
-                    addToCookies("userdata", user_details, addYears(new Date(), 1))
-                    addToCookies("usertype", 'user', addYears(new Date(), 1))
-                    window.location = "/";
+<!--    &lt;!&ndash; FOOTER &ndash;&gt;-->
+<!--    <footer class="container">-->
+<!--        <p class="float-end"><a href="#">Back to top</a></p>-->
+<!--        <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
+<!--    </footer>-->
+<!--</main>-->
 
-                }
-            });
-        }
-        e.preventDefault();
-    });
-
-
-    $('#createUserForm').submit(function (e) {
-        if ($('#company_radio').is(":checked")) {
-            $.ajax({
-                url: '/api/supplier/createSupplier',
-                type: 'post',
-                data: $('#createUserForm').serialize(),
-                success: function (res) {
-                    const user_details = JSON.stringify(res['Supplier'])
-                    addToCookies("userdata", user_details, addYears(new Date(), 1))
-                    addToCookies("usertype", 'supplier', addYears(new Date(), 1))
-                    alert("works")
-                }
-            });
-
-        } else if ($('#private_radio').is(":checked")) {
-
-            $.ajax({
-                url: '/api/user/createUser',
-                type: 'post',
-                data: $('#createUserForm').serialize(),
-                success: function (res) {
-                    const user_details = JSON.stringify(res['User'])
-                    addToCookies("userdata", user_details, addYears(new Date(), 1))
-                    addToCookies("usertype", 'user', addYears(new Date(), 1))
-                    alert("works")
-                }
-            });
-        }
-        e.preventDefault();
-    });
-</script>
 </body>
 </html>

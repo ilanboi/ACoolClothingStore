@@ -6,14 +6,6 @@ function showAllItemsHomeGrid() {
         AppendSingleShoeToElement("featured-items-sec2", item.title, item.price, item.image_url)
     }
 }
-//
-// function showAllItemsOn() {
-//     let res = getAllItems()
-//     const items = res.data
-//     for (let item of items) {
-//         AppendSingleShoeToElement("featured-items-sec1", item.title, item.price, item.image_url)
-//     }
-// }
 
 function showAllItemsInList() {
     let res = getAllItems()
