@@ -31,25 +31,16 @@ const createItem = function (req, res) {
 const innerGetAllItems = async function () {
     return await Item.getAllItems()
 }
+const innerGetSpecificItem = async function (itemId) {
+    return await Item.getItemById(itemId)
+}
 
 const getAllItems = async function (req, res) {
     return res.status(200).json(await innerGetAllItems())
 }
 
-const getSpecificItem = function (req, res) {
-    Item.findById({id: req.body.itemId}, function (err, obj) {
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: 'no item with that id.',
-            });
-        }
-        return res.status(201).json({
-            success: true,
-            message: 'item found.',
-            data: obj
-        });
-    });
+const getSpecificItem = async function (req, res) {
+    return res.status(200).json(await innerGetSpecificItem(req.params.itemId));
 }
 
 const getSearchedItems = function (req, res) {

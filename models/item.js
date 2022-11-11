@@ -54,9 +54,27 @@ const getAllItems = async function () {
         data: all
     };
 }
+const getItemById = async function (itemId) {
+    try {
+        const all = await Item.findById(itemId);
+        return {
+            success: true,
+            message: 'item found.',
+            data: all
+        };
+    } catch (e) {
+        return {
+            success: false,
+            message: 'item not found'
+        };
+    }
+
+}
+
 
 module.exports = {
     Item,
-    getAllItems
+    getAllItems,
+    getItemById
 };
 

@@ -163,5 +163,3 @@ module.exports.updateUser = function (req, res) {
 module.exports.getAllUsers = async function () {
     return await User.getAllUsers()
 }
-
-
