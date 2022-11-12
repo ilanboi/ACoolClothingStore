@@ -76,7 +76,7 @@ function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, i
             <img class="img-fluid lazy" src="${item_image}"
                                          data-src="${item_image}" alt="">
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text">${item_name}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                 <a href="/single-item?id=${item_id}" class="btn btn-primary">Watch</a>
