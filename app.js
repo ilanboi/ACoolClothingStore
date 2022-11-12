@@ -45,6 +45,12 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index2.html');
 });
+app.get('/women', (req, res) => {
+    res.sendFile(__dirname + '/views/women.html');
+});
+app.get('/men', (req, res) => {
+    res.sendFile(__dirname + '/views/men.html');
+});
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/views/login2.html');
 });
