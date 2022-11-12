@@ -2,8 +2,8 @@ function showAllItemsHomeGrid() {
     let res = getAllItems()
     const items = res.data
     for (let item of items) {
-        AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.image_url)
-        AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.image_url)
+        AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.size, item.image_url)
+        AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.size, item.image_url)
     }
 }
 
@@ -69,7 +69,7 @@ function showSingleItemInList(item_name, item_price, item_image, item_desc) {
 // <a href="/video?id=<%= videos[i].id %>" class="btn btn-primary">Watch</a>
 
 
-function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, item_image, item_tag = 'sale') {
+function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, item_size, item_image , item_tag = 'sale') {
     const div_all_items_new_arrival = document.getElementById(element_id);
     const data = `<div class="col">
           <div class="card shadow-sm">
@@ -81,7 +81,9 @@ function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, i
                 <div class="btn-group">
                 <a href="/single-item?id=${item_id}" class="btn btn-primary">Watch</a>
                 </div>
-                <small class="text-muted">${item_price}</small>
+                <p class="text-muted">price: ${item_price} ₪ </p>
+                
+                <small class="text-muted"${item_size}</small>
               </div>
             </div>
           </div>
@@ -96,7 +98,7 @@ function setItemsOnAlbum(filter) {
         console.log(filteredItems)
         const items = filteredItems.data
         for (let item of items) {
-            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.image_url)
+            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size , item.image_url )
         }
     }
 
@@ -118,6 +120,7 @@ $(document).ready(function () {
                 $("#item_image").attr("src",res.data.image_url);
                 $("#item_description").text(res.data.description);
                 $("#item_title").text(res.data.title);
+                $("#item_size").text("Size available: " + res.data.size)
                 $("#item_price").text(res.data.price + " ₪");
             }
         });
