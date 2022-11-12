@@ -1,63 +1,31 @@
-const mongoose = require("mongoose");
-const User = require("../models/user");
+const {
+    User,
+    getAllUsers,
+    deleteUser,
+    createUser,
+    loginUser
+} = require("../models/user");
 
-/**
- *
- * @param req = {
- *     email: string,
- *     password: string,
- *     fname: string,
- *     lname: string,
- *     isAdmin: string
- * }
- * @param res
- */
-module.exports.createUser = function (req, res) {
-    console.log(req.body)
-
-    const user = new User({
-        _id: mongoose.Types.ObjectId(),
-        email: req.body.email,
-        password: req.body.password,
-        fname: req.body.fname,
-        lname: req.body.lname,
-        isAdmin: req.body.isAdmin ?? false,
-        address: req.body.address,
-        city: req.body.city,
-        postal: req.body.postal,
-        telephone: req.body.telephone,
-        cart: []
-    });
-    User.findOne({email: req.body.email}, async function (err, obj) {
-        if (!err && !obj) {
-            return user
-                .save()
-                .then((newUser) => {
-                    return res.status(201).json({
-                        success: true,
-                        message: 'New user created successfully',
-                        User: newUser,
-                    });
-                })
-                .catch((error) => {
-                    res.status(500).json({
-                        success: false,
-                        message: 'Server error. Please try again.',
-                        error: error.message,
-                    });
-                });
-        } else {
-            return res.status(301).json({
-                success: false,
-                message: 'user already exist with this mail. \n' + err + ' ' + obj,
-            });
-        }
-
-    });
+const innerCreateUser = (email, password, fname, lname, address, city, postal, telephone, callback) => {
+    return createUser(email, password, fname, lname, address, city, postal, telephone, callback);
 }
+module.exports.createUser = async function (req, res) {
+    return innerCreateUser(
+        req.body.email,
+        req.body.password,
+        req.body.fname,
+        req.body.lname,
+        req.body.address,
+        req.body.city,
+        req.body.postal,
+        req.body.telephone,
+        res.status(200)
+    );
+}
+
 const innerDeleteUser = async function (userId) {
     //todo validation - current user capable of deleting
-    return await User.deleteUser(userId)
+    return await deleteUser(userId)
 }
 
 module.exports.deleteUser = async function (req, res) {
@@ -70,39 +38,14 @@ module.exports.deleteUser = async function (req, res) {
     })
 }
 
-/**
- *
- * @param req = {
- *     email: string,
- *     password: string
- * }
- * @param res
- */
-module.exports.loginUser = function (req, res) {
-    User.findOne({email: req.body.email}, function (err, obj) {
-        console.log(obj)
-        console.log(req.body)
-        if (err || !obj) {
-            return res.status(301).json({
-                success: false,
-                message: 'no user found.',
-            });
-        } else {
-            if (obj.password === req.body.password) {
-                return res.status(200).json({
-                    success: true,
-                    message: 'user found',
-                    userDetails: obj
-                });
-            } else {
-                return res.status(301).json({
-                    success: false,
-                    message: 'Password is incorrect'
-                });
-            }
-        }
-    });
+const innerLoginUser = function (email, password, callback) {
+    return loginUser(email, password, callback)
 }
+
+module.exports.loginUser = function (req, res) {
+    return innerLoginUser(req.body.email, req.body.password, res.status(200))
+}
+
 module.exports.addItemToCart = function (req, res) {
     // let doc = await User.findOneAndUpdate({email: req.body.email}, {$push: {cart: req.body.item_id}});
     User.updateOne({email: req.body.email}, {$push: {cart: {item_id: req.body.item_id}}}, {},
@@ -161,5 +104,5 @@ module.exports.updateUser = function (req, res) {
 
 }
 module.exports.getAllUsers = async function () {
-    return await User.getAllUsers()
+    return await getAllUsers()
 }

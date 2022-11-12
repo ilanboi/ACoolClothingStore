@@ -54,6 +54,7 @@
                     <span><%=data.users.data[i].fname%></span>
                     <span><%=data.users.data[i].lname%></span>
                     <span><%=data.users.data[i].email%></span>
+                    <span><%=data.users.data[i].password%></span>
                     <button id="deleteUserBtn" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
                 </article>
                 <%}%>

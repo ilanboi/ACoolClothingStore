@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {model} = require("mongoose");
 
 mongoose.Promise = global.Promise;
-const userSchema = new mongoose.Schema({
+const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     email: {
         type: String,
@@ -48,6 +48,75 @@ const userSchema = new mongoose.Schema({
 
 });
 const User = mongoose.model('User', userSchema);
+const createUser = function (email, password, fname, lname, address, city, postal, telephone, callback) {
+    const user = new User({
+        _id: mongoose.Types.ObjectId(),
+        email: email,
+        password: password,
+        fname: fname,
+        lname: lname,
+        isAdmin: false,
+        address: address,
+        city: city,
+        postal: postal,
+        telephone: telephone,
+        cart: []
+    });
+    User.findOne({email: email}, function (err, obj) {
+        if (!err && !obj) {
+            user
+                .save()
+                .then((newUser) => {
+                    console.log(newUser)
+                    return callback.json({
+                        success: true,
+                        message: 'New user created successfully',
+                        User: newUser,
+                    });
+                })
+                .catch((error) => {
+                    return callback.json({
+                        success: false,
+                        message: 'Server error. Please try again.',
+                        error: error.message,
+                    });
+                });
+        } else {
+            return callback.json({
+                success: false,
+                message: 'user already exist with this mail. \n' + err + ' ' + obj,
+            });
+        }
+    });
+}
+const loginUser = function (email, password, callback) {
+    User.findOne({email: email}, function (err, obj) {
+        console.log("obj ", obj)
+        console.log("email ", email)
+        console.log("pass ", password)
+        if (err || !obj) {
+            console.log("err ", err)
+            return callback.json({
+                success: false,
+                message: 'no user found.',
+            });
+        } else {
+            if (obj.password === password) {
+                return callback.json({
+                    success: true,
+                    message: 'user found',
+                    user: obj
+                });
+            } else {
+                return callback.json({
+                    success: false,
+                    message: 'Password is incorrect'
+                });
+            }
+        }
+    });
+
+}
 const getAllUsers = async function () {
     const filter = {};
     const all = await User.find(filter);
@@ -58,12 +127,14 @@ const getAllUsers = async function () {
     };
 }
 
-const deleteUser = async function(userId) {
+const deleteUser = async function (userId) {
     await User.deleteOne({_id: userId})
 }
 
 module.exports = {
     User,
+    loginUser,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    createUser
 }

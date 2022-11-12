@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const Item = require("../models/item");
+const {
+    Item,
+    _getAllItems,
+    getItemById
+} = require("../models/item");
 
 const createItem = function (req, res) {
     const item = new Item({
@@ -29,10 +33,10 @@ const createItem = function (req, res) {
 }
 
 const innerGetAllItems = async function () {
-    return await Item.getAllItems()
+    return await _getAllItems()
 }
 const innerGetSpecificItem = async function (itemId) {
-    return await Item.getItemById(itemId)
+    return await getItemById(itemId)
 }
 
 const getAllItems = async function (req, res) {

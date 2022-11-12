@@ -45,7 +45,7 @@ const itemSchema = new mongoose.Schema({
     },
 });
 const Item = mongoose.model('Item', itemSchema);
-const getAllItems = async function () {
+const _getAllItems = async function () {
     const filter = {};
     const all = await Item.find(filter);
     return {
@@ -74,7 +74,7 @@ const getItemById = async function (itemId) {
 
 module.exports = {
     Item,
-    getAllItems,
+    _getAllItems,
     getItemById
 };
 

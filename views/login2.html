@@ -190,6 +190,7 @@
 </head>
 <body>
 <script src="../public/js/handlers/requestsHandler.js"></script>
+<script src="../public/js/handlers/cookiesHandler.js"></script>
 <script src="../public/js/handlers/loginHandler.js"></script>
 
 <header>
@@ -236,17 +237,24 @@
             <div class="row">
                 <!--                <div class="col">-->
                 <div class="form-group" style="width: unset !important; margin-top: unset !important; ">
-                    <input type="email" class="form-control"
+                    <input type="email" id="login-email" class="form-control"
                            style="width: unset !important; margin-top: unset !important; border-radius: unset !important;"
                            placeholder="Email *" value=""/>
-                    <input type="text" maxlength="10"
+                    <input type="password" id="login-password"
                            style="width: unset !important; margin-top: unset !important; border-radius: unset !important;"
-                           minlength="10" class="form-control" placeholder="Phone *"
+                           class="form-control" placeholder="Password *"
                            value=""/>
+                    <select id="login-user-type" class="form-control">
+                        <option class="hidden" selected disabled>
+                            Please select a type
+                        </option>
+                        <option>User</option>
+                        <option>Supplier</option>
+                    </select>
                 </div>
                 <!--                </div>-->
             </div>
-            <input type="submit" name="" value="Login"/><br/>
+            <button type="submit" class="btn-primary" onclick="execLogin()" name="">Login</button>
         </div>
         <div class="col-md-9 register-right">
             <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -271,18 +279,26 @@
                                 <input type="text" id="lname" class="form-control" placeholder="Last Name *" value=""/>
                             </div>
                             <div class="form-group">
-                                <input type="password" id="user-password" class="form-control" placeholder="Password *" value=""/>
+                                <input type="password" id="user-password" class="form-control" placeholder="Password *"
+                                       value=""/>
                             </div>
                             <div class="form-group">
-                                <input type="password" id="user-password-confirm" class="form-control" placeholder="Confirm Password *" value=""/>
+                                <input type="password" id="user-password-confirm" class="form-control"
+                                       placeholder="Confirm Password *" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="user-address" class="form-control"
+                                       placeholder="Address *" value=""/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="email" id="user-email" class="form-control" placeholder="Your Email *" value=""/>
+                                <input type="email" id="user-email" class="form-control" placeholder="Your Email *"
+                                       value=""/>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="user-phone" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control"
+                                <input type="text" id="user-phone" minlength="10" maxlength="10" name="txtEmpPhone"
+                                       class="form-control"
                                        placeholder="Your Phone *" value=""/>
                             </div>
                             <div class="form-group">
@@ -299,9 +315,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="user-postal" class="form-control" placeholder="Postal*" value=""/>
+                                <input type="text" id="user-postal" class="form-control" placeholder="Postal*"
+                                       value=""/>
                             </div>
-                            <input type="submit" class="btnRegister" value="Register"/>
+                            <input type="submit" class="btnRegister" value="Register" onclick="execRegister()"/>
                         </div>
                     </div>
                 </div>
@@ -316,7 +333,8 @@
                                 <input type="email" class="form-control" placeholder="Email *" value=""/>
                             </div>
                             <div class="form-group">
-                                <input id="supplier-telephone" type="text" maxlength="10" minlength="10" class="form-control"
+                                <input id="supplier-telephone" type="text" maxlength="10" minlength="10"
+                                       class="form-control"
                                        placeholder="Phone *" value=""/>
                             </div>
 
@@ -329,7 +347,7 @@
                             <div class="form-group">
                                 <input type="password" class="form-control" placeholder="Confirm Password *" value=""/>
                             </div>
-                            <input type="submit" class="btnRegister" value="Register"/>
+                            <input type="submit" class="btnRegister" onclick="execRegister()" value="Register"/>
                         </div>
                     </div>
                 </div>
@@ -338,186 +356,6 @@
     </div>
 
 </div>
-<!--<main>-->
-<!--    <div class="container margin_30">-->
-<!--        <div class="page_header">-->
-<!--            <div class="breadcrumbs">-->
-<!--            </div>-->
-<!--            <h1>Sign In or Create an Account</h1>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; /page_header &ndash;&gt;-->
-<!--        <div class="row justify-content-center">-->
-<!--            <div class="col-xl-6 col-lg-6 col-md-8">-->
-<!--                <div class="box_account">-->
-<!--                    <h3 class="client">Already Client</h3>-->
-<!--                    <div class="form_container">-->
-<!--                        <form id="loginForm" action="">-->
-
-<!--                            <div class="form-group">-->
-<!--                                <input type="email" class="form-control" name="email" id="email"-->
-<!--                                       placeholder="Email*">-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <input type="password" class="form-control" name="password" id="password_in"-->
-<!--                                       value=""-->
-<!--                                       placeholder="Password*">-->
-<!--                            </div>-->
-<!--                            &lt;!&ndash;                            <div class="clearfix add_bottom_15">&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                <div class="checkboxes float-left">&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                </div>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--                            <div class="form-group">-->
-
-<!--                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private-->
-<!--                                    <input type="radio" id="private_radio_login" name="client_type_login" checked-->
-<!--                                           value="private">-->
-<!--                                    <span class="checkmark"></span>-->
-<!--                                </label>-->
-<!--                                <label class="container_radio" style="display: inline-block;">Company-->
-<!--                                    <input type="radio" id="company_radio_login" name="client_type_login"-->
-<!--                                           value="company">-->
-<!--                                    <span class="checkmark"></span>-->
-<!--                                </label>-->
-<!--                            </div>-->
-<!--                            <div class="text-center"><button type="submit" value="Log In" class="btn-outline-primary btn_1 full-width">Log In</button>-->
-<!--                            </div>-->
-<!--                        </form>-->
-
-<!--                    </div>-->
-<!--                    &lt;!&ndash; /form_container &ndash;&gt;-->
-<!--                </div>-->
-<!--                &lt;!&ndash; /box_account &ndash;&gt;-->
-<!--                &lt;!&ndash; /row &ndash;&gt;-->
-<!--            </div>-->
-
-
-<!--            <div class="col-xl-6 col-lg-6 col-md-8">-->
-<!--                <div class="box_account">-->
-<!--                    <h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>-->
-<!--                    <div class="form_container">-->
-<!--                        <form id="createUserForm" action="">-->
-<!--                            <div class="form-group">-->
-<!--                                <input type="email" class="form-control" name="email" id="email_2"-->
-<!--                                       placeholder="Email*">-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <input type="password" class="form-control" name="password" id="password_in_2"-->
-<!--                                       value="" placeholder="Password*">-->
-<!--                            </div>-->
-<!--                            <hr>-->
-<!--                            <div class="form-group">-->
-<!--                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private-->
-<!--                                    <input type="radio" id="private_radio" name="client_type" checked-->
-<!--                                           value="private">-->
-<!--                                    <span class="checkmark"></span>-->
-<!--                                </label>-->
-<!--                                <label class="container_radio" style="display: inline-block;">Company-->
-<!--                                    <input type="radio" id="company_radio" name="client_type" value="company">-->
-<!--                                    <span class="checkmark"></span>-->
-<!--                                </label>-->
-<!--                            </div>-->
-<!--                            <div class="private box">-->
-<!--                                <div class="row no-gutters">-->
-<!--                                    <div class="col-6 pr-1">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="fname"-->
-<!--                                                   placeholder="Name*">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-6 pl-1">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="lname"-->
-<!--                                                   placeholder="Last Name*">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-12">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="address"-->
-<!--                                                   placeholder="Address*">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash; /row &ndash;&gt;-->
-<!--                                <div class="row no-gutters">-->
-<!--                                    <div class="col-6 pr-1">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="city" placeholder="City*">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-6 pl-1">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="postal"-->
-<!--                                                   placeholder="Postal Code*">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash; /row &ndash;&gt;-->
-<!--                                &lt;!&ndash; /row &ndash;&gt;-->
-
-<!--                                <div class="row no-gutters">-->
-<!--                                    <div class="col-6 pl-1">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="number" class="form-control" name="telephone"-->
-<!--                                                   placeholder="Telephone *">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash; /row &ndash;&gt;-->
-
-<!--                            </div>-->
-<!--                            &lt;!&ndash; /private &ndash;&gt;-->
-<!--                            <div class="company box" style="display: none;">-->
-<!--                                <div class="row no-gutters">-->
-<!--                                    <div class="col-12">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="cname"-->
-<!--                                                   placeholder="Company Name*">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    &lt;!&ndash;								<div class="col-12">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;									<div class="form-group">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;										<input type="text" class="form-control" placeholder="Full Address">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;									</div>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;								</div>&ndash;&gt;-->
-<!--                                </div>-->
-
-<!--                                &lt;!&ndash; /row &ndash;&gt;-->
-<!--                                <div class="row no-gutters">-->
-<!--                                    <div class="col-6 pl-1">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <input type="text" class="form-control" name="ctelephone"-->
-<!--                                                   placeholder="Telephone *">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash; /row &ndash;&gt;-->
-<!--                            </div>-->
-<!--                            &lt;!&ndash; /company &ndash;&gt;-->
-<!--                            <hr>-->
-<!--                            <div class="form-group">-->
-<!--                                <label class="container_check">Accept <a href="#0">Terms and conditions</a>-->
-<!--                                    <input type="checkbox">-->
-<!--                                    <span class="checkmark"></span>-->
-<!--                                </label>-->
-<!--                            </div>-->
-<!--                            <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width">-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; /form_container &ndash;&gt;-->
-<!--                </div>-->
-<!--                &lt;!&ndash; /box_account &ndash;&gt;-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; /row &ndash;&gt;-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; FOOTER &ndash;&gt;-->
-<!--    <footer class="container">-->
-<!--        <p class="float-end"><a href="#">Back to top</a></p>-->
-<!--        <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
-<!--    </footer>-->
-<!--</main>-->
 
 </body>
 </html>

@@ -70,3 +70,47 @@ $('#createUserForm').submit(function (e) {
     }
     e.preventDefault();
 });
+
+
+function execRegister() {
+    $.ajax({
+            url: '/api/user/createUser',
+            type: 'post',
+            data: {
+                email: $('#user-email').val(),
+                password: $('#user-password').val(),
+                fname: $('#fname').val(),
+                lname: $('#lname').val(),
+                address: $('#user-address').val(),
+                city: $('#user-city').val(),
+                postal: $('#user-postal').val(),
+                telephone: $('#user-phone').val(),
+            },
+            success: function (res) {
+                const user_details = JSON.stringify(res['User'])
+                addToCookies("userdata", user_details, addYears(new Date(), 1))
+                addToCookies("usertype", 'user', addYears(new Date(), 1))
+                alert("works")
+                window.location = '/'
+            }
+        });
+}
+function execLogin() {
+    $.ajax({
+            url: '/api/user/login',
+            type: 'post',
+            data: {
+                email: $('#login-email').val(),
+                password: $('#login-password').val(),
+            },
+            success: function (res) {
+                if (res.success) {
+                    const user_details = JSON.stringify(res['User'])
+                    addToCookies("userdata", user_details, addYears(new Date(), 1))
+                    addToCookies("usertype", 'user', addYears(new Date(), 1))
+                    alert("works")
+                    window.location = '/'
+                }
+            }
+        });
+}
