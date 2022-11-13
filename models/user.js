@@ -48,7 +48,8 @@ const userSchema = mongoose.Schema({
 
 });
 const User = mongoose.model('User', userSchema);
-const createUser = function (email, password, fname, lname, address, city, postal, telephone, callback) {
+
+const createUserModel = function (email, password, fname, lname, address, city, postal, telephone, callback) {
     const user = new User({
         _id: mongoose.Types.ObjectId(),
         email: email,
@@ -84,12 +85,12 @@ const createUser = function (email, password, fname, lname, address, city, posta
         } else {
             return callback.json({
                 success: false,
-                message: 'user already exist with this mail. \n' + err + ' ' + obj,
+                message: 'User already exist with this mail. \n' + err + ' ' + obj,
             });
         }
     });
 }
-const loginUser = function (email, password, callback) {
+const loginUserModel = function (email, password, callback) {
     User.findOne({email: email}, function (err, obj) {
         console.log("obj ", obj)
         console.log("email ", email)
@@ -98,13 +99,13 @@ const loginUser = function (email, password, callback) {
             console.log("err ", err)
             return callback.json({
                 success: false,
-                message: 'no user found.',
+                message: 'No user found.',
             });
         } else {
             if (obj.password === password) {
                 return callback.json({
                     success: true,
-                    message: 'user found',
+                    message: 'User found',
                     user: obj
                 });
             } else {
@@ -117,24 +118,24 @@ const loginUser = function (email, password, callback) {
     });
 
 }
-const getAllUsers = async function () {
+const getAllUsersModel = async function () {
     const filter = {};
     const all = await User.find(filter);
     return {
         success: true,
-        message: 'all users are found.',
+        message: 'All users are found.',
         data: all
     };
 }
 
-const deleteUser = async function (userId) {
+const deleteUserModel = async function (userId) {
     await User.deleteOne({_id: userId})
 }
 
 module.exports = {
     User,
-    loginUser,
-    getAllUsers,
-    deleteUser,
-    createUser
+    loginUserModel,
+    getAllUsersModel,
+    deleteUserModel,
+    createUserModel
 }

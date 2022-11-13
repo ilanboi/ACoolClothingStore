@@ -44,13 +44,15 @@ const itemSchema = new mongoose.Schema({
         required: false,
     },
 });
+
 const Item = mongoose.model('Item', itemSchema);
-const _getAllItems = async function () {
+
+const getAllItemsModel = async function () {
     const filter = {};
     const all = await Item.find(filter);
     return {
         success: true,
-        message: 'all items are found.',
+        message: 'All items are found.',
         data: all
     };
 }
@@ -60,17 +62,18 @@ const getItemById = async function (itemId) {
         const all = await Item.findById(itemId);
         return {
             success: true,
-            message: 'item found.',
+            message: 'Item found.',
             data: all
         };
     } catch (e) {
         return {
             success: false,
-            message: 'item not found'
+            message: 'Item not found'
         };
     }
 
 }
+
 // Deleting an item
 const deleteItemModel = async function (itemId) {
     await Item.deleteOne({_id: itemId})
@@ -78,7 +81,7 @@ const deleteItemModel = async function (itemId) {
 
 module.exports = {
     Item,
-    _getAllItems,
+    getAllItemsModel,
     getItemById,
     deleteItemModel
 };

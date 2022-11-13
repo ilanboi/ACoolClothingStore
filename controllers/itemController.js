@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Item, _getAllItems, getItemById, deleteItemModel } = require("../models/item");
+const { Item, getAllItemsModel, getItemById, deleteItemModel } = require("../models/item");
 
 const createItem = function (req, res) {
     const item = new Item({
@@ -28,8 +28,9 @@ const createItem = function (req, res) {
         });
 }
 
+// why export the inner??
 const innerGetAllItems = async function () {
-    return await _getAllItems()
+    return await getAllItemsModel()
 }
 const innerGetSpecificItem = async function (itemId) {
     return await getItemById(itemId)
@@ -88,7 +89,7 @@ const getSearchedItems = function (req, res) {
 
 module.exports = {
     getAllItems,
-    innerGetAllItems,
+    innerGetAllItems, // why export the inner?
     createItem,
     getSpecificItem,
     getSearchedItems,

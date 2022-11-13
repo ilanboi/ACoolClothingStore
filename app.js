@@ -7,6 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const itemController = require('./controllers/itemController')
 const userController = require('./controllers/userController')
+const supplierController = require('./controllers/supplierController')
 
 const path = require("path");
 const app = express();
@@ -72,10 +73,12 @@ app.get('/item-listing/:searchText', (req, res) => {
     console.log(cloneRes)
     res.sendFile(__dirname + '/views/item-listing.html');
 })
+
 app.get('/admin2', async (req, res) => {
-    res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.innerGetAllItems(), suppliers: []}});
+    res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.innerGetAllItems(), suppliers: await supplierController.getAllSuppliers()}});
 
 })
+
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', (req, res) => {
     res.status(404).sendFile(__dirname + '/views/404.html');
