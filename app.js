@@ -49,9 +49,10 @@ app.get('/', (req, res) => {
 app.get('/women', (req, res) => {
     res.sendFile(__dirname + '/views/women.html');
 });
-app.get('/men', (req, res) => {
-    res.sendFile(__dirname + '/views/men.html');
-});
+// app.get('/men', (req, res) => {
+    
+//     res.sendFile(__dirname + '/views/men.html');
+// });
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/views/login2.html');
 });
@@ -73,6 +74,26 @@ app.get('/item-listing/:searchText', (req, res) => {
     console.log(cloneRes)
     res.sendFile(__dirname + '/views/item-listing.html');
 })
+
+
+app.get('/women', (req, res) => {
+    const searchText = req.params.kind;
+    const cloneRes = {}
+    if (searchText == women) {
+        itemController.getitembykind({body: "women"}, cloneRes);
+        res.sendFile(__dirname + '/views/women.html');
+    }
+    
+
+    if (searchText == men) {
+        itemController.getitembykind({body: "men"}, cloneRes);
+        res.sendFile(__dirname + '/views/men.html');
+    }
+    console.log(cloneRes)
+    
+})
+
+
 
 app.get('/admin2', async (req, res) => {
     res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.innerGetAllItems(), suppliers: await supplierController.getAllSuppliers()}});

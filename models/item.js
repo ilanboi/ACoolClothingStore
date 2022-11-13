@@ -74,6 +74,19 @@ const getItemById = async function (itemId) {
 
 }
 
+
+const getMenItemsModel = async function () {
+    const filter = {};
+    const all = await Item.find(filter).select({"kind": "men"});
+    console.log("test");
+    return {
+        success: true,
+        message: 'All items are found.',
+        data: all
+    };
+
+}
+
 // Deleting an item
 const deleteItemModel = async function (itemId) {
     await Item.deleteOne({_id: itemId})
@@ -83,6 +96,7 @@ module.exports = {
     Item,
     getAllItemsModel,
     getItemById,
-    deleteItemModel
+    deleteItemModel,
+    getMenItemsModel
 };
 

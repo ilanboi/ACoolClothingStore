@@ -7,6 +7,14 @@ function showAllItemsHomeGrid() {
     }
 }
 
+function showMenItems() {
+    let res = get_request('api/item/getMenItems')
+    const items = res.data
+    for (let item of items) {
+        AppendSingleShoeToElement("featured-items-men",item._id, item.title, item.price, item.size, item.image_url)
+    }
+}
+
 function showAllItemsInList() {
     let res = getAllItems()
     const items = res.data
@@ -14,6 +22,8 @@ function showAllItemsInList() {
         showSingleItemInList(item.title, item.price, item.image_url, item.description)
     }
 }
+
+
 
 
 function getAllItems() {
@@ -133,7 +143,8 @@ $(document).ready(function () {
         setItemsOnAlbum("");
     } else if(searchTextQueryParam === '') {
         setItemsOnAlbum("");
-    } else {
-        showAllItemsHomeGrid();
     }
+    //  else {
+    //     showAllItemsHomeGrid();
+    // }
 });
