@@ -3,6 +3,7 @@ const express = require('express');
 
 const router = express.Router();
 router.post('/createSupplier', supplierController.createSupplier);
+router.delete('/deleteSupplier/:supplierId', supplierController.deleteSupplier);
 router.post('/login', supplierController.loginSupplier);
 router.post('/addToPublishedItems', supplierController.addToPublishedItems);
 router.post('/removeFromPublishedItems', supplierController.removeFromPublishedItems);

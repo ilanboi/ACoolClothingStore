@@ -54,7 +54,8 @@
                     <span><%=data.users.data[i].lname%></span>
                     <span><%=data.users.data[i].email%></span>
                     <span><%=data.users.data[i].password%></span>
-                    <button id="deleteUserBtn" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
+
+                    <button id="deleteUserBtn<%= i %>" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
                 </article>
                 <% } %>
                 <br>
@@ -63,6 +64,19 @@
             <!-- SUPPLIERS -->
             <div class="tab-pane fade" id="pills-suppliers" role="tabpanel" aria-labelledby="pills-suppliers-tab">
                 suppliers page
+                <% /* %>
+                <span><%=JSON.stringify(data.suppliers)%></span>
+                <% */ %>
+
+                <% for (var i = 0; i < data.suppliers.data.length; i++) { %>
+                    <article>
+                        <span><%=data.suppliers.data[i]._id%></span>
+                        <span><%=data.suppliers.data[i].cname%></span>
+                        <span><%=data.suppliers.data[i].telephone%></span>  
+                        
+                        <button id="deleteSuppliersBtn<%= i %>" onclick="deleteSupplierAjax(`<%=data.suppliers.data[i]._id%>`)">delete</button>
+                    </article>
+                <% } %>
             </div>
 
             <!-- ITEMS -->
@@ -78,8 +92,7 @@
                     <span><%=data.items.data[i].title%></span>
                     <span><%=data.items.data[i].description%></span>
                     
-                    <button id="deleteItemBtn" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>
-                    
+                    <button id="deleteItemBtn<%= i %>" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>  
                 </article>
                 <% } %>
             </div>

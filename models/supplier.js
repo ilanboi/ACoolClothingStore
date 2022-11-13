@@ -31,4 +31,27 @@ const supplierSchema = new mongoose.Schema({
     }
 
 });
-module.exports = mongoose.model('Supplier', supplierSchema);
+//module.exports = mongoose.model('Supplier', supplierSchema);
+const Supplier = mongoose.model('Supplier', supplierSchema);
+
+// Deleting an item
+const deleteSupplierModel = async function (supplierId) {
+    await Supplier.deleteOne({_id: supplierId})
+}
+
+// Getting all suppliers
+const getAllSuppliersModel = async function () {
+    const filter = {};
+    const all = await Supplier.find(filter);
+    return {
+        success: true,
+        message: 'All supplier are found.',
+        data: all
+    };
+}
+
+module.exports = {
+    Supplier,
+    deleteSupplierModel,
+    getAllSuppliersModel
+}

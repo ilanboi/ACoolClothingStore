@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
-const Supplier = require("../models/supplier");
+//const Supplier = require("../models/supplier");
+const { Supplier, deleteSupplierModel, getAllSuppliersModel }= require("../models/supplier");
 
-module.exports.createSupplier = function (req, res) {
+//module.exports.createSupplier = function (req, res) {
+const createSupplier = function (req, res) {
     console.log(req.body)
     const supplier = new Supplier({
         _id: mongoose.Types.ObjectId(),
@@ -34,10 +36,9 @@ module.exports.createSupplier = function (req, res) {
         } else {
             return res.status(301).json({
                 success: false,
-                message: 'supplier already exist with this mail. \n' + err + ' ' + obj,
+                message: 'Supplier already exist with this mail. \n' + err + ' ' + obj,
             });
         }
-
     });
 }
 
@@ -49,18 +50,19 @@ module.exports.createSupplier = function (req, res) {
  * }
  * @param res
  */
-module.exports.loginSupplier = function (req, res) {
+const loginSupplier = function (req, res) {
+    //module.exports.loginSupplier = function (req, res) {
     Supplier.findOne({email: req.body.email}, function (err, obj) {
         if (err || !obj) {
             return res.status(301).json({
                 success: false,
-                message: 'no supplier found.',
+                message: 'No supplier found.',
             });
         } else {
             if (obj.password === req.body.password) {
                 return res.status(200).json({
                     success: true,
-                    message: 'supplier found',
+                    message: 'Supplier found',
                     supplierDetails: obj
                 });
             } else {
@@ -72,39 +74,68 @@ module.exports.loginSupplier = function (req, res) {
         }
     });
 }
-module.exports.addToPublishedItems = function (req, res) {
+const addToPublishedItems = function (req, res) {
+    // module.exports.addToPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$push: {publishedItems: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
                 return res.status(301).json({
                     success: false,
-                    message: 'error.',
+                    message: 'Error.',
                 });
             }
             return res.status(200).json({
                 success: true,
-                message: 'success adding published item',
+                message: 'Success adding published item',
                 details: obj
             });
         })
-
 }
-module.exports.removeFromPublishedItems = function (req, res) {
+const removeFromPublishedItems = function (req, res) {
+    //module.exports.removeFromPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$pull: {publishedItems: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
                 return res.status(301).json({
                     success: false,
-                    message: 'error.',
+                    message: 'Error.',
                 });
             }
             return res.status(200).json({
                 success: true,
-                message: 'popped',
+                message: 'Popped',
                 supplierDetails: obj
             });
         })
+}
 
+// Deleting supplier
+const innerDeleteSupplier = async function (supplierId) {
+    //todo validation - current user capable of deleting
+    return await deleteSupplierModel(supplierId)
+}
+const deleteSupplier = async function (req, res) {
+    //todo validation - current user capable of deleting
+    console.log(req.params.supplierId)
+    await innerDeleteSupplier(req.params.supplierId)
+    return res.status(200).json({
+        success: true,
+        message: 'Supplier deleted'
+    })
+}
+
+// Getting all supplier
+const getAllSuppliers = async function () {
+    return await getAllSuppliersModel()
+}
+
+module.exports = {
+    deleteSupplier,
+    getAllSuppliers,
+    removeFromPublishedItems,
+    addToPublishedItems,
+    loginSupplier,
+    createSupplier
 }
 
 

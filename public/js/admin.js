@@ -7,12 +7,14 @@ function deleteUserAjax(userId) {
 }
 
 // Deleting a supplier
-// function deleteSupplierAjax(supplierId) {
-//     $.ajax({
-//         url: '/api/supplier/deleteSupplier/'+supplierId,
-//         type: 'delete'
-//     });
-// }
+function deleteSupplierAjax(supplierId) {
+    console.log("the supplier id is:"+supplierId);
+    $.ajax({
+        url: '/api/supplier/deleteSupplier/'+supplierId,
+        type: 'delete'
+        
+    });
+}
 
 // Deleting an item
 function deleteItemAjax(itemId) {
