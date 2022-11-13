@@ -16,6 +16,7 @@
 
     <!-- The "href" should be without the "public" -->
 <!--    <link rel="stylesheet" href="/css/index.css">-->
+<link rel="stylesheet" href="../public/css/admin.css">
 
 </head>
 
@@ -31,7 +32,7 @@
                 <button class="nav-link" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button" role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-spoilers-tab" data-bs-toggle="pill" data-bs-target="#pills-spoilers" type="button" role="tab" aria-controls="pills-spoilers" aria-selected="false">Spoilers</button>
+                <button class="nav-link" id="pills-suppliers-tab" data-bs-toggle="pill" data-bs-target="#pills-suppliers" type="button" role="tab" aria-controls="pills-suppliers" aria-selected="false">Suppliers</button>
             </li>
             <li class="nav-item" role="presentation" action="item" method="get">
                 <button class="nav-link" id="pills-items-tab" data-bs-toggle="pill" data-bs-target="#pills-items" type="button" role="tab" aria-controls="pills-items" aria-selected="false" >Items</button>
@@ -43,12 +44,11 @@
                 home page
             </div>
 
+            <!-- USERS -->
             <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
-                <!-- <label id="test"> users page </label> -->
-                <!-- <br> -->
+              
                 users page
-                <%for (var i = 0; i < data.users.data.length; i++) {%>
-
+                <% for (var i = 0; i < data.users.data.length; i++) { %>
                 <article>
                     <span id=""><%=data.users.data[i].id%></span>
                     <span><%=data.users.data[i].fname%></span>
@@ -57,18 +57,32 @@
                     <span><%=data.users.data[i].password%></span>
                     <button id="deleteUserBtn" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
                 </article>
-                <%}%>
+                <% } %>
                 <br>
-
-
-
-
             </div>
-            <div class="tab-pane fade" id="pills-spoilers" role="tabpanel" aria-labelledby="pills-spoilers-tab">
-                spoilers page
+
+            <!-- SUPPLIERS -->
+            <div class="tab-pane fade" id="pills-suppliers" role="tabpanel" aria-labelledby="pills-suppliers-tab">
+                suppliers page
             </div>
+
+            <!-- ITEMS -->
             <div class="tab-pane fade" id="pills-items" role="tabpanel" aria-labelledby="pills-contact-tab" >
+                <% /* %>
                 <span><%=JSON.stringify(data.items)%></span>
+                <% */ %>
+                <br>
+                
+                <% for (var i = 0; i < data.items.data.length; i++) { %>
+                <article>
+                    <span><%=data.items.data[i]._id%></span>
+                    <span><%=data.items.data[i].title%></span>
+                    <span><%=data.items.data[i].description%></span>
+                    <% /* %>
+                    <!-- <button id="deleteItemBtn" onclick="deleteItemAjax(`<%=data.item.data[i]._id%>`)">delete</button> -->
+                    <% */ %>
+                </article>
+                <% } %>
             </div>
         </div>
 
@@ -110,15 +124,15 @@
     </div>
 </div>
 </div>
-<script>
+<script src="../public/js/admin.js"></script>
+<!-- <script>
     function deleteUserAjax(userId) {
         $.ajax({
             url: '/api/user/deleteUser/'+userId,
             type: 'delete'
         });
     }
-</script>
-<!-- <script src="footube.js"></script> -->
+</script> -->
 </body>
 
 <!-- FOOTER -->
