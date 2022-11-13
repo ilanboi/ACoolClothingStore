@@ -7,6 +7,15 @@ function showAllItemsHomeGrid() {
     }
 }
 
+function showItemsByGender(gender) {
+    let res = get_request('api/item/getItemsByGender/' + gender)
+    console.log(res.data)
+    const items = res.data
+    for (let item of items) {
+        AppendSingleShoeToElement("album-shoes",item._id, item.title, item.price, item.size, item.image_url)
+    }
+}
+
 function showAllItemsInList() {
     let res = getAllItems()
     const items = res.data
@@ -14,6 +23,8 @@ function showAllItemsInList() {
         showSingleItemInList(item.title, item.price, item.image_url, item.description)
     }
 }
+
+
 
 
 function getAllItems() {
@@ -104,6 +115,15 @@ function setItemsOnAlbum(filter) {
 
 }
 
+function setItemsOnAlbumByGender(gender) {
+        const filteredItems = showItemsByGender(gender)
+        const items = filteredItems.data
+        for (let item of items) {
+            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size , item.image_url )
+        }
+
+}
+
 $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const searchTextQueryParam = urlParams.get('searchText');
@@ -131,9 +151,14 @@ $(document).ready(function () {
         setItemsOnAlbum(searchTextQueryParam);
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'items') {
         setItemsOnAlbum("");
+    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'men') {
+        setItemsOnAlbumByGender("men");
+    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'women') {
+        setItemsOnAlbumByGender("women");
     } else if(searchTextQueryParam === '') {
         setItemsOnAlbum("");
-    } else {
+    }
+     else {
         showAllItemsHomeGrid();
     }
 });

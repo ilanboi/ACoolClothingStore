@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Item, getAllItemsModel, getItemById, deleteItemModel } = require("../models/item");
+const { Item, getAllItemsModel, getItemById, getGenderItemsModel, deleteItemModel } = require("../models/item");
 
 const createItem = function (req, res) {
     const item = new Item({
@@ -32,6 +32,11 @@ const createItem = function (req, res) {
 const innerGetAllItems = async function () {
     return await getAllItemsModel()
 }
+
+const getGenderItems = async function (req, res) {
+    return res.status(200).json(await getGenderItemsModel(req.params.gender)) 
+}
+
 const innerGetSpecificItem = async function (itemId) {
     return await getItemById(itemId)
 }
@@ -57,6 +62,8 @@ const getAllItems = async function (req, res) {
 const getSpecificItem = async function (req, res) {
     return res.status(200).json(await innerGetSpecificItem(req.params.itemId));
 }
+
+
 
 const getSearchedItems = function (req, res) {
     const searchText = req.query.searchText;
@@ -93,5 +100,6 @@ module.exports = {
     createItem,
     getSpecificItem,
     getSearchedItems,
-    deleteItem
+    deleteItem,
+    getGenderItems
 }

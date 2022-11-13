@@ -24,16 +24,16 @@ const createUser = async function (req, res) {
     );
 }
 
-const innerDeleteUser = async function (userId) {
+const innerDeleteUser = async function (userId, currentUserId) {
     //todo validation - current user capable of deleting
-    return await deleteUserModel(userId)
+    return await deleteUserModel(userId, currentUserId)
 }
 
 const deleteUser = async function (req, res) {
     //module.exports
     //todo validation - current user capable of deleting
     console.log(req.params.userId)
-    await innerDeleteUser(req.params.userId)
+    await innerDeleteUser(req.params.userId, req.body.currentUserId)
     return res.status(200).json({
         success: true,
         message: 'User deleted'

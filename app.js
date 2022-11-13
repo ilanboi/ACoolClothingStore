@@ -50,6 +50,7 @@ app.get('/women', (req, res) => {
     res.sendFile(__dirname + '/views/women.html');
 });
 app.get('/men', (req, res) => {
+    
     res.sendFile(__dirname + '/views/men.html');
 });
 app.get('/login', (req, res) => {
@@ -73,6 +74,7 @@ app.get('/item-listing/:searchText', (req, res) => {
     console.log(cloneRes)
     res.sendFile(__dirname + '/views/item-listing.html');
 })
+
 
 app.get('/admin2', async (req, res) => {
     res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.innerGetAllItems(), suppliers: await supplierController.getAllSuppliers()}});

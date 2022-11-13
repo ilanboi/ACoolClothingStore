@@ -8,4 +8,5 @@ router.delete('/deleteItem/:itemId', itemController.deleteItem);
 router.get('/getAllItems', itemController.getAllItems);
 router.get('/getSpecificItem/:itemId', itemController.getSpecificItem);
 router.get('/search', itemController.getSearchedItems);
+router.get('/getItemsByGender/:gender',itemController.getGenderItems)
 module.exports = router;

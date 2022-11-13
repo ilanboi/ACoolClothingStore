@@ -128,8 +128,18 @@ const getAllUsersModel = async function () {
     };
 }
 
-const deleteUserModel = async function (userId) {
-    await User.deleteOne({_id: userId})
+const deleteUserModel = async function (userId, currentUserId) {
+    const filter = {_id: currentUserId, isAdmin: true}
+    User.find(filter, async (error, response)=> {
+        if (!error && response)
+        {
+            await User.deleteOne({_id: userId})
+            console.log("he gone" + response + error)
+        }
+        else
+            console.log("u aint no admin")
+    })
+    
 }
 
 module.exports = {
