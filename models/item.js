@@ -54,6 +54,7 @@ const _getAllItems = async function () {
         data: all
     };
 }
+
 const getItemById = async function (itemId) {
     try {
         const all = await Item.findById(itemId);
@@ -70,11 +71,15 @@ const getItemById = async function (itemId) {
     }
 
 }
-
+// Deleting an item
+const deleteItemModel = async function (itemId) {
+    await Item.deleteOne({_id: itemId})
+}
 
 module.exports = {
     Item,
     _getAllItems,
-    getItemById
+    getItemById,
+    deleteItemModel
 };
 

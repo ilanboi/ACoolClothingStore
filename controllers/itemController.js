@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
-const {
-    Item,
-    _getAllItems,
-    getItemById
-} = require("../models/item");
+const { Item, _getAllItems, getItemById, deleteItemModel } = require("../models/item");
 
 const createItem = function (req, res) {
     const item = new Item({
@@ -39,6 +35,20 @@ const innerGetSpecificItem = async function (itemId) {
     return await getItemById(itemId)
 }
 
+// Deleting item
+const innerDeleteItem = async function (itemId) {
+    //todo validation - current user capable of deleting
+    return await deleteItemModel(itemId)
+}
+const deleteItem = async function (req, res) {
+    //todo validation - current user capable of deleting
+    console.log(req.params.itemId)
+    await innerDeleteItem(req.params.itemId)
+    return res.status(200).json({
+        success: true,
+        message: 'Item deleted'
+    })
+}
 const getAllItems = async function (req, res) {
     return res.status(200).json(await innerGetAllItems())
 }
@@ -64,12 +74,12 @@ const getSearchedItems = function (req, res) {
         if (err) {
             return res.status(500).json({
                 success: false,
-                message: 'no item with that id.',
+                message: 'No item with that id.',
             });
         }
         return res.status(201).json({
             success: true,
-            message: 'item found.',
+            message: 'Item found.',
             data: obj
         });
     });
@@ -82,4 +92,5 @@ module.exports = {
     createItem,
     getSpecificItem,
     getSearchedItems,
+    deleteItem
 }
