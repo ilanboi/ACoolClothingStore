@@ -1,8 +1,12 @@
 function showAllItemsHomeGrid() {
     let res = getAllItems()
     const items = res.data
-    for (let item of items) {
+    const latestitems = items.slice(items.length -6, items.length)
+    for (let item of latestitems ) {
         AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.size, item.image_url)
+    }
+    const hotestitems = items.slice(0, 6)
+    for (let item of hotestitems ) {
         AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.size, item.image_url)
     }
 }

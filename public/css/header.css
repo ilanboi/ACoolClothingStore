@@ -6,7 +6,7 @@
   }
   
     .flip:hover {
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 40px;
     transform: rotate(180deg);
   }
