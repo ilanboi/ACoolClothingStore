@@ -91,10 +91,10 @@ const removeItemFromCart = function (req, res) {
 const updateUser = function (req, res) {
     //module.exports
     console.log(req.body)
-    console.log(JSON.parse(req.body.updatedData))
+    // console.log(JSON.parse(req.body.updatedData))
     console.log(req.body.email)
     // let doc = await User.findOneAndUpdate({email: req.body.email}, {$pull: {cart: req.body.item_id}});
-    User.findOneAndUpdate({email: req.body.email}, JSON.parse(req.body.updatedData), {new: true},
+    User.findOneAndUpdate({email: req.body.email}, req.body.updatedData, {new: true},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
                 return res.status(301).json({
@@ -115,12 +115,28 @@ const getAllUsers = async function () {
     return await getAllUsersModel()
 }
 
+const clearCart = function (req, res) {
+    User.findOneAndUpdate({email: req.body.email}, { $set: { cart: [] }}, {new: true},
+        function (err, obj) {
+            if (err || obj.modifiedCount === 0) {
+                return res.status(301).json({
+                    success: false,
+                    message: 'Error.',
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'User updated',
+                userDetails: obj
+            });
+        })
 
+}
 const getCartItems = async function (req, res) {
     //module.exports
-    const userData =  await User.findById(req.params.userId);
+    const userData = await User.findById(req.params.userId);
     let itemsData = [];
-    for(let item of userData.cart){
+    for (let item of userData.cart) {
         itemsData.push(await Item.findById(item.item_id));
     }
     res.status(200).json({
@@ -137,5 +153,6 @@ module.exports = {
     removeItemFromCart,
     addItemToCart,
     loginUser,
-    getCartItems
+    getCartItems,
+    clearCart
 }

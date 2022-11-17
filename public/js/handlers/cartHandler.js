@@ -2,6 +2,9 @@ function showCartItem(userId) {
     let result = get_request(`/api/user/getCartItemsOfUser/${userId}`)
     let sum = 0;
     let items = result.Cart
+    if (!items.length) {
+        $("#checkoutBTN").prop('disabled', true)
+    }
     for (let item of items) {
         showItems(item.title, item.price, item.image_url, item.description)
         sum += item.price;
@@ -11,6 +14,7 @@ function showCartItem(userId) {
     $("#numOfItems").text(items.length + " Items");
     $("#sumNum").text(items.length + " Items");
     $("#price").text(sum  + "$");
+
 }
 
 
