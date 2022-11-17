@@ -1,22 +1,9 @@
 function showAllItemsHomeGrid() {
     let res = getAllItems()
     const items = res.data
-    const latestitems = items.slice(items.length -6, items.length)
-    for (let item of latestitems ) {
-        AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.size, item.image_url)
-    }
-    const hotestitems = items.slice(0, 6)
-    for (let item of hotestitems ) {
-        AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.size, item.image_url)
-    }
-}
-
-function showItemsByGender(gender) {
-    let res = get_request('api/item/getItemsByGender/' + gender)
-    console.log(res.data)
-    const items = res.data
     for (let item of items) {
-        AppendSingleShoeToElement("album-shoes",item._id, item.title, item.price, item.size, item.image_url)
+        AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.size, item.image_url)
+        AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.size, item.image_url)
     }
 }
 
@@ -27,8 +14,6 @@ function showAllItemsInList() {
         showSingleItemInList(item.title, item.price, item.image_url, item.description)
     }
 }
-
-
 
 
 function getAllItems() {
@@ -119,15 +104,6 @@ function setItemsOnAlbum(filter) {
 
 }
 
-function setItemsOnAlbumByGender(gender) {
-        const filteredItems = showItemsByGender(gender)
-        const items = filteredItems.data
-        for (let item of items) {
-            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size , item.image_url )
-        }
-
-}
-
 $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const searchTextQueryParam = urlParams.get('searchText');
@@ -155,14 +131,9 @@ $(document).ready(function () {
         setItemsOnAlbum(searchTextQueryParam);
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'items') {
         setItemsOnAlbum("");
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'men') {
-        setItemsOnAlbumByGender("men");
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'women') {
-        setItemsOnAlbumByGender("women");
     } else if(searchTextQueryParam === '') {
         setItemsOnAlbum("");
-    }
-     else {
+    } else {
         showAllItemsHomeGrid();
     }
 });

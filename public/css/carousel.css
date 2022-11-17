@@ -163,7 +163,7 @@ body {
     fill: currentColor;
 }
 
-/* .nav-scroller {
+.nav-scroller {
     position: relative;
     z-index: 2;
     height: 2.75rem;
@@ -179,4 +179,4 @@ body {
     text-align: center;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-} */
+}
