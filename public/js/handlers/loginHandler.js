@@ -105,7 +105,8 @@ function execLogin() {
             },
             success: function (res) {
                 if (res.success) {
-                    const user_details = JSON.stringify(res['User'])
+                    // console.log(res);
+                    const user_details = JSON.stringify(res['user'])
                     addToCookies("userdata", user_details, addYears(new Date(), 1))
                     addToCookies("usertype", 'user', addYears(new Date(), 1))
                     alert("works")

@@ -50,7 +50,6 @@ app.get('/women', (req, res) => {
     res.sendFile(__dirname + '/views/women.html');
 });
 app.get('/men', (req, res) => {
-    
     res.sendFile(__dirname + '/views/men.html');
 });
 app.get('/login', (req, res) => {
@@ -59,11 +58,14 @@ app.get('/login', (req, res) => {
 app.get('/items', (req, res) => {
     res.sendFile(__dirname + '/views/album.html');
 });
- app.get('/single-item', (req, res) => {
-     // res.sendFile(__dirname + '/views/single-item.html');
-     const item_id= req.query.item_id
-     res.sendFile(__dirname + "/views/single-item.html");
- });
+app.get('/single-item', (req, res) => {
+    // res.sendFile(__dirname + '/views/single-item.html');
+    const item_id = req.query.item_id
+    res.sendFile(__dirname + "/views/single-item.html");
+});
+app.get('/cart', (req, res) => {
+    res.sendFile(__dirname + '/views/cart.html');
+});
 
 app.get('/item-listing/:searchText', (req, res) => {
     const searchText = req.params.searchText;
@@ -77,7 +79,13 @@ app.get('/item-listing/:searchText', (req, res) => {
 
 
 app.get('/admin2', async (req, res) => {
-    res.render("../views/admin2.ejs", {data: {users: await userController.getAllUsers(), items: await itemController.innerGetAllItems(), suppliers: await supplierController.getAllSuppliers()}});
+    res.render("../views/admin2.ejs", {
+        data: {
+            users: await userController.getAllUsers(),
+            items: await itemController.innerGetAllItems(),
+            suppliers: await supplierController.getAllSuppliers()
+        }
+    });
 
 })
 

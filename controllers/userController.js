@@ -5,6 +5,7 @@ const {
     createUserModel,
     loginUserModel
 } = require("../models/user");
+const {Item} = require("../models/item");
 
 const innerCreateUser = (email, password, fname, lname, address, city, postal, telephone, callback) => {
     return createUserModel(email, password, fname, lname, address, city, postal, telephone, callback);
@@ -114,6 +115,20 @@ const getAllUsers = async function () {
     return await getAllUsersModel()
 }
 
+
+const getCartItems = async function (req, res) {
+    //module.exports
+    const userData =  await User.findById(req.params.userId);
+    let itemsData = [];
+    for(let item of userData.cart){
+        itemsData.push(await Item.findById(item.item_id));
+    }
+    res.status(200).json({
+        "Cart": itemsData
+    });
+
+}
+
 module.exports = {
     createUser,
     deleteUser,
@@ -121,5 +136,6 @@ module.exports = {
     updateUser,
     removeItemFromCart,
     addItemToCart,
-    loginUser
+    loginUser,
+    getCartItems
 }
