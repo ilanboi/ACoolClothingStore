@@ -10,7 +10,7 @@ function showCartItem(userId) {
 
     $("#numOfItems").text(items.length + " Items");
     $("#sumNum").text(items.length + " Items");
-    $("#price").text(sum  + "$");
+    $("#price").text(sum  + "₪");
 }
 
 
