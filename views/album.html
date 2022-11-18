@@ -11,9 +11,11 @@
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link href="../public/css/footer.css" rel="stylesheet">
+    <link href="../public/css/header.css" rel="stylesheet">
 
     <!-- Favicon-->
-	<link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
+    <link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
 
 </head>
 <body>
@@ -24,7 +26,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Shoey</a>
+            <a class="navbar-brand flip" href="/">Shoey</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,13 +34,13 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="/women">Women</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="/men">Men</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -50,7 +52,8 @@
                 </form>
                 <button class="btn btn-outline-primary" type="button" onclick="window.location = '/login'">Login
                 </button>
-
+                <button class="btn btn-outline-primary" type="button" onclick="window.location = '/cart'">Cart
+                </button>
             </div>
         </div>
     </nav>
@@ -60,14 +63,7 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">All Shoes</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the
-                    creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it
-                    entirely.</p>
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                </p>
+                <h1 class="fw-light"> Search results: </h1>
             </div>
         </div>
     </section>
@@ -82,16 +78,45 @@
     </div>
 </main>
 
-<footer class="text-muted py-5">
+<footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
     <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                href="../getting-started/introduction/">getting started guide</a>.</p>
+      <div class="row row-30 columns">
+        <div class="col-lg-6 col-xl-6">
+          <div class="pr-xl-4">
+
+                <!-- <h3 class="white-text">Quick Tweets</h3> -->
+                <h3>Quick Tweets</h3>
+                <div class="links" id="collapse_1">
+                    <a class="twitter-timeline" data-width="450" data-height="200" data-dnt="true" data-theme="dark"
+                       href="https://twitter.com/StoreShoey?ref_src=twsrc%5Etfw">Tweets by StoreShoey</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
+                    </li>
+                </div>
+    
+    
+
+            <!-- Rights-->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h5 class="white-text">Contacts</h5>
+          <dl class="contact-list">
+            <dt class="white-text">Address:</dt>
+            <dd class="white-text">Colman <br class="white-text">Rishon Le Zion - IL</dd>
+          </dl>
+          <dl class="contact-list">
+            <dt class="white-text">email:</dt>
+            <dd><a href="mailto:#">info@shoey.com</a></dd>
+          </dl>
+          <dl class="contact-list">
+            <dt class="white-text">phones:</dt>
+            <dd class="white-text">+972 52-8252-<strong>69</strong>9</dd>
+          </dl>
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
 
 
 </body>

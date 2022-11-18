@@ -1,13 +1,13 @@
 function showAllItemsHomeGrid() {
     let res = getAllItems()
     const items = res.data
-    const latestitems = items.slice(items.length -6, items.length)
-    for (let item of latestitems ) {
-        AppendSingleShoeToElement("featured-items-sec1",item._id, item.title, item.price, item.size, item.image_url)
+    const latestitems = items.slice(items.length - 6, items.length)
+    for (let item of latestitems) {
+        AppendSingleShoeToElement("featured-items-sec1", item._id, item.title, item.price, item.size, item.image_url)
     }
     const hotestitems = items.slice(0, 6)
-    for (let item of hotestitems ) {
-        AppendSingleShoeToElement("featured-items-sec2",item._id, item.title, item.price, item.size, item.image_url)
+    for (let item of hotestitems) {
+        AppendSingleShoeToElement("featured-items-sec2", item._id, item.title, item.price, item.size, item.image_url)
     }
 }
 
@@ -16,7 +16,7 @@ function showItemsByGender(gender) {
     console.log(res.data)
     const items = res.data
     for (let item of items) {
-        AppendSingleShoeToElement("album-shoes",item._id, item.title, item.price, item.size, item.image_url)
+        AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size, item.image_url)
     }
 }
 
@@ -27,8 +27,6 @@ function showAllItemsInList() {
         showSingleItemInList(item.title, item.price, item.image_url, item.description)
     }
 }
-
-
 
 
 function getAllItems() {
@@ -84,7 +82,7 @@ function showSingleItemInList(item_name, item_price, item_image, item_desc) {
 // <a href="/video?id=<%= videos[i].id %>" class="btn btn-primary">Watch</a>
 
 
-function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, item_size, item_image , item_tag = 'sale') {
+function AppendSingleShoeToElement(element_id, item_id, item_name, item_price, item_size, item_image, item_tag = 'sale') {
     const div_all_items_new_arrival = document.getElementById(element_id);
     const data = `<div class="col">
           <div class="card shadow-sm">
@@ -113,18 +111,18 @@ function setItemsOnAlbum(filter) {
         console.log(filteredItems)
         const items = filteredItems.data
         for (let item of items) {
-            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size , item.image_url )
+            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size, item.image_url)
         }
     }
 
 }
 
 function setItemsOnAlbumByGender(gender) {
-        const filteredItems = showItemsByGender(gender)
-        const items = filteredItems.data
-        for (let item of items) {
-            AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size , item.image_url )
-        }
+    const filteredItems = showItemsByGender(gender)
+    const items = filteredItems.data
+    for (let item of items) {
+        AppendSingleShoeToElement("album-shoes", item._id, item.title, item.price, item.size, item.image_url)
+    }
 
 }
 
@@ -141,7 +139,7 @@ $(document).ready(function () {
             type: 'get',
             success: function (res) {
                 console.log(res);
-                $("#item_image").attr("src",res.data.image_url);
+                $("#item_image").attr("src", res.data.image_url);
                 $("#item_description").text(res.data.description);
                 $("#item_title").text(res.data.title);
                 $("#item_size").text("Size available: " + res.data.size)
@@ -159,10 +157,29 @@ $(document).ready(function () {
         setItemsOnAlbumByGender("men");
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'women') {
         setItemsOnAlbumByGender("women");
-    } else if(searchTextQueryParam === '') {
+    } else if (searchTextQueryParam === '') {
         setItemsOnAlbum("");
-    }
-     else {
+    } else {
         showAllItemsHomeGrid();
     }
 });
+
+function addToCartRequest() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const QueryItemId = urlParams.get('id');
+    $.ajax({
+        url: '/api/user/addToCart',
+        type: 'put',
+        data: {
+            email: JSON.parse(getCookie('userdata')).email,
+            item_id: QueryItemId
+        },
+        success: function (res) {
+            if (res.success) {
+                // console.log(res);
+                alert("item added to cart")
+                // window.location = '/'
+            }
+        }
+    });
+}

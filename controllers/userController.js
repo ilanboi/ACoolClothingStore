@@ -5,6 +5,7 @@ const {
     createUserModel,
     loginUserModel
 } = require("../models/user");
+const {Item} = require("../models/item");
 
 
 const innerCreateUser = (email, password, fname, lname, address, city, postal, telephone, callback) => {
@@ -97,7 +98,9 @@ const removeItemFromCart = function (req, res) {
         })
 
 }
-const updateUser = function (req, res) {
+
+const updateUserByEmail = function (req, res) {
+    //module.exports
     console.log(req.body)
     console.log(JSON.parse(req.body.updatedData))
     console.log(req.body.email)
@@ -121,12 +124,44 @@ const getAllUsers = async function () {
     return await getAllUsersModel()
 }
 
+const clearCart = function (req, res) {
+    User.findOneAndUpdate({email: req.body.email}, { $set: { cart: [] }}, {new: true},
+        function (err, obj) {
+            if (err || obj.modifiedCount === 0) {
+                return res.status(301).json({
+                    success: false,
+                    message: 'Error.',
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'User updated',
+                userDetails: obj
+            });
+        })
+
+}
+const getCartItems = async function (req, res) {
+    //module.exports
+    const userData = await User.findById(req.params.userId);
+    let itemsData = [];
+    for (let item of userData.cart) {
+        itemsData.push(await Item.findById(item.item_id));
+    }
+    res.status(200).json({
+        "Cart": itemsData
+    });
+
+}
+
 module.exports = {
     createUser,
     deleteUser,
     getAllUsers,
-    updateUser,
+    updateUserByEmail,
     removeItemFromCart,
     addItemToCart,
-    loginUser
+    loginUser,
+    getCartItems,
+    clearCart
 }

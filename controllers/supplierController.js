@@ -1,54 +1,60 @@
-const mongoose = require("mongoose");
-const { Supplier, deleteSupplierModel, getAllSuppliersModel }= require("../models/supplier");
+const {Supplier, deleteSupplierModel, getAllSuppliersModel, createSupplierModel} = require("../models/supplier");
 
-
-const createSupplier = function (req, res) {
-    console.log(req.body)
-    const supplier = new Supplier({
-        _id: mongoose.Types.ObjectId(),
-        email: req.body.email,
-        password: req.body.password,
-        cname: req.body.cname,
-        isAdmin: req.body.isAdmin ?? false,
-        telephone: req.body.ctelephone,
-        publishedItems: []
-    });
-
-    Supplier.findOne({email: req.body.email}, async function (err, obj) {
-        if (!err && !obj) {
-            return supplier
-                .save()
-                .then((newSupplier) => {
-                    return res.status(201).json({
-                        success: true,
-                        message: 'New supplier created successfully',
-                        supplier: newSupplier,
-                    });
-                })
-                .catch((error) => {
-                    res.status(500).json({
-                        success: false,
-                        message: 'Server error. Please try again.',
-                        error: error.message,
-                    });
-                });
-        } else {
-            return res.status(301).json({
-                success: false,
-                message: 'Supplier already exist with this mail. \n' + err + ' ' + obj,
-            });
-        }
-    });
+const innerCreateSupplier = (email, password, cname, telephone, callback) => {
+    return createSupplierModel(email, password, cname, telephone, callback);
 }
 
-/**
- *
- * @param req = {
- *     email: string,
- *     password: string
- * }
- * @param res
- */
+const createSupplier = async function (req, res) {
+    //module.exports.createUser = async function (req, res) {
+    return innerCreateSupplier(
+        req.body.email,
+        req.body.password,
+        req.body.cname,
+        req.body.telephone,
+        res.status(200)
+    );
+}
+
+//module.exports.createSupplier = function (req, res) {
+// const createSupplier = function (req, res) {
+//     console.log(req.body)
+//     const supplier = new Supplier({
+//         _id: mongoose.Types.ObjectId(),
+//         email: req.body.email,
+//         password: req.body.password,
+//         cname: req.body.cname,
+//         isAdmin: req.body.isAdmin ?? false,
+//         telephone: req.body.ctelephone,
+//         publishedItems: []
+//     });
+//
+//     Supplier.findOne({email: req.body.email}, async function (err, obj) {
+//         if (!err && !obj) {
+//             return supplier
+//                 .save()
+//                 .then((newSupplier) => {
+//                     return res.status(201).json({
+//                         success: true,
+//                         message: 'New supplier created successfully',
+//                         supplier: newSupplier,
+//                     });
+//                 })
+//                 .catch((error) => {
+//                     res.status(500).json({
+//                         success: false,
+//                         message: 'Server error. Please try again.',
+//                         error: error.message,
+//                     });
+//                 });
+//         } else {
+//             return res.status(301).json({
+//                 success: false,
+//                 message: 'Supplier already exist with this mail. \n' + err + ' ' + obj,
+//             });
+//         }
+//     });
+// }
+
 const loginSupplier = function (req, res) {
     Supplier.findOne({email: req.body.email}, function (err, obj) {
         if (err || !obj) {
@@ -72,6 +78,7 @@ const loginSupplier = function (req, res) {
         }
     });
 }
+
 const addToPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$push: {publishedItems: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
@@ -111,7 +118,6 @@ const innerDeleteSupplier = async function (supplierId, currentUserId) {
     return await deleteSupplierModel(supplierId, currentUserId)
 }
 
-// Deleting supplier
 const deleteSupplier = async function (req, res) {
     //todo validation - current user capable of deleting
     // ---- Before ----

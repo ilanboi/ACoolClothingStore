@@ -23,6 +23,8 @@
 <body>
 <script src="../public/js/handlers/itemsHandler.js"></script>
 <script src="../public/js/handlers/requestsHandler.js"></script>
+<script src="../public/js/handlers/cookiesHandler.js"></script>
+<script src="../public/js/handlers/loginHandler.js"></script>
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -40,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/men">Men</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input id="searchInput" class="form-control me-2" type="search" placeholder="Search"
@@ -48,9 +53,10 @@
                             onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
                     </button>
                 </form>
-                <button class="btn btn-outline-primary" type="button" onclick="window.location = '/login'">Login
+                <button class="btn btn-outline-primary" type="button" id="login-btn">Login
                 </button>
-
+                <button class="btn btn-outline-primary" type="button" onclick="window.location = '/cart'">Cart
+                </button>
             </div>
         </div>
     </nav>
@@ -129,10 +135,6 @@
     </div>
 
 
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
     <div class="container marketing">
 
         <!-- Three columns of text below the carousel -->
@@ -145,13 +147,13 @@
         <hr class="featurette-divider">
 
         <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading fw-normal lh-1">Best Sellers -  <span class="text-muted">Yeezy</span>
-                </h2>
-                <p class="lead">Our prices are going crazy, just like Kanye </p>
-            </div>
             <div class="col-md-5">
-                <img src="../public/img/lifestyle.svg" data-src="img/lifestyle.svg" alt=""
+                <h2 class="featurette-heading fw-normal lh-1">What do we sell?</span></h2>
+                <p class="lead">One of a kind shoes that you won't find anywhere else! </p>
+                <p class="lead">Limited to one size per shoe, so be quick and get a pair that no one else has! </p>
+            </div>
+            <div class="col-md-7">
+                <img src="../public/img/collection.svg" data-src="img/collection.svg" alt=""
                      class="img-fluid lazy">
 
             </div>
@@ -165,72 +167,6 @@
             <div class="container">
                 
                 <div id="featured-items-sec1" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <!--                    <div class="col">-->
-                    <!--                        <div class="card shadow-sm">-->
-                    <!--                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"-->
-                    <!--                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"-->
-                    <!--                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>-->
-                    <!--                                <rect width="100%" height="100%" fill="#55595c"/>-->
-                    <!--                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
-                    <!--                            </svg>-->
-
-                    <!--                            <div class="card-body">-->
-                    <!--                                <p class="card-text">This is a wider card with supporting text below as a natural-->
-                    <!--                                    lead-in to additional content. This content is a little bit longer.</p>-->
-                    <!--                                <div class="d-flex justify-content-between align-items-center">-->
-                    <!--                                    <div class="btn-group">-->
-                    <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
-                    <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                    <!--                                    </div>-->
-                    <!--                                    <small class="text-muted">9 mins</small>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col">-->
-                    <!--                        <div class="card shadow-sm">-->
-                    <!--                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"-->
-                    <!--                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"-->
-                    <!--                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>-->
-                    <!--                                <rect width="100%" height="100%" fill="#55595c"/>-->
-                    <!--                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
-                    <!--                            </svg>-->
-
-                    <!--                            <div class="card-body">-->
-                    <!--                                <p class="card-text">This is a wider card with supporting text below as a natural-->
-                    <!--                                    lead-in to additional content. This content is a little bit longer.</p>-->
-                    <!--                                <div class="d-flex justify-content-between align-items-center">-->
-                    <!--                                    <div class="btn-group">-->
-                    <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
-                    <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                    <!--                                    </div>-->
-                    <!--                                    <small class="text-muted">9 mins</small>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col">-->
-                    <!--                        <div class="card shadow-sm">-->
-                    <!--                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"-->
-                    <!--                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"-->
-                    <!--                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>-->
-                    <!--                                <rect width="100%" height="100%" fill="#55595c"/>-->
-                    <!--                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
-                    <!--                            </svg>-->
-
-                    <!--                            <div class="card-body">-->
-                    <!--                                <p class="card-text">This is a wider card with supporting text below as a natural-->
-                    <!--                                    lead-in to additional content. This content is a little bit longer.</p>-->
-                    <!--                                <div class="d-flex justify-content-between align-items-center">-->
-                    <!--                                    <div class="btn-group">-->
-                    <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
-                    <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                    <!--                                    </div>-->
-                    <!--                                    <small class="text-muted">9 mins</small>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -238,12 +174,12 @@
 
         <div class="row featurette">
             <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading fw-normal lh-1">New Arrival  -  <span class="text-muted">Running shoes </span>
+                <h2 class="featurette-heading fw-normal lh-1">Our favorite  -  <span class="text-muted">Yeezy </span>
                 </h2>
-                <p class="lead">After All, If You Can Run Far Enough, No One Can Catch You </p>
+                <p class="lead">Our prices are going crazy, just like Kanye </p>
             </div>
             <div class="col-md-5 order-md-1">
-                <img src="../public/img/running.svg" data-src="img/lifestyle.svg" alt=""
+                <img src="../public/img/lifestyle.svg" data-src="img/lifestyle.svg" alt=""
                      class="img-fluid lazy">
 
             </div>
@@ -284,7 +220,7 @@
 
     <footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
         <div class="container">
-          <div class="row row-30">
+          <div class="row row-30 columns">
             <div class="col-lg-6 col-xl-6">
               <div class="pr-xl-4">
     
