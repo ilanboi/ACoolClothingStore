@@ -55,11 +55,16 @@ app.get('/men', (req, res) => {
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/views/login2.html');
 });
+app.get('/profile', (req, res) => {
+    res.sendFile(__dirname + '/views/profile.html');
+});
 app.get('/items', (req, res) => {
     res.sendFile(__dirname + '/views/album.html');
 });
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + '/views/about.html');
+app.get('/thankyou', (req, res) => {
+    res.sendFile(__dirname + '/views/thankyou.html');
 });
 app.get('/single-item', (req, res) => {
     // res.sendFile(__dirname + '/views/single-item.html');
