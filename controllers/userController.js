@@ -6,11 +6,11 @@ const {
     loginUserModel
 } = require("../models/user");
 
+
 const innerCreateUser = (email, password, fname, lname, address, city, postal, telephone, callback) => {
     return createUserModel(email, password, fname, lname, address, city, postal, telephone, callback);
 }
 const createUser = async function (req, res) {
-    //module.exports.createUser = async function (req, res) {
     return innerCreateUser(
         req.body.email,
         req.body.password,
@@ -30,14 +30,27 @@ const innerDeleteUser = async function (userId, currentUserId) {
 }
 
 const deleteUser = async function (req, res) {
-    //module.exports
     //todo validation - current user capable of deleting
+    
     console.log(req.params.userId)
-    await innerDeleteUser(req.params.userId, req.body.currentUserId)
-    return res.status(200).json({
-        success: true,
-        message: 'User deleted'
-    })
+    //await innerDeleteUser(req.params.userId, req.body.currentUserId)
+    //! Change later --> to "req.body.currentUserId"
+    const result = await innerDeleteUser(req.params.userId, "636eec1c8d3a32a33b6a8c44")
+    console.log("result: " + result.success);
+    
+    if(result.success == false)
+    {
+        return res.status(400).json({ // code 101?
+            success: false,
+            message: 'Error - No permissions',
+        });
+    }
+    else{
+        return res.status(200).json({
+            success: true,
+            message: 'User deleted'
+        })
+    }  
 }
 
 const innerLoginUser = function (email, password, callback) {
@@ -45,12 +58,10 @@ const innerLoginUser = function (email, password, callback) {
 }
 
 const loginUser = function (req, res) {
-    //module.exports
     return innerLoginUser(req.body.email, req.body.password, res.status(200))
 }
 
 const addItemToCart = function (req, res) {
-    //module.exports
     // let doc = await User.findOneAndUpdate({email: req.body.email}, {$push: {cart: req.body.item_id}});
     User.updateOne({email: req.body.email}, {$push: {cart: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
@@ -69,7 +80,6 @@ const addItemToCart = function (req, res) {
 
 }
 const removeItemFromCart = function (req, res) {
-    //module.exports
     // let doc = await User.findOneAndUpdate({email: req.body.email}, {$pull: {cart: req.body.item_id}});
     User.updateOne({email: req.body.email}, {$pull: {cart: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
@@ -88,7 +98,6 @@ const removeItemFromCart = function (req, res) {
 
 }
 const updateUser = function (req, res) {
-    //module.exports
     console.log(req.body)
     console.log(JSON.parse(req.body.updatedData))
     console.log(req.body.email)
@@ -107,10 +116,8 @@ const updateUser = function (req, res) {
                 userDetails: obj
             });
         })
-
 }
 const getAllUsers = async function () {
-    //module.exports
     return await getAllUsersModel()
 }
 
