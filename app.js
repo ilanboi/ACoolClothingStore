@@ -58,6 +58,9 @@ app.get('/login', (req, res) => {
 app.get('/items', (req, res) => {
     res.sendFile(__dirname + '/views/album.html');
 });
+app.get('/about', (req, res) => {
+    res.sendFile(__dirname + '/views/about.html');
+});
 app.get('/single-item', (req, res) => {
     // res.sendFile(__dirname + '/views/single-item.html');
     const item_id = req.query.item_id

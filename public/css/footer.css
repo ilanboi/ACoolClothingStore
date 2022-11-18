@@ -1,3 +1,11 @@
+html, body, main {
+    height: 100%;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .white-text {
     color: white;
 }
@@ -7,3 +15,11 @@ h3 {
     color: skyblue;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   }
+
+  .columns {
+    column-count: 2;
+    column-gap: 100px;
+    column-rule: 1px solid lightblue;
+    width: 100%;
+  }
+
