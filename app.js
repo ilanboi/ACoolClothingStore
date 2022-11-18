@@ -25,7 +25,7 @@ app.use('/api/supplier/', supplierRoutes);
 app.use('/api/item/', itemRoutes);
 
 // set up mongoose
-mongoose.connect('mongodb+srv://ronen:QWeasd123@cluster0.lw2akjb.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://ilanshoey:ilanshoey@cluster0.nnc8yow.mongodb.net/shoey')
     .then(() => {
         console.log('Database connected');
     })
@@ -63,6 +63,7 @@ app.get('/items', (req, res) => {
 });
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + '/views/about.html');
+});
 app.get('/thankyou', (req, res) => {
     res.sendFile(__dirname + '/views/thankyou.html');
 });
