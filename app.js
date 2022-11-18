@@ -5,9 +5,12 @@ const logger = require('morgan');
 const supplierRoutes = require('./routes/supplierRoutes');
 const userRoutes = require('./routes/userRoutes');
 const itemRoutes = require('./routes/itemRoutes');
+const warehouseRoutes = require('./routes/warehouseRoutes');
 const itemController = require('./controllers/itemController')
 const userController = require('./controllers/userController')
 const supplierController = require('./controllers/supplierController')
+const warehouseController = require('./controllers/warehouseController')
+
 
 const path = require("path");
 const app = express();
@@ -23,9 +26,10 @@ app.use('/public', express.static(path.join(__dirname, "public")));
 app.use('/api/user/', userRoutes);
 app.use('/api/supplier/', supplierRoutes);
 app.use('/api/item/', itemRoutes);
+app.use('/api/warehouse', warehouseRoutes);
 
 // set up mongoose
-mongoose.connect('mongodb+srv://ronen:QWeasd123@cluster0.lw2akjb.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://shoey:shoey@cluster0.nnc8yow.mongodb.net/shoey?retryWrites=true&w=majority')
     .then(() => {
         console.log('Database connected');
     })
@@ -63,9 +67,11 @@ app.get('/items', (req, res) => {
 });
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + '/views/about.html');
+});   
 app.get('/thankyou', (req, res) => {
     res.sendFile(__dirname + '/views/thankyou.html');
 });
+
 app.get('/single-item', (req, res) => {
     // res.sendFile(__dirname + '/views/single-item.html');
     const item_id = req.query.item_id

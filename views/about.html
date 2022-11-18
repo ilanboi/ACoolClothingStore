@@ -17,14 +17,15 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <!-- BASE CSS -->
-    <link href="../public/css/bootstrap.custom.min.css" rel="stylesheet">
-    <link href="../public/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 	<link href="../public/css/footer.css" rel="stylesheet">
 	<link href="../public/css/header.css" rel="stylesheet">
-    <link href="../public/css/about.css" rel="stylesheet">
-    <script src="../public/js/handlers/itemsHandler.js"></script>
-    <script src="../public/js/handlers/requestsHandler.js"></script>
+  <link href="../public/css/about.css" rel="stylesheet">
+  <script src="../public/js/handlers/requestsHandler.js"></script>
+  <script src="../public/js/about.js"></script>
 
 </head>
 
@@ -74,22 +75,30 @@
 			<div class="container" >
 				<div class="row justify-content-center text-center box">
 					<div class="col-xl-7 col-lg-9"></div>
+            <canvas>
 						<h2 class="head">Who are we and what do we sell?</h2>
+            </canvas>
                         <div class = "text-about col-md-7 order-md-1">
-						    <p class="text-left lead">Our mission is to provide access to the world’s most coveted items in the smartest way possible.</p>
+						                <p class="text-left lead">Our mission is to provide access to the world’s most coveted items in the smartest way possible.</p>
                             <p class="text-left lead">We guarantee to provide you with sneakers that no one else has which will preserve value over time and make you very attractive.</p>
-                            
+                            <h3>Our locations:</h3>
+                            <div id="map">
+                              <script async
+                                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD28Z7lsQXZ3agvcEiaIsQajBLyWEDjbXk&callback=initMap">
+                              </script>
+                            </div>
                         </div>
-                        <!-- <div class="col-md-5 order-md-2">
-                            <img src="../public/img/about.svg" data-src="img/about.svg" alt=""
-                                 class="img-fluid lazy">
-            
-                        </div> -->
+                        
+
 					</div>
 				</div>
-				<!-- /row -->
+
 			</div>
         </div>
+
+
+
+
 			<!-- /container -->
             <footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
                 <div class="container">
@@ -140,9 +149,7 @@
 	
 	<div id="toTop"></div><!-- Back to top button -->
 	
-	<!-- COMMON SCRIPTS -->
-    <script src="../public/js/common_scripts.min.js"></script>
-    <script src="../public/js/main.js"></script>
+	
 		
 </body>
 </html>
