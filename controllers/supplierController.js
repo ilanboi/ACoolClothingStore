@@ -56,7 +56,6 @@ const createSupplier = async function (req, res) {
 // }
 
 const loginSupplier = function (req, res) {
-    //module.exports.loginSupplier = function (req, res) {
     Supplier.findOne({email: req.body.email}, function (err, obj) {
         if (err || !obj) {
             return res.status(301).json({
@@ -81,7 +80,6 @@ const loginSupplier = function (req, res) {
 }
 
 const addToPublishedItems = function (req, res) {
-    // module.exports.addToPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$push: {publishedItems: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
@@ -98,7 +96,6 @@ const addToPublishedItems = function (req, res) {
         })
 }
 const removeFromPublishedItems = function (req, res) {
-    //module.exports.removeFromPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$pull: {publishedItems: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
@@ -116,19 +113,45 @@ const removeFromPublishedItems = function (req, res) {
 }
 
 // Deleting supplier
-const innerDeleteSupplier = async function (supplierId) {
-    //todo validation - current user capable of deleting
-    return await deleteSupplierModel(supplierId)
+const innerDeleteSupplier = async function (supplierId, currentUserId) {
+    // validation - current user capable of deleting
+    return await deleteSupplierModel(supplierId, currentUserId)
 }
 
 const deleteSupplier = async function (req, res) {
     //todo validation - current user capable of deleting
+    // ---- Before ----
     console.log(req.params.supplierId)
-    await innerDeleteSupplier(req.params.supplierId)
+    await innerDeleteSupplier(req.params.supplierId, "636eec1c8d3a32a33b6a8c44")
+    //! Change later --> to "req.body.currentUserId"
+    //await deleteSupplierModel(req.params.supplierId, "636eec1c8d3a32a33b6a8c44")
+   
     return res.status(200).json({
         success: true,
         message: 'Supplier deleted'
     })
+
+
+    // ---- After ----
+    // console.log(req.params.supplierId)
+    // //console.log(req.params.currentUserId)
+    // //await innerDeleteSupplier(req.params.supplierId, req.params.currentUserId)
+    // //! Change later --> to "req.body.currentUserId"
+    // const result = await innerDeleteSupplier(req.params.supplierId, "636eec1c8d3a32a33b6a8c44")
+    // console.log("result: " + result.success);
+    // if(result.success == false)
+    // {
+    //     return res.status(400).json({ 
+    //         success: false,
+    //         message: 'Error - No permissions',
+    //     });
+    // }
+    // else{
+    //     return res.status(200).json({
+    //         success: true,
+    //         message: 'Supplier deleted'
+    //     })
+    // }  
 }
 
 // Getting all supplier

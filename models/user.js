@@ -129,17 +129,39 @@ const getAllUsersModel = async function () {
 }
 
 const deleteUserModel = async function (userId, currentUserId) {
-    const filter = {_id: currentUserId, isAdmin: true}
-    User.find(filter, async (error, response)=> {
-        if (!error && response)
-        {
-            await User.deleteOne({_id: userId})
-            console.log("he gone" + response + error)
-        }
-        else
-            console.log("u aint no admin")
-    })
-    
+    // const filter = {_id: currentUserId, isAdmin: true}
+    // User.find(filter, async (error, response)=> {
+    //     if (!error && response)
+    //     {
+    //        // await User.deleteOne({_id: userId})
+    //         console.log("he gone")
+    //         console.log("response: " + response)
+    //         console.log("error:" + error)
+    //     }
+    //     else
+    //         console.log("u aint no admin")
+    // })
+
+    // ---- WORKING -----
+    const all = await User.findById(currentUserId);
+    console.log(all);
+    if(all.isAdmin !== true)
+    {
+        console.log("You are not admin");
+        return {
+            success: false,
+            message: 'No permissions to delete',
+            data: all
+        };
+    }
+    else
+    {
+        await User.deleteOne({_id: userId})
+        return {
+            success: true,
+            message: 'The user was deleted'
+        };
+    }   
 }
 
 module.exports = {
