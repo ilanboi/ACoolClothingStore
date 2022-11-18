@@ -50,8 +50,46 @@ const getAllSuppliersModel = async function () {
     };
 }
 
+const createSupplierModel = function (email, password, cname, telephone, callback) {
+    const supplier = new Supplier({
+        _id: mongoose.Types.ObjectId(),
+        email: email,
+        password: password,
+        cname: cname,
+        telephone: telephone,
+        publishedItems: []
+    });
+    Supplier.findOne({email: email}, function (err, obj) {
+        if (!err && !obj) {
+            supplier
+                .save()
+                .then((newUser) => {
+                    console.log(newUser)
+                    return callback.json({
+                        success: true,
+                        message: 'New user created successfully',
+                        User: newUser,
+                    });
+                })
+                .catch((error) => {
+                    return callback.json({
+                        success: false,
+                        message: 'Server error. Please try again.',
+                        error: error.message,
+                    });
+                });
+        } else {
+            return callback.json({
+                success: false,
+                message: 'User already exist with this mail. \n' + err + ' ' + obj,
+            });
+        }
+    });
+}
+
 module.exports = {
     Supplier,
     deleteSupplierModel,
-    getAllSuppliersModel
+    getAllSuppliersModel,
+    createSupplierModel
 }

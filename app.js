@@ -55,6 +55,9 @@ app.get('/men', (req, res) => {
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/views/login2.html');
 });
+app.get('/profile', (req, res) => {
+    res.sendFile(__dirname + '/views/profile.html');
+});
 app.get('/items', (req, res) => {
     res.sendFile(__dirname + '/views/album.html');
 });

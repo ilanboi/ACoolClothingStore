@@ -88,13 +88,13 @@ const removeItemFromCart = function (req, res) {
         })
 
 }
-const updateUser = function (req, res) {
+const updateUserByEmail = function (req, res) {
     //module.exports
     console.log(req.body)
-    // console.log(JSON.parse(req.body.updatedData))
+    console.log(JSON.parse(req.body.updatedData))
     console.log(req.body.email)
     // let doc = await User.findOneAndUpdate({email: req.body.email}, {$pull: {cart: req.body.item_id}});
-    User.findOneAndUpdate({email: req.body.email}, req.body.updatedData, {new: true},
+    User.findOneAndUpdate({email: req.body.email}, JSON.parse(req.body.updatedData), {new: true},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
                 return res.status(301).json({
@@ -149,7 +149,7 @@ module.exports = {
     createUser,
     deleteUser,
     getAllUsers,
-    updateUser,
+    updateUserByEmail,
     removeItemFromCart,
     addItemToCart,
     loginUser,

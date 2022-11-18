@@ -219,7 +219,7 @@
                             onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
                     </button>
                 </form>
-                <button class="btn btn-outline-primary" type="button" onclick="window.location = '/login'">Login
+                <button class="btn btn-outline-primary" type="button" id="login-btn" onclick="window.location = '/login'">Login
                 </button>
                 <button class="btn btn-outline-primary" type="button" onclick="window.location = '/cart'">Cart
                 </button>
@@ -327,10 +327,10 @@
                     <div class="row register-form">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Company Name *" value=""/>
+                                <input type="text" class="form-control" id="compName" placeholder="Company Name *" value=""/>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email *" value=""/>
+                                <input type="email" class="form-control" id="cemail" placeholder="Email *" value=""/>
                             </div>
                             <div class="form-group">
                                 <input id="supplier-telephone" type="text" maxlength="10" minlength="10"
@@ -338,11 +338,10 @@
                                        placeholder="Phone *" value=""/>
                             </div>
 
-
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password *" value=""/>
+                                <input type="password" id="supplierPassword" class="form-control" placeholder="Password *" value=""/>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" placeholder="Confirm Password *" value=""/>
