@@ -13,9 +13,13 @@
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-
     
+    <!-- Favicon-->
+    <link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
+    
+    <!-- CSS Files-->
     <link rel="stylesheet" href="../public/css/admin.css">
+    <!-- <link href="../public/css/footer.css" rel="stylesheet"> -->
 
 </head>
 
@@ -52,10 +56,51 @@
                     <span id=""><%=data.users.data[i].id%></span>
                     <span><%=data.users.data[i].fname%></span>
                     <span><%=data.users.data[i].lname%></span>
-                    <span><%=data.users.data[i].email%></span>
+                    <span>email: <%=data.users.data[i].email%></span>
                     <span><%=data.users.data[i].password%></span>
+                    <span><%=data.users.data[i].telephone%></span>
 
                     <button id="deleteUserBtn<%= i %>" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
+
+                    <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModalForm<%= i %>">Edit</button>
+                    
+                    <div class="modal fade" id="editUserModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Edit Employee</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <!-- Action and method of "Edit" request -->
+                            <!-- <form action="/updateUser" method="post"> -->
+                            <form >
+                              <div class="modal-body text-start">
+                                <label class="form-label">First Name:</label>
+                                <input id="firstNameEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].fname%>">
+                                <!-- <label class="form-label">Age:</label>
+                                <input id="ageEdit" name="age" type="number" class="form-control" placeholder="Enter age"> -->
+                                <label class="form-label">Phone Number:</label>
+                                <input id="phoneNumberEditUser<%= i %>" name="phoneNumber" type="number" class="form-control" value="<%=data.users.data[i].telephone%>">
+                                <label class="form-label">Email:</label>
+                                <input id="emailEditUser<%= i %>" name="email" type="email" class="form-control" value="<%=data.users.data[i].email%>">
+                                <!-- <label class="form-label">Level:</label>
+                                <input id="levelEdit" name="level" class="form-control" placeholder="Enter level">
+                                <label class="form-label">Job Description:</label>
+                                <input id="jobDescEdit" name="jobDesc" class="form-control" placeholder="Enter job description"> -->
+                              </div>
+                              <div class="invalidError" id="invalidErrorEditUser<%= i %>"></div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <!-- <button id="editBtn<%= i %>" type="submit" class="btn btn-primary">Edit</button> -->
+                                <button id="editUserBtn<%= i %>" type="button" class="btn btn-primary" onclick="updateUserAjax(`<%=data.users.data[i].id%>`, `<%= i %>`)">Edit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+                
+                
                 </article>
                 <% } %>
                 <br>
@@ -176,5 +221,6 @@
         <!-- Copyright -->
     </footer>
     <!-- Footer -->
+
 </section>
 </html>

@@ -4,3 +4,8 @@ footer{
     bottom: 0;
     width: 100%;
 }
+.invalidError{
+    color: red;
+    padding-bottom: 8px ;
+    text-align: center;
+}

@@ -28,13 +28,8 @@ const createItem = function (req, res) {
         });
 }
 
-// why export the inner??
 const innerGetAllItems = async function () {
     return await getAllItemsModel()
-}
-
-const getGenderItems = async function (req, res) {
-    return res.status(200).json(await getGenderItemsModel(req.params.gender)) 
 }
 
 const innerGetSpecificItem = async function (itemId) {
@@ -55,6 +50,7 @@ const deleteItem = async function (req, res) {
         message: 'Item deleted'
     })
 }
+
 const getAllItems = async function (req, res) {
     return res.status(200).json(await innerGetAllItems())
 }
@@ -63,7 +59,9 @@ const getSpecificItem = async function (req, res) {
     return res.status(200).json(await innerGetSpecificItem(req.params.itemId));
 }
 
-
+const getGenderItems = async function (req, res) {
+    return res.status(200).json(await getGenderItemsModel(req.params.gender)) 
+}
 
 const getSearchedItems = function (req, res) {
     const searchText = req.query.searchText;
@@ -96,7 +94,7 @@ const getSearchedItems = function (req, res) {
 
 module.exports = {
     getAllItems,
-    innerGetAllItems, // why export the inner?
+    innerGetAllItems, 
     createItem,
     getSpecificItem,
     getSearchedItems,
