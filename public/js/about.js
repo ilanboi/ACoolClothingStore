@@ -8,7 +8,7 @@ function initMap() {
     if (!result.length) {
         console.log("error")
     }
-
+    console.log("result:"+ result.warehouses.data);
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 10,
         center: new google.maps.LatLng(31.985060092192455, 34.78767853499693),

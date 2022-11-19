@@ -29,19 +29,37 @@ const warehouseSchema = new mongoose.Schema({
     }
     
 });
-//module.exports = mongoose.model('Warehouse', warehouseSchema);
+
 const Warehouse = mongoose.model('Warehouse', warehouseSchema);
+const { User } = require("../models/user");
 
 // Deleting a warehouse
-const deleteWarehouseModel = async function (warehouseId) {
-    await Warehouse.deleteOne({_id: warehouseId})
+const deleteWarehouseModel = async function (warehouseId, currentUserId) { 
+    const all = await User.findById(currentUserId);
+    console.log( all);
+    if(all.isAdmin !== true)
+    {
+        console.log("You are not admin");
+        return {
+            success: false,
+            message: 'No permissions to delete',
+            data: all
+        };
+    }
+    else
+    {
+        await Warehouse.deleteOne({_id: warehouseId})
+        return {
+            success: true,
+            message: 'The supplier was deleted'
+        };
+    }   
 }
 
 // Getting all warehouses
 const getAllWarehousesModel = async function () {
     const filter = {};
     const all = await Warehouse.find(filter);
-    console.log(all)
     return {
         success: true,
         message: 'All Warehouses are found.',

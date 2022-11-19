@@ -133,7 +133,7 @@ const updateUserById = function (req, res) {
                 message: 'User updated',
                 userDetails: obj
             });
-        })
+    })
 }
 
 const getAllUsers = async function () {

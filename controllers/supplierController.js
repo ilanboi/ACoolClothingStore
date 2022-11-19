@@ -89,7 +89,7 @@ const updateSupplierById = function (req, res) {
                 message: 'Supplier updated',
                 userDetails: obj
             });
-        })
+    })
 }
 
 // Deleting supplier

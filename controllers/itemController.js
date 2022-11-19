@@ -37,18 +37,28 @@ const innerGetSpecificItem = async function (itemId) {
 }
 
 // Deleting item
-const innerDeleteItem = async function (itemId) {
-    //todo validation - current user capable of deleting
-    return await deleteItemModel(itemId)
+const innerDeleteItem = async function (itemId, currentUserId) {
+    return await deleteItemModel(itemId, currentUserId)
 }
 const deleteItem = async function (req, res) {
-    //todo validation - current user capable of deleting
-    console.log(req.params.itemId)
-    await innerDeleteItem(req.params.itemId)
-    return res.status(200).json({
-        success: true,
-        message: 'Item deleted'
-    })
+    console.log(req.params.currentUserId)
+    
+    //! Change later --> to "req.body.currentUserId"
+    const result = await innerDeleteItem(req.params.itemId, "6377a7f6356ff1ad98754a73")
+    console.log("result: " + result.success);
+    if(result.success == false)
+    {
+        return res.status(400).json({ 
+            success: false,
+            message: 'Error - No permissions',
+        });
+    }
+    else{
+        return res.status(200).json({
+            success: true,
+            message: 'Supplier deleted'
+        })
+    }  
 }
 
 const getAllItems = async function (req, res) {
@@ -90,6 +100,25 @@ const getSearchedItems = function (req, res) {
         });
     });
 }
+const updateItemById = function (req, res) {  
+    console.log(req.body)
+    console.log(JSON.parse(req.body.updatedData))
+    console.log("id: "+req.params.itemId)
+    Item.findOneAndUpdate({_id: req.params.itemId}, JSON.parse(req.body.updatedData), {new: true},
+        function (err, obj) {
+            if (err || obj.modifiedCount === 0) {
+                return res.status(301).json({
+                    success: false,
+                    message: 'Error.',
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'Supplier updated',
+                userDetails: obj
+            });
+    })
+}
 
 
 module.exports = {
@@ -99,5 +128,6 @@ module.exports = {
     getSpecificItem,
     getSearchedItems,
     deleteItem,
-    getGenderItems
+    getGenderItems,
+    updateItemById
 }
