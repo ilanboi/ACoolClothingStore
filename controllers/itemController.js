@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
-const { Item, getAllItemsModel, getItemById, getGenderItemsModel, deleteItemModel } = require("../models/item");
+const {
+    Item,
+    getAllItemsModel,
+    getItemById,
+    getGenderItemsModel,
+    deleteItemModel,
+    filterItemsModel
+} = require("../models/item");
 
 const createItem = function (req, res) {
     const item = new Item({
@@ -43,23 +50,21 @@ const innerDeleteItem = async function (itemId, currentUserId) {
 }
 const deleteItem = async function (req, res) {
     console.log(req.params.currentUserId)
-    
+
     //! Change later --> to "req.body.currentUserId"
     const result = await innerDeleteItem(req.params.itemId, "6377a7f6356ff1ad98754a73")
     console.log("result: " + result.success);
-    if(result.success == false)
-    {
-        return res.status(400).json({ 
+    if (result.success == false) {
+        return res.status(400).json({
             success: false,
             message: 'Error - No permissions',
         });
-    }
-    else{
+    } else {
         return res.status(200).json({
             success: true,
             message: 'Supplier deleted'
         })
-    }  
+    }
 }
 
 const getAllItems = async function (req, res) {
@@ -71,7 +76,25 @@ const getSpecificItem = async function (req, res) {
 }
 
 const getGenderItems = async function (req, res) {
-    return res.status(200).json(await getGenderItemsModel(req.params.gender)) 
+    return res.status(200).json(await getGenderItemsModel(req.params.gender))
+}
+
+const getFilteredItems = async function (req, res) {
+    return res.status(200).json(await filterItemsModel(
+        JSON.stringify(req.body.kind),
+        // req.body.companies,
+        JSON.stringify(req.body.sizes),
+        // req.body.prices,
+    ))
+}
+
+const getFilteredItemsSocket = async function (kind, sizes, prices, companies) {
+    return JSON.stringify(await filterItemsModel(
+        JSON.stringify(kind),
+        JSON.stringify(sizes),
+        JSON.stringify(prices),
+        JSON.stringify(companies)
+    ))
 }
 
 const getSearchedItems = function (req, res) {
@@ -101,10 +124,10 @@ const getSearchedItems = function (req, res) {
         });
     });
 }
-const updateItemById = function (req, res) {  
+const updateItemById = function (req, res) {
     console.log(req.body)
     console.log(JSON.parse(req.body.updatedData))
-    console.log("id: "+req.params.itemId)
+    console.log("id: " + req.params.itemId)
     Item.findOneAndUpdate({_id: req.params.itemId}, JSON.parse(req.body.updatedData), {new: true},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
@@ -118,17 +141,19 @@ const updateItemById = function (req, res) {
                 message: 'Supplier updated',
                 userDetails: obj
             });
-    })
+        })
 }
 
 
 module.exports = {
     getAllItems,
-    innerGetAllItems, 
+    innerGetAllItems,
     createItem,
     getSpecificItem,
     getSearchedItems,
     deleteItem,
     getGenderItems,
-    updateItemById
+    updateItemById,
+    getFilteredItems,
+    getFilteredItemsSocket
 }

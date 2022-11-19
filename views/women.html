@@ -20,12 +20,14 @@
     <script src="../public/js/handlers/socketHandler.js"></script>
     <script src="../public/js/handlers/cookiesHandler.js"></script>
     <script src="../public/js/handlers/loginHandler.js"></script>
+    <script src="../public/js/handlers/filtersHandler.js"></script>
 
 </head>
 <body>
 <script src="../public/js/handlers/requestsHandler.js"></script>
 <script src="../public/js/handlers/itemsHandler.js"></script>
 <script src="../public/js/handlers/albumHandler.js"></script>
+<script src="../public/js/handlers/filtersHandler.js"></script>
 <link href="../public/css/footer.css" rel="stylesheet">
 <link href="../public/css/header.css" rel="stylesheet">
 
@@ -58,7 +60,8 @@
                             onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
                     </button>
                 </form>
-                <button class="btn btn-outline-primary" type="button" id="login-btn" onclick="window.location = '/login'">Login
+                <button class="btn btn-outline-primary" type="button" id="login-btn"
+                        onclick="window.location = '/login'">Login
                 </button>
                 <button class="btn btn-outline-primary" type="button" onclick="window.location = '/cart'">Cart
                 </button>
@@ -84,51 +87,158 @@
 
     <div class="album py-3 bg-light">
         <div class="container">
+            filters:
             <div class="btn-group">
                 <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                    Action
+                    Company
                 </button>
-                <ul class="dropdown-menu" style="width: max-content;">
+                <ul id="listAllCompaniesFilters" class="dropdown-menu" style="width: max-content;">
                     <li>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox
-                                input</label>
+                            <input class="form-check-input" type="checkbox" id="companiesFilter1" checked>
+                            <label class="form-check-label" for="companiesFilter1">Nike</label>
                         </div>
                     </li>
                     <li>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox
-                                input</label>
+                            <input class="form-check-input" type="checkbox" id="companiesFilter2" checked>
+                            <label class="form-check-label" for="companiesFilter2">Adidas</label>
                         </div>
                     </li>
                     <li>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox
-                                input</label>
+                            <input class="form-check-input" type="checkbox" id="companiesFilter3" checked>
+                            <label class="form-check-label" for="companiesFilter3">Fila</label>
                         </div>
                     </li>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox
-                            input</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled" disabled>
-                        <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch checkbox
-                            input</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked
-                               disabled>
-                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Disabled checked switch
-                            checkbox input</label>
-                    </div>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter4" checked>
+                            <label class="form-check-label" for="companiesFilter4">New Balance</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter5" checked>
+                            <label class="form-check-label" for="companiesFilter5">vans</label>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- sizes filter -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    sizes
+                </button>
+                <ul id="listAllSizeFilters" class="dropdown-menu" style="width: max-content;">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter1" checked>
+                            <label class="form-check-label" for="sizeFilter1">35</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter2" checked>
+                            <label class="form-check-label" for="sizeFilter2">36</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter3" checked>
+                            <label class="form-check-label" for="sizeFilter3">37</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter4" checked>
+                            <label class="form-check-label" for="sizeFilter4">38</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter5" checked>
+                            <label class="form-check-label" for="sizeFilter5">39</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter6" checked>
+                            <label class="form-check-label" for="sizeFilter6">40</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter7" checked>
+                            <label class="form-check-label" for="sizeFilter7">41</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter8" checked>
+                            <label class="form-check-label" for="sizeFilter8">42</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter9" checked>
+                            <label class="form-check-label" for="sizeFilter9">43</label>
+                        </div>
+                    </li>
                 </ul>
             </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    prices
+                </button>
+                <ul class="dropdown-menu" style="width: max-content;" id="listAllPricesFilters">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter1" checked>
+                            <label class="form-check-label" for="priceFilter1">less then 200</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter2" checked>
+                            <label class="form-check-label" for="priceFilter2">between 200 and 400</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter3" checked>
+                            <label class="form-check-label" for="priceFilter3">between 400 and 600</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter4" checked>
+                            <label class="form-check-label" for="priceFilter4">between 600 and 800</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter5" checked>
+                            <label class="form-check-label" for="priceFilter5">between 800 and 1000</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter6" checked>
+                            <label class="form-check-label" for="priceFilter6">greater then 1000</label>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <button id="submitAllFilters" class="btn btn-primary">Submit Filters</button>
         </div>
     </div>
     <div class="album py-5 bg-light">

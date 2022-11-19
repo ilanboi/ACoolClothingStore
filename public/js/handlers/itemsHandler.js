@@ -129,7 +129,9 @@ function setItemsOnAlbumByGender(gender) {
 
 }
 
+let publicKind = ""
 $(document).ready(function () {
+    const urln = window.location.href.replace('#', '')
     const urlParams = new URLSearchParams(window.location.search);
     const searchTextQueryParam = urlParams.get('searchText');
 
@@ -152,19 +154,25 @@ $(document).ready(function () {
     }
     console.log(searchTextQueryParam)
     console.log(window.location.href.split('/').length)
+
     if (searchTextQueryParam) {
         setItemsOnAlbum(searchTextQueryParam);
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'items') {
+    } else if (urln.split('/')[urln.split('/').length - 1] === 'items') {
+        publicKind = [{kind: "women"}, {kind: "men"}]
         setItemsOnAlbum("");
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'supplier') {
         setItemsOnAlbum("");
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'men') {
+    } else if (urln.split('/')[urln.split('/').length - 1] === 'men') {
+        publicKind = [{kind: "men"}]
         setItemsOnAlbumByGender("men");
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'women') {
+    } else if (urln.split('/')[urln.split('/').length - 1] === 'women') {
+        publicKind = [{kind: "women"}]
         setItemsOnAlbumByGender("women");
     } else if (searchTextQueryParam === '') {
+        publicKind = [{kind: "women"}, {kind: "men"}]
         setItemsOnAlbum("");
     } else {
+        publicKind = [{kind: "women"}, {kind: "men"}]
         showAllItemsHomeGrid();
     }
 });

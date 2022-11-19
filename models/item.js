@@ -50,7 +50,7 @@ const itemSchema = new mongoose.Schema({
 });
 
 const Item = mongoose.model('Item', itemSchema);
-const { User } = require("../models/user");
+const {User} = require("../models/user");
 
 const getAllItemsModel = async function () {
     const filter = {};
@@ -90,28 +90,44 @@ const getGenderItemsModel = async function (gender) {
 
 }
 
+const filterItemsModel = async function (kind, sizes, prices, companies) {
+
+    const filter = {
+        $and: [
+            {$or: JSON.parse(kind)},
+            {$or: JSON.parse(companies)},
+            {$or: JSON.parse(sizes)},
+            {$or: JSON.parse(prices)},
+        ]
+    };
+    const filtered = await Item.find(filter);
+    return {
+        success: true,
+        message: 'All items are found.',
+        data: filtered
+    };
+
+}
+
 // Deleting an item
 const deleteItemModel = async function (itemId, currentUserId) {
     //await Item.deleteOne({_id: itemId})
     const all = await User.findById(currentUserId);
     console.log(all);
-    if(all.isAdmin !== true)
-    {
+    if (all.isAdmin !== true) {
         console.log("You are not admin");
         return {
             success: false,
             message: 'No permissions to delete',
             data: all
         };
-    }
-    else
-    {
+    } else {
         await Item.deleteOne({_id: itemId})
         return {
             success: true,
             message: 'The item was deleted'
         };
-    }   
+    }
 }
 
 module.exports = {
@@ -119,6 +135,7 @@ module.exports = {
     getAllItemsModel,
     getItemById,
     deleteItemModel,
-    getGenderItemsModel
+    getGenderItemsModel,
+    filterItemsModel
 };
 
