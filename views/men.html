@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shoey 2 colman</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
@@ -14,16 +16,20 @@
 
     <!-- Favicon-->
     <link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
-
+    <script src='/socket.io/socket.io.js'></script>
+    <script src="../public/js/handlers/socketHandler.js"></script>
+    <script src="../public/js/handlers/cookiesHandler.js"></script>
+    <script src="../public/js/handlers/loginHandler.js"></script>
+    <script src="../public/js/handlers/filtersHandler.js"></script>
 
 </head>
 <body>
-<script src="../public/js/handlers/itemsHandler.js"></script>
 <script src="../public/js/handlers/requestsHandler.js"></script>
+<script src="../public/js/handlers/itemsHandler.js"></script>
+<script src="../public/js/handlers/albumHandler.js"></script>
+<script src="../public/js/handlers/filtersHandler.js"></script>
 <link href="../public/css/footer.css" rel="stylesheet">
 <link href="../public/css/header.css" rel="stylesheet">
-<script src="../public/js/handlers/cookiesHandler.js"></script>
-<script src="../public/js/handlers/loginHandler.js"></script>
 
 
 <header>
@@ -54,7 +60,8 @@
                             onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
                     </button>
                 </form>
-                <button class="btn btn-outline-primary" type="button" id="login-btn" onclick="window.location = '/login'">Login
+                <button class="btn btn-outline-primary" type="button" id="login-btn"
+                        onclick="window.location = '/login'">Login
                 </button>
                 <button class="btn btn-outline-primary" type="button" onclick="window.location = '/cart'">Cart
                 </button>
@@ -64,6 +71,9 @@
 </header>
 
 <main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -71,11 +81,167 @@
                 <canvas width="50" height="50">
                   </canvas>
                   
-                <p class="lead text-muted"> One of a kind shoes </p>
+                <p class="lead text-muted">One of a kind shoes </p>
             </div>
         </div>
     </section>
 
+    <div class="album py-3 bg-light">
+        <div class="container">
+            filters:
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Company
+                </button>
+                <ul id="listAllCompaniesFilters" class="dropdown-menu" style="width: max-content;">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter1" checked>
+                            <label class="form-check-label" for="companiesFilter1">Nike</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter2" checked>
+                            <label class="form-check-label" for="companiesFilter2">Adidas</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter3" checked>
+                            <label class="form-check-label" for="companiesFilter3">Fila</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter4" checked>
+                            <label class="form-check-label" for="companiesFilter4">New Balance</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="companiesFilter5" checked>
+                            <label class="form-check-label" for="companiesFilter5">vans</label>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- sizes filter -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    sizes
+                </button>
+                <ul id="listAllSizeFilters" class="dropdown-menu" style="width: max-content;">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter1" checked>
+                            <label class="form-check-label" for="sizeFilter1">35</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter2" checked>
+                            <label class="form-check-label" for="sizeFilter2">36</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter3" checked>
+                            <label class="form-check-label" for="sizeFilter3">37</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter4" checked>
+                            <label class="form-check-label" for="sizeFilter4">38</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter5" checked>
+                            <label class="form-check-label" for="sizeFilter5">39</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter6" checked>
+                            <label class="form-check-label" for="sizeFilter6">40</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter7" checked>
+                            <label class="form-check-label" for="sizeFilter7">41</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter8" checked>
+                            <label class="form-check-label" for="sizeFilter8">42</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sizeFilter9" checked>
+                            <label class="form-check-label" for="sizeFilter9">43</label>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    prices
+                </button>
+                <ul class="dropdown-menu" style="width: max-content;" id="listAllPricesFilters">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter1" checked>
+                            <label class="form-check-label" for="priceFilter1">less then 200</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter2" checked>
+                            <label class="form-check-label" for="priceFilter2">between 200 and 400</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter3" checked>
+                            <label class="form-check-label" for="priceFilter3">between 400 and 600</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter4" checked>
+                            <label class="form-check-label" for="priceFilter4">between 600 and 800</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter5" checked>
+                            <label class="form-check-label" for="priceFilter5">between 800 and 1000</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="priceFilter6" checked>
+                            <label class="form-check-label" for="priceFilter6">greater then 1000</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <button id="submitAllFilters" class="btn btn-primary">Submit Filters</button>
+        </div>
+    </div>
     <div class="album py-5 bg-light">
         <div class="container">
 
@@ -84,46 +250,48 @@
             </div>
         </div>
     </div>
-    <footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
-        <div class="container">
-          <div class="row row-30 columns">
+</main>
+
+<footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
+    <div class="container">
+        <div class="row row-30 columns">
             <div class="col-lg-6 col-xl-6">
-              <div class="pr-xl-4">
-    
-                        <!-- <h3 class="white-text">Quick Tweets</h3> -->
-                        <h3>Quick Tweets</h3>
-                        <div class="links" id="collapse_1">
-                            <a class="twitter-timeline" data-width="450" data-height="200" data-dnt="true" data-theme="dark"
-                               href="https://twitter.com/StoreShoey?ref_src=twsrc%5Etfw">Tweets by StoreShoey</a>
-                            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    
-                            </li>
-                        </div>
-    
-    
-                        <!-- Rights-->
+                <div class="pr-xl-4">
+
+                    <!-- <h3 class="white-text">Quick Tweets</h3> -->
+                    <h3>Quick Tweets</h3>
+                    <div class="links" id="collapse_1">
+                        <a class="twitter-timeline" data-width="450" data-height="200" data-dnt="true" data-theme="dark"
+                           href="https://twitter.com/StoreShoey?ref_src=twsrc%5Etfw">Tweets by StoreShoey</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                        </li>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <h5 class="white-text">Contacts</h5>
-                    <dl class="contact-list">
-                        <dt class="white-text">Address:</dt>
-                        <dd class="white-text">Colman <br class="white-text">Rishon Le Zion - IL</dd>
-                    </dl>
-                    <dl class="contact-list">
-                        <dt class="white-text">email:</dt>
-                        <dd><a href="mailto:#">info@shoey.com</a></dd>
-                    </dl>
-                    <dl class="contact-list">
-                        <dt class="white-text">phones:</dt>
-                        <dd class="white-text">+972 52-8252-<strong>69</strong>9</dd>
-                    </dl>
+
+
+                    <!-- Rights-->
                 </div>
             </div>
+            <div class="col-md-4">
+                <h5 class="white-text">Contacts</h5>
+                <dl class="contact-list">
+                    <dt class="white-text">Address:</dt>
+                    <dd class="white-text">Colman <br class="white-text">Rishon Le Zion - IL</dd>
+                </dl>
+                <dl class="contact-list">
+                    <dt class="white-text">email:</dt>
+                    <dd><a href="mailto:#">info@shoey.com</a></dd>
+                </dl>
+                <dl class="contact-list">
+                    <dt class="white-text">phones:</dt>
+                    <dd class="white-text">+972 52-8252-<strong>69</strong>9</dd>
+                </dl>
+            </div>
         </div>
-    </footer>
-</main>
+    </div>
+</footer>
 
 
 </body>
 </html>
+

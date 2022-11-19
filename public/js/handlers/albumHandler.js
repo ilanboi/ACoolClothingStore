@@ -25,3 +25,13 @@ $( '.dropdown-menu a' ).on( 'click', function( event ) {
     console.log( options );
     return false;
 });
+
+$(function(){
+
+    $(".dropdown-menu li a").click(function(){
+
+        $(".btn:first-child #sortbyBtn").text($(this).text());
+        $(".btn:first-child").val($(this).text());
+    });
+
+});

@@ -18,6 +18,7 @@ const warehouseController = require('./controllers/warehouseController')
 
 
 const path = require("path");
+const {getFilteredItemsSocket} = require("./controllers/itemController");
 
 
 const port = 8080;
@@ -122,10 +123,15 @@ app.get('*', (req, res) => {
 // Emit welcome message on connection
 io.on('connection', (socket) => {
     console.log('new connection');
-    socket.emit('filteredData', {"aaa": "AAA"})
-    socket.on('filteredRequest', (data) => {
-        console.log(data)
+    socket.on('filteredRequest', async (data) => {
+        console.log(data.sizes)
+        const items = await getFilteredItemsSocket(
+            data.kind,
+            data.sizes, data.prices, data.companies);
+        socket.emit('filteredData', items)
+        // socket.emit('filteredData', {"aaa": "AAA"})
     })
+
 
     socket.on('disconnect', () => {
         console.log('client disconnected');
