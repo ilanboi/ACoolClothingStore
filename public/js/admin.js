@@ -3,13 +3,7 @@ function deleteUserAjax(userId) {
     $.ajax({
         url: '/api/user/deleteUser/' + userId,
         type: 'delete'
-    }); //.done( function(resultArr) {
-
-        // Render the file with all the relevant data BUT activate the USER "pills-users"
-        // Another option -> trying to add here the info to the file using ajax
-        // somehow get only the users data again OR getting all the data(users, item, suppliers) and 
-        // "show active" the specific tap according to what was deleted/updated
-        //});
+    }); 
 }
 
 // Deleting a supplier
@@ -64,8 +58,7 @@ function updateUserAjax(userId, index) {
                         telephone: $('#phoneNumberEditUser' + index).val(),
                         city: $('#cityEditUser' + index).val(),
                         address: $('#addressEditUser' + index).val(),
-                        postal: $('#postalEditUser' + index).val()
-                        
+                        postal: $('#postalEditUser' + index).val()        
                     })
             }
         $.ajax({
@@ -85,58 +78,85 @@ function updateUserAjax(userId, index) {
 
 // Updating a supplier
 function updateSupplierAjax(supplierId, index) {
-    console.log("The supplier id is:" + supplierId);
-    console.log("The index is: " + index);
-    let data = { updatedData: JSON.stringify({
-                    cname: $('#CNameEditSupplier' + index).val(),
-                    email: $('#emailEditSupplier' + index).val(),
-                    telephone: $('#phoneNumberEditSupplier' + index).val()
-                    // Adding all fields
-                })
-        }
-    $.ajax({
-        url: '/api/supplier/updateSupplierById/' + supplierId,
-        type: 'post' ,
-        dataType: 'json',
-        data: data,
-        success: function(res){
-            console.log("supplier updated");
-            // Adding render the file!
-        }
-    }); 
+    cname =  $('#CNameEditSupplier' + index).val();
+    email = $('#emailEditSupplier' + index).val();
+    telephone = $('#phoneNumberEditSupplier' + index).val();
+    
+    errorDiv= '#invalidErrorEditSuppliers'+ index;
 
-    console.log($('#CNameEditSupplier' + index).val())
+    if(SupplierValidation(cname,  telephone, email, errorDiv))
+    {
+        console.log("The supplier id is:" + supplierId);
+        console.log("The index is: " + index);
+        let data = { updatedData: JSON.stringify({
+                        cname: $('#CNameEditSupplier' + index).val(),
+                        email: $('#emailEditSupplier' + index).val(),
+                        telephone: $('#phoneNumberEditSupplier' + index).val()
+                    })
+            }
+        $.ajax({
+            url: '/api/supplier/updateSupplierById/' + supplierId,
+            type: 'post' ,
+            dataType: 'json',
+            data: data,
+            success: function(res){
+                console.log("supplier updated");
+                // Adding render the file!
+            }
+        }); 
 
-    $('#editSupplierModalForm' + index).modal('toggle');
+        console.log($('#CNameEditSupplier' + index).val())
+
+        $('#editSupplierModalForm' + index).modal('toggle');
+    }
 }
 
 // Updating an item
 function updateItemAjax(itemId, index) {
-    console.log("The item id is:" + itemId);
-    console.log("The index is: " + index);
-    let data = { updatedData: JSON.stringify({
-                    title: $('#titleEditItem' + index).val(),
-                    description: $('#descEditItem' + index).val(),
-                    kind: $('#kindEditItem' + index).val(),
-                    price: $('#priceEditItem' + index).val()
-                    // Adding all fields
-                })
-        }
-    $.ajax({
-        url: '/api/item/updateItemById/' + itemId,
-        type: 'post' ,
-        dataType: 'json',
-        data: data,
-        success: function(res){
-            console.log("item updated");
-            // Adding render the file!
-        }
-    }); 
-
-    console.log($('#titleEditItem' + index).val())
-    console.log($('#priceEditItem' + index).val())
     
-    $('#editItemModalForm' + index).modal('toggle');
+    title = $('#titleEditItem' + index).val();
+    desc = $('#descEditItem' + index).val();
+    kind = $('#kindEditItem' + index).val();
+    price = $('#priceEditItem' + index).val();
+    size = $('#sizeEditItem' + index).val();
+    rating = $('#ratingEditItem' + index).val();
+    image_url = $('#imgUrlEditItem' + index).val();
+    company = $('#companyEditItem' + index).val();
+    
+    errorDiv= '#invalidErrorEditItem'+ index;
+
+    if(ItemValidation(title, image_url, rating, desc, kind, price, size, company,  errorDiv))
+    {
+    
+        console.log("The item id is:" + itemId);
+        console.log("The index is: " + index);
+        let data = { updatedData: JSON.stringify({
+                        title: $('#titleEditItem' + index).val(),
+                        description: $('#descEditItem' + index).val(),
+                        kind: $('#kindEditItem' + index).val(),
+                        price: $('#priceEditItem' + index).val(),
+                        image_url: $('#imgUrlEditItem' + index).val(),
+                        rating: $('#ratingEditItem' + index).val(),
+                        size: $('#sizeEditItem' + index).val(),
+                        company: $('#companyEditItem' + index) 
+                    })
+            }
+        $.ajax({
+            url: '/api/item/updateItemById/' + itemId,
+            type: 'post' ,
+            dataType: 'json',
+            data: data,
+            success: function(res){
+                console.log("item updated");
+                // Adding render the file!
+            }
+        }); 
+
+        console.log($('#titleEditItem' + index).val())
+        console.log($('#priceEditItem' + index).val())
+    
+        $('#editItemModalForm' + index).modal('toggle');
+    }
 }
 
 // Updating a Warehouse
@@ -216,9 +236,6 @@ function createWarehouseAjax() {
     $('#addWarehouseModalForm').modal('toggle');
 }
 
-
-// ADD VALIDATION OR EDIT
-// ONLY AFTER VALIDATION ---> CALLING THE RELEVANT UPDATE FUNC!!!
 
 // Validation
 function UserValidation(fName, lName, phoneNumber, email, city, address, postal, errorDiv){
@@ -325,37 +342,77 @@ function UserValidation(fName, lName, phoneNumber, email, city, address, postal,
 function ItemValidation(title, image_url, rating, desc, kind, price, size, company,  errorDiv){
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
-    const PhoneStart = /(050|054|053|052)\d+/
+    const sizeRgx = /[0-9\.]+/
+   
     
-    if(fName == "")
+    if(title == "")
     {
-        $(errorDiv).text("Invalid input - Full Name is required");
+        $(errorDiv).text("Invalid input - Title is required");
         return false;
     }
-    else if(!onlyLettersAndSpaces.test(fName))
+    else if(!onlyLettersAndSpaces.test(title))
     {
-        $(errorDiv).text("Invalid input - Name must have only letters and spaces");
+        $(errorDiv).text("Invalid input - Title must have only letters and spaces");
         return false;
     }
-    
-    if(phoneNumber == "")
+    if(desc == "")
     {
-        $(errorDiv).text("Invalid input - Phone Number is required");
+        $(errorDiv).text("Invalid input - Description is required");
         return false;
     }
-    else if(!onlyNumbers.test(phoneNumber))
+    if(price == "")
     {
-        $(errorDiv).text("Invalid input - Phone Number must have only numbers");
+        $(errorDiv).text("Invalid input - Price is required");
         return false;
     }
-    else if(onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber))
+    else if (!onlyNumbers.test(price))
     {
-        $(errorDiv).text("Invalid input - Phone Number must start with one of the following: 050/052/053/054");
+        $(errorDiv).text("Invalid input - Price must have only numbers");
         return false;
     }
-    else if(onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10))
+    if(kind == "")
     {
-        $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
+        $(errorDiv).text("Invalid input - Kind is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(kind))
+    {
+        $(errorDiv).text("Invalid input - Kind must have only letters and spaces");
+        return false;
+    }
+    else if(kind.toLowerCase() != "women" && kind.toLowerCase() != "men")
+    {
+        $(errorDiv).text("Invalid input - Kind must be women/men ");
+        return false;
+    }
+    if(image_url == "")
+    {
+        $(errorDiv).text("Invalid input - Image Url is required");
+        return false;
+    }
+    if(rating == "")
+    {
+        $(errorDiv).text("Invalid input - Rating is required");
+        return false;
+    }
+    else if (!onlyNumbers.test(rating))
+    {
+        $(errorDiv).text("Invalid input - Rating must have only numbers");
+        return false;
+    }
+    if(size == "")
+    {
+        $(errorDiv).text("Invalid input - Size is required");
+        return false;
+    }
+    else if (!sizeRgx.test(size))
+    {
+        $(errorDiv).text("Invalid input - Size must have only numbers and a .");
+        return false;
+    }
+    if(company == "")
+    {
+        $(errorDiv).text("Invalid input - Company is required");
         return false;
     }
     else
@@ -369,18 +426,18 @@ function SupplierValidation(cName,  phoneNumber, email, errorDiv){
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const PhoneStart = /(050|054|053|052)\d+/
+    const emailRgx = /^[a-zA-Z0-9~#%\$\*+-\.!?]+@[a-zA-Z0-9~#%\$\*+-\.!?]+\.[a-zA-Z0-9~#%\$\*+-\.!?]+/
     
-    if(fName == "")
+    if(cName == "")
     {
-        $(errorDiv).text("Invalid input - Full Name is required");
+        $(errorDiv).text("Invalid input - Name is required");
         return false;
     }
-    else if(!onlyLettersAndSpaces.test(fName))
+    else if(!onlyLettersAndSpaces.test(cName))
     {
         $(errorDiv).text("Invalid input - Name must have only letters and spaces");
         return false;
     }
-    
     if(phoneNumber == "")
     {
         $(errorDiv).text("Invalid input - Phone Number is required");
@@ -399,6 +456,16 @@ function SupplierValidation(cName,  phoneNumber, email, errorDiv){
     else if(onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10))
     {
         $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
+        return false;
+    }
+    if(email == "")
+    {
+        $(errorDiv).text("Invalid input - Email is required");
+        return false;
+    }
+    else if(!emailRgx.test(email))
+    {
+        $(errorDiv).text("Invalid input - Email must contain @ and a .");
         return false;
     }
     else
