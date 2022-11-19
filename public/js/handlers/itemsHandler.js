@@ -9,6 +9,9 @@ function showAllItemsHomeGrid() {
     for (let item of hotestitems) {
         AppendSingleShoeToElement("featured-items-sec2", item._id, item.title, item.price, item.size, item.image_url)
     }
+    for(let item of items) {
+        AppendSingleShoeToElement("featured-items-sec3", item._id, item.title, item.price, item.size, item.image_url)
+    }
 }
 
 function showItemsByGender(gender) {
@@ -152,6 +155,8 @@ $(document).ready(function () {
     if (searchTextQueryParam) {
         setItemsOnAlbum(searchTextQueryParam);
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'items') {
+        setItemsOnAlbum("");
+    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'supplier') {
         setItemsOnAlbum("");
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'men') {
         setItemsOnAlbumByGender("men");

@@ -71,6 +71,7 @@ app.get('/profile', (req, res) => {
 app.get('/items', (req, res) => {
     res.sendFile(__dirname + '/views/album.html');
 });
+
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + '/views/about.html');
 });
@@ -87,6 +88,10 @@ app.get('/cart', (req, res) => {
     res.sendFile(__dirname + '/views/cart.html');
 });
 
+app.get('/supplier', (req, res) => {
+    res.sendFile(__dirname + '/views/supplier.html');
+});
+
 app.get('/item-listing/:searchText', (req, res) => {
     const searchText = req.params.searchText;
     const cloneRes = {}
@@ -96,6 +101,7 @@ app.get('/item-listing/:searchText', (req, res) => {
     console.log(cloneRes)
     res.sendFile(__dirname + '/views/item-listing.html');
 })
+
 
 
 app.get('/admin2', async (req, res) => {

@@ -39,6 +39,10 @@ const itemSchema = new mongoose.Schema({
         required: false,
         default: "S, M, L, XL"
     },
+    company: {
+        type: String,
+        required: false,
+    },
     date: {
         type: String,
         required: false,

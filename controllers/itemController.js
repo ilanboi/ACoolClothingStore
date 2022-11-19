@@ -8,7 +8,8 @@ const createItem = function (req, res) {
         description: req.body.description,
         kind: req.body.kind,
         price: req.body.price,
-        date: req.body.date
+        date: req.body.date,
+        company: req.body.company
     });
     return item
         .save()

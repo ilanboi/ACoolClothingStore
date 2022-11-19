@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shoey 2 colman</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link href="../public/css/footer.css" rel="stylesheet">
+    <link href="../public/css/header.css" rel="stylesheet">
+    <link href="../public/css/newitem.css" rel="stylesheet">
+
+
+    <!-- Favicon-->
+    <link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
+
+</head>
+<body>
+<script src="../public/js/handlers/itemsHandler.js"></script>
+<script src="../public/js/handlers/requestsHandler.js"></script>
+<script src="../public/js/handlers/cookiesHandler.js"></script>
+<script src="../public/js/handlers/loginHandler.js"></script>
+
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand flip logo" href="/">Shoey</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/women">Women</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/men">Men</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search"
+                           aria-label="Search">
+                    <button class="btn btn-outline-primary" type="button"
+                            onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
+                    </button>
+                </form>
+                <button class="btn btn-outline-primary" type="button" id="login-btn" onclick="window.location = '/login'">Login
+                </button>
+                <button class="btn btn-outline-primary open-button" type="button" onclick="openForm()">Add item
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Shoes stock</h1>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container album py-5 bg-light">
+        <div class="login-box container">
+            <h1>Add new item</h1>
+        
+            <label for="shoe_name"><b>Shoe name</b></label>
+            <input type="text" placeholder="Enter shoes name" name="shoes_name" required>
+        
+            <label for="size"><b>Shoe size</b></label>
+            <input type="text" placeholder="Enter shoes size" name="size" required>
+    
+            <label for="gender"><b>Shoe gender</b></label>
+            <input type="text" placeholder="Enter shoes gender" name="gender" required>
+    
+            <label for="image"><b>Shoe image url</b></label>
+            <input type="text" placeholder="Enter shoes image url" name="img" required>
+    
+            <label for="price"><b>Shoe price</b></label>
+            <input type="text" placeholder="Enter shoes price" name="price" required>
+    
+            <label for="desc"><b>Shoe description</b></label>
+            <input type="text" placeholder="Enter shoes description" name="desc" required>
+        
+            <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+        <div class="container">
+            
+            <div id="album-shoes" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
+    <div class="container">
+      <div class="row row-30 columns">
+        <div class="col-lg-6 col-xl-6">
+          <div class="pr-xl-4">
+
+                <!-- <h3 class="white-text">Quick Tweets</h3> -->
+                <h3>Quick Tweets</h3>
+                <div class="links" id="collapse_1">
+                    <a class="twitter-timeline" data-width="450" data-height="200" data-dnt="true" data-theme="dark"
+                       href="https://twitter.com/StoreShoey?ref_src=twsrc%5Etfw">Tweets by StoreShoey</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
+                    </li>
+                </div>
+    
+    
+
+            <!-- Rights-->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h5 class="white-text">Contacts</h5>
+          <dl class="contact-list">
+            <dt class="white-text">Address:</dt>
+            <dd class="white-text">Colman <br class="white-text">Rishon Le Zion - IL</dd>
+          </dl>
+          <dl class="contact-list">
+            <dt class="white-text">email:</dt>
+            <dd><a href="mailto:#">info@shoey.com</a></dd>
+          </dl>
+          <dl class="contact-list">
+            <dt class="white-text">phones:</dt>
+            <dd class="white-text">+972 52-8252-<strong>69</strong>9</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+</body>
+</html>
