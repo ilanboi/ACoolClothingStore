@@ -17,7 +17,7 @@ $('#loginForm').submit(function (e) {
                 addToCookies("userdata", supplier_details, addYears(new Date(), 1))
                 addToCookies("usertype", 'supplier', addYears(new Date(), 1))
 
-                alert("works login comp")
+                alert("logged in successfully")
             }
         });
 
@@ -94,11 +94,13 @@ function execSupplierLogin() {
                 const user_details = JSON.stringify(res['supplierDetails'])
                 addToCookies("userdata", user_details, addYears(new Date(), 1))
                 addToCookies("usertype", 'supplier', addYears(new Date(), 1))
-                alert("works")
+                alert("logged in successfully")
                 window.location = '/'
+            } else {
+                alert("Error logging in")
             }
         }
-    });
+    })
 }
 
 function execUserLogin() {
@@ -115,8 +117,10 @@ function execUserLogin() {
                 const user_details = JSON.stringify(res['user'])
                 addToCookies("userdata", user_details, addYears(new Date(), 1))
                 addToCookies("usertype", 'user', addYears(new Date(), 1))
-                alert("works")
+                alert("logged in successfully")
                 window.location = '/'
+            } else {
+                alert("Error logging in")
             }
         }
     });
