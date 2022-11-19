@@ -7,6 +7,7 @@ const innerCreateWarehouse = (name, city, street, houseNumber, lat ,lng, callbac
 }
 
 const createWarehouse = async function (req, res) {
+    console.log(req.body)
     return innerCreateWarehouse(
         req.body.name,
         req.body.city,
@@ -28,7 +29,7 @@ const deleteWarehouse = async function (req, res) {
     console.log("id: "+ req.params.warehouseId);
     
     //! Change later --> to "req.body.currentUserId"
-    const result = await innerDeleteWarehouse(req.params.warehouseId, "6377a7f6356ff1ad98754a73")
+    const result = await innerDeleteWarehouse(req.params.warehouseId, req.body.currentUserId)
     console.log("result: " + result.success);
     if(result.success == false)
     {

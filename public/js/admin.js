@@ -1,5 +1,10 @@
-function drawCircle() {
+const userData = JSON.parse(getCookie('userdata'))
 
+userData.isAdmin ? '' : window.location = '/404'
+
+function drawCircle() {
+    let result = get_request('/api/item/getGroupByItem')
+    // console.log(dataaa.items.data)
 // set the dimensions and margins of the graph
     var width = 450
     height = 450
@@ -17,7 +22,11 @@ function drawCircle() {
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 // Create dummy data
-    var data = {a: 9, b: 20, c:30, d:8, e:12}
+    var data = {}
+
+    for (let itemD of result.data) {
+        data[itemD._id] = itemD.count
+    }
 
 // set the color scale
     var color = d3.scaleOrdinal()
@@ -26,7 +35,9 @@ function drawCircle() {
 
 // Compute the position of each group on the pie:
     var pie = d3.pie()
-        .value(function(d) {return d.value; })
+        .value(function (d) {
+            return d.value;
+        })
     var data_ready = pie(d3.entries(data))
 // Now I know that group A goes from 0 degrees to x degrees and so on.
 
@@ -42,7 +53,9 @@ function drawCircle() {
         .enter()
         .append('path')
         .attr('d', arcGenerator)
-        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attr('fill', function (d) {
+            return (color(d.data.key))
+        })
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 0.7)
@@ -53,12 +66,17 @@ function drawCircle() {
         .data(data_ready)
         .enter()
         .append('text')
-        .text(function(d){ return "grp " + d.data.key})
-        .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+        .text(function (d) {
+            return d.data.key + " " + d.data.value
+        })
+        .attr("transform", function (d) {
+            return "translate(" + arcGenerator.centroid(d) + ")";
+        })
         .style("text-anchor", "middle")
         .style("font-size", 17)
 
 }
+
 function drawBars() {
 
 // set the dimensions and margins of the graph
@@ -76,7 +94,7 @@ function drawBars() {
             "translate(" + margin.left + "," + margin.top + ")");
 
 // get the data
-    d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", function(data) {
+    d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", function (data) {
 
         // X axis: scale and draw:
         var x = d3.scaleLinear()
@@ -88,7 +106,9 @@ function drawBars() {
 
         // set the parameters for the histogram
         var histogram = d3.histogram()
-            .value(function(d) { return d.price; })   // I need to give the vector of value
+            .value(function (d) {
+                return d.price;
+            })   // I need to give the vector of value
             .domain(x.domain())  // then the domain of the graphic
             .thresholds(x.ticks(70)); // then the numbers of bins
 
@@ -98,7 +118,9 @@ function drawBars() {
         // Y axis: scale and draw:
         var y = d3.scaleLinear()
             .range([height, 0]);
-        y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+        y.domain([0, d3.max(bins, function (d) {
+            return d.length;
+        })]);   // d3.hist has to be called before the Y axis obviously
         svg.append("g")
             .call(d3.axisLeft(y));
 
@@ -115,23 +137,23 @@ function drawBars() {
 
         // A function that change this tooltip when the user hover a point.
         // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
-        var showTooltip = function(d) {
+        var showTooltip = function (d) {
             tooltip
                 .transition()
                 .duration(100)
                 .style("opacity", 1)
             tooltip
                 .html("Range: " + d.x0 + " - " + d.x1)
-                .style("left", (d3.mouse(this)[0]+20) + "px")
+                .style("left", (d3.mouse(this)[0] + 20) + "px")
                 .style("top", (d3.mouse(this)[1]) + "px")
         }
-        var moveTooltip = function(d) {
+        var moveTooltip = function (d) {
             tooltip
-                .style("left", (d3.mouse(this)[0]+20) + "px")
+                .style("left", (d3.mouse(this)[0] + 20) + "px")
                 .style("top", (d3.mouse(this)[1]) + "px")
         }
         // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-        var hideTooltip = function(d) {
+        var hideTooltip = function (d) {
             tooltip
                 .transition()
                 .duration(100)
@@ -144,14 +166,20 @@ function drawBars() {
             .enter()
             .append("rect")
             .attr("x", 1)
-            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-            .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-            .attr("height", function(d) { return height - y(d.length); })
+            .attr("transform", function (d) {
+                return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+            })
+            .attr("width", function (d) {
+                return x(d.x1) - x(d.x0) - 1;
+            })
+            .attr("height", function (d) {
+                return height - y(d.length);
+            })
             .style("fill", "#69b3a2")
             // Show tooltip on hover
-            .on("mouseover", showTooltip )
-            .on("mousemove", moveTooltip )
-            .on("mouseleave", hideTooltip )
+            .on("mouseover", showTooltip)
+            .on("mousemove", moveTooltip)
+            .on("mouseleave", hideTooltip)
 
     });
 }
@@ -163,110 +191,127 @@ $(document).ready(function () {
 
 // Deleting a user
 function deleteUserAjax(userId) {
+    let userdata = JSON.parse(getCookie('userdata'))
     $.ajax({
         url: '/api/user/deleteUser/' + userId,
-        type: 'delete'
-    }); 
+        type: 'delete',
+        data: {
+            currentUserId: userdata['_id']
+        }
+    });
 }
 
 // Deleting a supplier
 function deleteSupplierAjax(supplierId) {
+    let userdata = JSON.parse(getCookie('userdata'))
     console.log("The supplier id is:" + supplierId);
     $.ajax({
         url: '/api/supplier/deleteSupplier/' + supplierId,
-        type: 'delete'       
+        type: 'delete',
+        data: {
+            currentUserId: userdata['_id']
+        }
     });
 }
 
 // Deleting an item
 function deleteItemAjax(itemId) {
+    let userdata = JSON.parse(getCookie('userdata'))
     $.ajax({
         url: '/api/item/deleteItem/' + itemId,
-        type: 'delete'
+        type: 'delete',
+        data: {
+            currentUserId: userdata['_id']
+        }
     });
 }
+
 // Deleting a warehouse
 function deleteWarehouseAjax(warehouseId) {
+    let userdata = JSON.parse(getCookie('userdata'))
     $.ajax({
         url: '/api/warehouse/deleteWarehouse/' + warehouseId,
-        type: 'delete'
+        type: 'delete',
+        data: {
+            currentUserId: userdata['_id']
+        }
     });
 }
 
 
 // Updating a user
 function updateUserAjax(userId, index) {
-    
-    // The relevant DATA to send in the req!
-    fname= $('#firstNameEditUser' + index).val()
-    lname= $('#lastNameEditUser' + index).val()
-    email= $('#emailEditUser' + index).val()
-    telephone= $('#phoneNumberEditUser' + index).val()
-    city= $('#cityEditUser' + index).val()
-    address= $('#addressEditUser' + index).val()
-    postal= $('#postalEditUser' + index).val()
-    
-    errorDiv= '#invalidErrorEditUser'+ index
 
-    console.log('#invalidErrorEditUser'+ index)
-    
-    if(UserValidation(fname, lname, telephone, email, city, address, postal, errorDiv))
-    {
+    // The relevant DATA to send in the req!
+    fname = $('#firstNameEditUser' + index).val()
+    lname = $('#lastNameEditUser' + index).val()
+    email = $('#emailEditUser' + index).val()
+    telephone = $('#phoneNumberEditUser' + index).val()
+    city = $('#cityEditUser' + index).val()
+    address = $('#addressEditUser' + index).val()
+    postal = $('#postalEditUser' + index).val()
+
+    errorDiv = '#invalidErrorEditUser' + index
+
+    console.log('#invalidErrorEditUser' + index)
+
+    if (UserValidation(fname, lname, telephone, email, city, address, postal, errorDiv)) {
         console.log("The user id is:" + userId);
         console.log("The index is: " + index);
-        let data = { updatedData: JSON.stringify({
-                        fname: $('#firstNameEditUser' + index).val(),
-                        lname: $('#lastNameEditUser' + index).val(),
-                        email: $('#emailEditUser' + index).val(),
-                        telephone: $('#phoneNumberEditUser' + index).val(),
-                        city: $('#cityEditUser' + index).val(),
-                        address: $('#addressEditUser' + index).val(),
-                        postal: $('#postalEditUser' + index).val()        
-                    })
-            }
+        let data = {
+            updatedData: JSON.stringify({
+                fname: $('#firstNameEditUser' + index).val(),
+                lname: $('#lastNameEditUser' + index).val(),
+                email: $('#emailEditUser' + index).val(),
+                telephone: $('#phoneNumberEditUser' + index).val(),
+                city: $('#cityEditUser' + index).val(),
+                address: $('#addressEditUser' + index).val(),
+                postal: $('#postalEditUser' + index).val()
+            })
+        }
         $.ajax({
             url: '/api/user/updateUserById/' + userId,
-            type: 'post' ,
+            type: 'post',
             dataType: 'json',
             data: data,
-            success: function(res){
+            success: function (res) {
                 console.log("user updated");
                 // Adding render the file!
             }
-        }); 
+        });
 
         $('#editUserModalForm' + index).modal('toggle');
-    }       
+    }
 }
 
 // Updating a supplier
 function updateSupplierAjax(supplierId, index) {
-    cname =  $('#CNameEditSupplier' + index).val();
+    cname = $('#CNameEditSupplier' + index).val();
     email = $('#emailEditSupplier' + index).val();
     telephone = $('#phoneNumberEditSupplier' + index).val();
-    
-    errorDiv= '#invalidErrorEditSuppliers'+ index;
 
-    if(SupplierValidation(cname,  telephone, email, errorDiv))
-    {
+    errorDiv = '#invalidErrorEditSuppliers' + index;
+
+    if (SupplierValidation(cname, telephone, email, errorDiv)) {
         console.log("The supplier id is:" + supplierId);
         console.log("The index is: " + index);
-        let data = { updatedData: JSON.stringify({
-                        cname: $('#CNameEditSupplier' + index).val(),
-                        email: $('#emailEditSupplier' + index).val(),
-                        telephone: $('#phoneNumberEditSupplier' + index).val()
-                    })
-            }
+        let data = {
+            updatedData: JSON.stringify({
+                cname: $('#CNameEditSupplier' + index).val(),
+                email: $('#emailEditSupplier' + index).val(),
+                telephone: $('#phoneNumberEditSupplier' + index).val()
+            })
+        }
         $.ajax({
             url: '/api/supplier/updateSupplierById/' + supplierId,
-            type: 'post' ,
+            type: 'post',
             dataType: 'json',
             data: data,
-            success: function(res){
+            success: function (res) {
                 console.log("supplier updated");
                 // Adding render the file!
             }
-        }); 
+        });
 
         console.log($('#CNameEditSupplier' + index).val())
 
@@ -276,7 +321,7 @@ function updateSupplierAjax(supplierId, index) {
 
 // Updating an item
 function updateItemAjax(itemId, index) {
-    
+
     title = $('#titleEditItem' + index).val();
     desc = $('#descEditItem' + index).val();
     kind = $('#kindEditItem' + index).val();
@@ -285,50 +330,50 @@ function updateItemAjax(itemId, index) {
     rating = $('#ratingEditItem' + index).val();
     image_url = $('#imgUrlEditItem' + index).val();
     company = $('#companyEditItem' + index).val();
-    
-    errorDiv= '#invalidErrorEditItem'+ index;
 
-    if(ItemValidation(title, image_url, rating, desc, kind, price, size, company,  errorDiv))
-    {
-    
+    errorDiv = '#invalidErrorEditItem' + index;
+
+    if (ItemValidation(title, image_url, rating, desc, kind, price, size, company, errorDiv)) {
+
         console.log("The item id is:" + itemId);
         console.log("The index is: " + index);
-        let data = { updatedData: JSON.stringify({
-                        title: $('#titleEditItem' + index).val(),
-                        description: $('#descEditItem' + index).val(),
-                        kind: $('#kindEditItem' + index).val(),
-                        price: $('#priceEditItem' + index).val(),
-                        image_url: $('#imgUrlEditItem' + index).val(),
-                        rating: $('#ratingEditItem' + index).val(),
-                        size: $('#sizeEditItem' + index).val(),
-                        company: $('#companyEditItem' + index) 
-                    })
-            }
+        let data = {
+            updatedData: JSON.stringify({
+                title: $('#titleEditItem' + index).val(),
+                description: $('#descEditItem' + index).val(),
+                kind: $('#kindEditItem' + index).val(),
+                price: $('#priceEditItem' + index).val(),
+                image_url: $('#imgUrlEditItem' + index).val(),
+                rating: $('#ratingEditItem' + index).val(),
+                size: $('#sizeEditItem' + index).val(),
+                company: $('#companyEditItem' + index)
+            })
+        }
         $.ajax({
             url: '/api/item/updateItemById/' + itemId,
-            type: 'post' ,
+            type: 'post',
             dataType: 'json',
             data: data,
-            success: function(res){
+            success: function (res) {
                 console.log("item updated");
                 // Adding render the file!
             }
-        }); 
+        });
 
         console.log($('#titleEditItem' + index).val())
         console.log($('#priceEditItem' + index).val())
-    
+
         $('#editItemModalForm' + index).modal('toggle');
     }
 }
 
 // Updating a Warehouse
 function updateWarehouseAjax(warehouseId, index) {
-    
+
 
     console.log($('#nameEditWarehouse' + index).val())
     console.log($('#houseNumberEditWarehouse' + index).val())
-   
+
     wName = $('#nameEditWarehouse' + index).val();
     street = $('#streetEditWarehouse' + index).val();
     city = $('#cityEditWarehouse' + index).val();
@@ -336,377 +381,289 @@ function updateWarehouseAjax(warehouseId, index) {
     lat = $('#latEditWarehouse' + index).val();
     lng = $('#lngEditWarehouse' + index).val();
     errorDiv = '#invalidErrorEditWarehouse' + index;
-    
-    if(WarehouseValidation(wName, street, city, houseNumber, lat, lng, errorDiv))
-    {   
+
+    if (WarehouseValidation(wName, street, city, houseNumber, lat, lng, errorDiv)) {
         console.log("The Warehouse id is:" + warehouseId);
         console.log("The index is: " + index);
-        let data = { updatedData: JSON.stringify({
-                    name: $('#nameEditWarehouse' + index).val(),
-                    city: $('#cityEditWarehouse' + index).val(),
-                    street: $('#streetEditWarehouse' + index).val(),
-                    houseNumber: $('#houseNumberEditWarehouse' + index).val(),
-                    lat: $('#latEditWarehouse' + index).val(),
-                    lng: $('#lngEditWarehouse' + index).val()       
-                })
-            }
+        let data = {
+            updatedData: JSON.stringify({
+                name: $('#nameEditWarehouse' + index).val(),
+                city: $('#cityEditWarehouse' + index).val(),
+                street: $('#streetEditWarehouse' + index).val(),
+                houseNumber: $('#houseNumberEditWarehouse' + index).val(),
+                lat: $('#latEditWarehouse' + index).val(),
+                lng: $('#lngEditWarehouse' + index).val()
+            })
+        }
         $.ajax({
             url: '/api/warehouse/updateWarehouseById/' + warehouseId,
-            type: 'post' ,
+            type: 'post',
             dataType: 'json',
             data: data,
-            success: function(res){
+            success: function (res) {
                 console.log("warehouse updated");
-            // Adding render the file!
+                // Adding render the file!
             }
-        }); 
+        });
 
         $('#editWarehouseModalForm' + index).modal('toggle');
-        
-    }       
-    
-    
+
+    }
+
+
 }
 
-// doesn't really work!!
 function createWarehouseAjax() {
-    let data = { updatedData: JSON.stringify({
-                    name: $('#nameEditWarehouse').val(),
-                    city: $('#cityEditWarehouse').val(),
-                    street: $('#streetEditWarehouse').val(),
-                    houseNumber: $('#houseNumberEditWarehouse').val(),
-                    lat: $('#latEditWarehouse').val(),
-                    lng: $('#lngEditWarehouse').val()
-                })
-        }
+    let data1 = {
+        name: $('#nameAddWarehouse').val(),
+        city: $('#cityAddWarehouse').val(),
+        street: $('#streetAddWarehouse').val(),
+        houseNumber: $('#houseNumberAddWarehouse').val(),
+        lat: $('#latAddWarehouse').val(),
+        lng: $('#lngAddWarehouse').val()
+    }
+    console.log("asdasd", data1);
     $.ajax({
-        url: '/api/warehouse/createWarehouse/' ,
-        type: 'post' ,
-        dataType: 'json',
-        data: data,
-        success: function(res){
+        url: '/api/warehouse/createWarehouse/',
+        type: 'post',
+        // dataType: 'json',
+        data: data1,
+        success: function (res) {
             console.log("warehouse created");
             // Adding render the file!
         }
-    }); 
+    });
 
     console.log($('#nameAddWarehouse').val())
     console.log($('#cityAddWarehouse').val())
     console.log($('#streetAddWarehouse').val())
     console.log($('#latAddWarehouse').val())
     console.log($('#lngAddWarehouse').val())
-    
+
     $('#addWarehouseModalForm').modal('toggle');
 }
 
 
 // Validation
-function UserValidation(fName, lName, phoneNumber, email, city, address, postal, errorDiv){
+function UserValidation(fName, lName, phoneNumber, email, city, address, postal, errorDiv) {
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const PhoneStart = /(050|054|053|052)\d+/
     const emailRgx = /^[a-zA-Z0-9~#%\$\*+-\.!?]+@[a-zA-Z0-9~#%\$\*+-\.!?]+\.[a-zA-Z0-9~#%\$\*+-\.!?]+/
-    
+
     const addressRgx = /^[A-Za-z]+\s[A-Za-z0-9\s]+$/
 
-    if(fName == "")
-    {
+    if (fName == "") {
         $(errorDiv).text("Invalid input - First Name is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(fName))
-    {
+    } else if (!onlyLettersAndSpaces.test(fName)) {
         $(errorDiv).text("Invalid input - First Name must have only letters and spaces");
         return false;
     }
-    if(lName == "")
-    {
+    if (lName == "") {
         $(errorDiv).text("Invalid input - Last Name is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(lName))
-    {
+    } else if (!onlyLettersAndSpaces.test(lName)) {
         $(errorDiv).text("Invalid input - Last Name must have only letters and spaces");
         return false;
     }
-    if(phoneNumber == "")
-    {
+    if (phoneNumber == "") {
         $(errorDiv).text("Invalid input - Phone Number is required");
         return false;
-    }
-    else if(!onlyNumbers.test(phoneNumber))
-    {
+    } else if (!onlyNumbers.test(phoneNumber)) {
         $(errorDiv).text("Invalid input - Phone Number must have only numbers");
         return false;
-    }
-    else if(onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber))
-    {
+    } else if (onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber)) {
         $(errorDiv).text("Invalid input - Phone Number must start with one of the following: 050/052/053/054");
         return false;
-    }
-    else if(onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10))
-    {
+    } else if (onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10)) {
         $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
         return false;
     }
-    if(email == "")
-    {
+    if (email == "") {
         $(errorDiv).text("Invalid input - Email is required");
         return false;
-    }
-    else if(!emailRgx.test(email))
-    {
+    } else if (!emailRgx.test(email)) {
         $(errorDiv).text("Invalid input - Email must contain @ and a .");
         return false;
     }
-    if(address == "")
-    {
+    if (address == "") {
         $(errorDiv).text("Invalid input - Address is required");
         return false;
-    }
-    else if(!addressRgx.test(address))
-    {
+    } else if (!addressRgx.test(address)) {
         $(errorDiv).text("Invalid input - Address must start with letters and contains only letters and numbers");
         return false;
     }
-    if(city == "")
-    {
+    if (city == "") {
         $(errorDiv).text("Invalid input - City is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(city))
-    {
+    } else if (!onlyLettersAndSpaces.test(city)) {
         $(errorDiv).text("Invalid input - City must have only letters and spaces");
         return false;
     }
-    if(postal == "")
-    {
+    if (postal == "") {
         $(errorDiv).text("Invalid input - Postal is required");
         return false;
-    }
-    else if(!onlyNumbers.test(postal))
-    {
+    } else if (!onlyNumbers.test(postal)) {
         $(errorDiv).text("Invalid input - Postal must have only numbers");
         return false;
-    }
-    else if((postal.length == 5) || (postal.length == 7 ) )
-    {
+    } else if ((postal.length == 5) || (postal.length == 7)) {
         $(errorDiv).text("Invalid input - Postal must have 5 or 7 digits");
         return false;
-    }
-    else
-    {
+    } else {
         $(errorDiv).text("");
         return true;
     }
 }
 
 
-function ItemValidation(title, image_url, rating, desc, kind, price, size, company,  errorDiv){
+function ItemValidation(title, image_url, rating, desc, kind, price, size, company, errorDiv) {
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const sizeRgx = /[0-9\.]+/
     const onlyLettersAndNumbers = /^[A-Za-z0-9\.\s]*$/
-    
-    if(title == "")
-    {
+
+    if (title == "") {
         $(errorDiv).text("Invalid input - Title is required");
         return false;
-    }
-    else if(!onlyLettersAndNumbers.test(title))
-    {
+    } else if (!onlyLettersAndNumbers.test(title)) {
         $(errorDiv).text("Invalid input - Title must have only letters, numbers and spaces");
         return false;
     }
-    if(desc == "")
-    {
+    if (desc == "") {
         $(errorDiv).text("Invalid input - Description is required");
         return false;
     }
-    if(price == "")
-    {
+    if (price == "") {
         $(errorDiv).text("Invalid input - Price is required");
         return false;
-    }
-    else if (!onlyNumbers.test(price))
-    {
+    } else if (!onlyNumbers.test(price)) {
         $(errorDiv).text("Invalid input - Price must have only numbers");
         return false;
     }
-    if(kind == "")
-    {
+    if (kind == "") {
         $(errorDiv).text("Invalid input - Kind is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(kind))
-    {
+    } else if (!onlyLettersAndSpaces.test(kind)) {
         $(errorDiv).text("Invalid input - Kind must have only letters and spaces");
         return false;
-    }
-    else if(kind.toLowerCase() != "women" && kind.toLowerCase() != "men")
-    {
+    } else if (kind.toLowerCase() != "women" && kind.toLowerCase() != "men") {
         $(errorDiv).text("Invalid input - Kind must be women/men ");
         return false;
     }
-    if(image_url == "")
-    {
+    if (image_url == "") {
         $(errorDiv).text("Invalid input - Image Url is required");
         return false;
     }
-    if(rating == "")
-    {
+    if (rating == "") {
         $(errorDiv).text("Invalid input - Rating is required");
         return false;
-    }
-    else if (!onlyNumbers.test(rating))
-    {
+    } else if (!onlyNumbers.test(rating)) {
         $(errorDiv).text("Invalid input - Rating must have only numbers");
         return false;
     }
-    if(size == "")
-    {
+    if (size == "") {
         $(errorDiv).text("Invalid input - Size is required");
         return false;
-    }
-    else if (!sizeRgx.test(size))
-    {
+    } else if (!sizeRgx.test(size)) {
         $(errorDiv).text("Invalid input - Size must have only numbers and a .");
         return false;
     }
-    if(company == "")
-    {
+    if (company == "") {
         $(errorDiv).text("Invalid input - Company is required");
         return false;
-    }
-    else
-    {
+    } else {
         $(errorDiv).text("");
         return true;
     }
 }
 
-function SupplierValidation(cName,  phoneNumber, email, errorDiv){
+function SupplierValidation(cName, phoneNumber, email, errorDiv) {
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const PhoneStart = /(050|054|053|052)\d+/
     const emailRgx = /^[a-zA-Z0-9~#%\$\*+-\.!?]+@[a-zA-Z0-9~#%\$\*+-\.!?]+\.[a-zA-Z0-9~#%\$\*+-\.!?]+/
-    
-    if(cName == "")
-    {
+
+    if (cName == "") {
         $(errorDiv).text("Invalid input - Name is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(cName))
-    {
+    } else if (!onlyLettersAndSpaces.test(cName)) {
         $(errorDiv).text("Invalid input - Name must have only letters and spaces");
         return false;
     }
-    if(phoneNumber == "")
-    {
+    if (phoneNumber == "") {
         $(errorDiv).text("Invalid input - Phone Number is required");
         return false;
-    }
-    else if(!onlyNumbers.test(phoneNumber))
-    {
+    } else if (!onlyNumbers.test(phoneNumber)) {
         $(errorDiv).text("Invalid input - Phone Number must have only numbers");
         return false;
-    }
-    else if(onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber))
-    {
+    } else if (onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber)) {
         $(errorDiv).text("Invalid input - Phone Number must start with one of the following: 050/052/053/054");
         return false;
-    }
-    else if(onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10))
-    {
+    } else if (onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10)) {
         $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
         return false;
     }
-    if(email == "")
-    {
+    if (email == "") {
         $(errorDiv).text("Invalid input - Email is required");
         return false;
-    }
-    else if(!emailRgx.test(email))
-    {
+    } else if (!emailRgx.test(email)) {
         $(errorDiv).text("Invalid input - Email must contain @ and a .");
         return false;
-    }
-    else
-    {
+    } else {
         $(errorDiv).text("");
         return true;
     }
 }
 
-function WarehouseValidation(name,  street, city, houseNumber, lat, lng, errorDiv){
+function WarehouseValidation(name, street, city, houseNumber, lat, lng, errorDiv) {
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const coordinates = /^[-+]?[0-9]+$/
-    
-    if(name == "")
-    {
+
+    if (name == "") {
         $(errorDiv).text("Invalid input - Warehouse Name is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(name))
-    {
+    } else if (!onlyLettersAndSpaces.test(name)) {
         $(errorDiv).text("Invalid input - Name must have only letters and spaces");
         return false;
     }
-    if(street == "")
-    {
+    if (street == "") {
         $(errorDiv).text("Invalid input - Warehouse street is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(street))
-    {
+    } else if (!onlyLettersAndSpaces.test(street)) {
         $(errorDiv).text("Invalid input - Street must have only letters and spaces");
         return false;
     }
-    if(city == "")
-    {
+    if (city == "") {
         $(errorDiv).text("Invalid input - Warehouse city is required");
         return false;
-    }
-    else if(!onlyLettersAndSpaces.test(city))
-    {
+    } else if (!onlyLettersAndSpaces.test(city)) {
         $(errorDiv).text("Invalid input - City must have only letters and spaces");
         return false;
     }
-    
-    if(houseNumber == "")
-    {
+
+    if (houseNumber == "") {
         $(errorDiv).text("Invalid input - House Number is required");
         return false;
-    }
-    else if(!onlyNumbers.test(houseNumber))
-    {
+    } else if (!onlyNumbers.test(houseNumber)) {
         $(errorDiv).text("Invalid input - house Number must have only numbers");
         return false;
     }
-    if(lat == "")
-    {
+    if (lat == "") {
         $(errorDiv).text("Invalid input - Latitude is required");
         return false;
-    }
-    else if(!coordinates.test(lat))
-    {
+    } else if (!coordinates.test(lat)) {
         $(errorDiv).text("Invalid input - Latitude must have only numbers and -+");
         return false;
     }
-    if(lng == "")
-    {
+    if (lng == "") {
         $(errorDiv).text("Invalid input - Longitude is required");
         return false;
-    }
-    else if(!coordinates.test(lng))
-    {
+    } else if (!coordinates.test(lng)) {
         $(errorDiv).text("Invalid input - Longitude must have only numbers -+");
         return false;
-    }
-   
-    else
-    {
+    } else {
         $(errorDiv).text("");
         return true;
     }

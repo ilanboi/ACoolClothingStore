@@ -5,7 +5,7 @@ const {
     getItemById,
     getGenderItemsModel,
     deleteItemModel,
-    filterItemsModel
+    filterItemsModel, getGroupByCompanyItem
 } = require("../models/item");
 
 const createItem = function (req, res) {
@@ -45,6 +45,9 @@ const innerGetAllItems = async function () {
 const innerGetSpecificItem = async function (itemId) {
     return await getItemById(itemId)
 }
+const innerGetGroupByItem = async function () {
+    return await getGroupByCompanyItem()
+}
 
 // Deleting item
 const innerDeleteItem = async function (itemId, currentUserId) {
@@ -54,7 +57,7 @@ const deleteItem = async function (req, res) {
     console.log(req.params.currentUserId)
 
     //! Change later --> to "req.body.currentUserId"
-    const result = await innerDeleteItem(req.params.itemId, "6377a7f6356ff1ad98754a73")
+    const result = await innerDeleteItem(req.params.itemId, req.body.currentUserId)
     console.log("result: " + result.success);
     if (result.success == false) {
         return res.status(400).json({
@@ -64,7 +67,7 @@ const deleteItem = async function (req, res) {
     } else {
         return res.status(200).json({
             success: true,
-            message: 'Supplier deleted'
+            message: 'item deleted'
         })
     }
 }
@@ -75,6 +78,10 @@ const getAllItems = async function (req, res) {
 
 const getSpecificItem = async function (req, res) {
     return res.status(200).json(await innerGetSpecificItem(req.params.itemId));
+}
+
+const getGroupByItem = async function (req, res) {
+    return res.status(200).json(await innerGetGroupByItem());
 }
 
 const getGenderItems = async function (req, res) {
@@ -157,5 +164,6 @@ module.exports = {
     getGenderItems,
     updateItemById,
     getFilteredItems,
-    getFilteredItemsSocket
+    getFilteredItemsSocket,
+    getGroupByItem
 }

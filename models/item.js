@@ -78,6 +78,28 @@ const getItemById = async function (itemId) {
     }
 }
 
+const getGroupByCompanyItem = async function () {
+    try {
+        const all = await Item.aggregate([
+            {
+                $group: {
+                    _id: '$company',
+                    count: { $sum: 1 } // this means that the count will increment by 1
+                }
+            }]);
+        return {
+            success: true,
+            message: 'Item found.',
+            data: all
+        };
+    } catch (e) {
+        return {
+            success: false,
+            message: 'Item not found ' + e
+        };
+    }
+}
+
 
 const getGenderItemsModel = async function (gender) {
     const filter = {"kind": gender};
@@ -136,6 +158,7 @@ module.exports = {
     getItemById,
     deleteItemModel,
     getGenderItemsModel,
-    filterItemsModel
+    filterItemsModel,
+    getGroupByCompanyItem
 };
 

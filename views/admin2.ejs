@@ -16,7 +16,9 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
+    <script src="../public/js/handlers/cookiesHandler.js"></script>
     <script src="../public/js/admin.js"></script>
+    <script src="../public/js/handlers/requestsHandler.js"></script>
     <!-- Favicon-->
     <link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
 
@@ -26,6 +28,8 @@
 </head>
 
 <body>
+<script src="../public/js/admin.js"></script>
+
 <div class="container-fluid">
     <div class="row jusify-content-center">
         <ul class="navClass nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -48,8 +52,11 @@
 
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div id="my_dataviz"></div>
-                <div id="my_dataviz2"></div>
+                <div class="">
+
+                    <span id="my_dataviz2"></span>
+                    <span id="my_dataviz"></span>
+                </div>
             </div>
 
             <!-- USERS -->
@@ -201,7 +208,7 @@
                 </thead> 
                 <tbody>
                 <% /* %>
-                <span><%=JSON.stringify(data.items)%></span>
+                <span ><%=JSON.stringify(data.items)%></span>
                 <% */ %>
                 <br>
                 

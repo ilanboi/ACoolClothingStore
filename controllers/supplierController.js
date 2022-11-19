@@ -115,7 +115,7 @@ const deleteSupplier = async function (req, res) {
     console.log(req.params.currentUserId)
 
     //! Change later --> to "req.body.currentUserId"
-    const result = await innerDeleteSupplier(req.params.supplierId, "6377a7f6356ff1ad98754a73")
+    const result = await innerDeleteSupplier(req.params.supplierId, req.body.currentUserId)
     console.log("result: " + result.success);
     if (result.success == false) {
         return res.status(400).json({
