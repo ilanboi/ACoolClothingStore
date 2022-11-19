@@ -166,14 +166,6 @@
   transition: bottom 0.1s ease-out, transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-@font-face {
-  font-family: 'themify';
-  src: url("fonts/themify.eot?-fvbane");
-  src: url("fonts/themify.eot?#iefix-fvbane") format("embedded-opentype"), url("fonts/themify.woff?-fvbane") format("woff"), url("fonts/themify.ttf?-fvbane") format("truetype"), url("fonts/themify.svg?-fvbane#themify") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 [class^="ti-"], [class*=" ti-"] {
   font-family: 'themify';
   speak: none;
@@ -1596,14 +1588,7 @@
 }
 
 /*-------- Fontello --------*/
-@font-face {
-  font-family: 'fontello';
-  src: url("fonts/fontello.eot?33109840");
-  src: url("fonts/fontello.eot?33109840#iefix") format("embedded-opentype"), url("fonts/fontello.woff2?33109840") format("woff2"), url("fonts/fontello.woff?33109840") format("woff"), url("fonts/fontello.ttf?33109840") format("truetype"), url("fonts/fontello.svg?33109840#fontello") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*
@@ -2670,7 +2655,6 @@ header.version_1 .main-menu > ul > li:hover > a {
 @media (max-width: 991px) {
   .main-menu ul > li.submenu > a:after {
     font-size: 14px !important;
-    font-size: 14px !important/16pxrem;
     float: right;
   }
 }
@@ -4783,7 +4767,6 @@ body.modal-open .mm-slideout {
   left: -15px;
   top: -6px;
   content: '';
-  background: url(../img/countdown_bg.svg) top left no-repeat;
   width: 27px;
   height: 30px;
   display: inline-block;
@@ -4816,9 +4799,7 @@ body.modal-open .mm-slideout {
 /* 3.  COMMON */
 /*============================================================================================*/
 /*-------- 3.1 Owl Carousel Custom Nav --------*/
-.owl-theme .owl-dots {
-  margin-top: 20 !important;
-}
+
 
 .owl-carousel .owl-nav button.owl-prev, .owl-carousel .owl-nav button.owl-next, .owl-carousel button.owl-dot {
   outline: none;
@@ -5350,7 +5331,6 @@ ul.list_ok li:last-child {
   font-size: 0.75rem;
   margin: 0;
   font-weight: 500;
-  -moz-appearance: window;
   -webkit-appearance: none;
   cursor: pointer;
   outline: none;
@@ -6716,19 +6696,6 @@ ul.additional_links li:after {
   cursor: progress;
 }
 
-.mfp-zoom-out-cur,
-.mfp-zoom-out-cur .mfp-image-holder .mfp-close {
-  cursor: -moz-zoom-out;
-  cursor: -webkit-zoom-out;
-  cursor: zoom-out;
-}
-
-.mfp-zoom {
-  cursor: pointer;
-  cursor: -webkit-zoom-in;
-  cursor: -moz-zoom-in;
-  cursor: zoom-in;
-}
 
 .mfp-auto-cursor .mfp-content {
   cursor: auto;
