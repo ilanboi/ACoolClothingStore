@@ -6287,10 +6287,7 @@ footer {
     padding: 0 0 15px 0;
   }
 }
-/*footer hr {*/
-/*  border-color: rgba(255, 255, 255, 0.15);*/
-/*  margin-top: 5px;*/
-/*}*/
+
 @media (max-width: 767px) {
   footer hr {
     border-color: transparent;
