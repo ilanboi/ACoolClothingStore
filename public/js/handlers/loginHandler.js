@@ -14,7 +14,7 @@ $('#loginForm').submit(function (e) {
             success: function (res) {
                 console.log(res)
                 const supplier_details = JSON.stringify(res['supplierDetails'])
-                addToCookies("supplierdata", supplier_details, addYears(new Date(), 1))
+                addToCookies("userdata", supplier_details, addYears(new Date(), 1))
                 addToCookies("usertype", 'supplier', addYears(new Date(), 1))
 
                 alert("works login comp")
@@ -136,7 +136,7 @@ function execSupplierRegister() {
             success: function (res) {
                 if (res.success) {
                     const user_details = JSON.stringify(res['User'])
-                    addToCookies("supplierdata", user_details, addYears(new Date(), 1))
+                    addToCookies("userdata", user_details, addYears(new Date(), 1))
                     addToCookies("usertype", 'supplier', addYears(new Date(), 1))
                     alert("works")
                     window.location = '/'
