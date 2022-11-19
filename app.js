@@ -101,7 +101,6 @@ app.get('/admin2', async (req, res) => {
             warehouses: await warehouseController.innerGetAllWarehouses()
         }
     });
-
 })
 
 //The 404 Route (ALWAYS Keep this as the last route)

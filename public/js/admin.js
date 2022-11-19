@@ -28,24 +28,36 @@ function deleteItemAjax(itemId) {
         type: 'delete'
     });
 }
+// Deleting a warehouse
+function deleteWarehouseAjax(warehouseId) {
+    $.ajax({
+        url: '/api/warehouse/deleteWarehouse/' + warehouseId,
+        type: 'delete'
+    });
+}
 
 
 // Updating a user
 function updateUserAjax(userId, index) {
     console.log("The user id is:" + userId);
     console.log("The index is: " + index);
+    let data = { updatedData: JSON.stringify({
+                    fname: $('#firstNameEditUser' + index).val(),
+                    email: $('#emailEditUser' + index).val(),
+                    telephone: $('#phoneNumberEditUser' + index).val()
+                    // Adding all fields
+                })
+        }
     $.ajax({
-        url: '/api/user/updateUser/' + userId,
-        type: 'update' ,
-        // data:  {
-        //     fname: $('#firstNameEdit' + index).val(),
-        //     email: $('#emailEdit' + index).val(),
-        //     password: $('#phoneNumberEdit' + index).val(),
-        // },      
-    }); //.done(()=>{
-    //     $('.modal').modal('toggle');
-    // })
-  // $('#editUserModalForm' + index).modal('toggle');
+        url: '/api/user/updateUserById/' + userId,
+        type: 'post' ,
+        dataType: 'json',
+        data: data,
+        success: function(res){
+            console.log("user updated");
+            // Adding render the file!
+        }
+    }); 
     
     // The relevant DATA to send in the req!
     fname= $('#firstNameEditUser' + index).val()
@@ -53,38 +65,101 @@ function updateUserAjax(userId, index) {
     telephone= $('#phoneNumberEditUser' + index).val()
     errorDiv= '#invalidErrorEditUser'+ index
     
-    console.log("fname: "+fname)
-    console.log("email: "+email)
-    console.log("telephone: "+telephone)
     console.log('#invalidErrorEditUser'+ index)
 
-    if(validation(fname, telephone, email, errorDiv))
-    {
-        $('#editUserModalForm' + index).modal('toggle');
-        // And send the request!!!
-    }       
+    // Validation
+    // if(validation(fname, telephone, email, errorDiv))
+    // {
+    //     $('#editUserModalForm' + index).modal('toggle');
+    //     // And send the request!!!
+    // }       
 }
 
 // Updating a supplier
 function updateSupplierAjax(supplierId, index) {
     console.log("The supplier id is:" + supplierId);
+    console.log("The index is: " + index);
+    let data = { updatedData: JSON.stringify({
+                    cname: $('#CNameEditSupplier' + index).val(),
+                    email: $('#emailEditSupplier' + index).val(),
+                    telephone: $('#phoneNumberEditSupplier' + index).val()
+                    // Adding all fields
+                })
+        }
     $.ajax({
-        url: '/api/supplier/updateSupplier/' + supplierId,
-        type: 'update'       
-    });
+        url: '/api/supplier/updateSupplierById/' + supplierId,
+        type: 'post' ,
+        dataType: 'json',
+        data: data,
+        success: function(res){
+            console.log("supplier updated");
+            // Adding render the file!
+        }
+    }); 
+
+    console.log($('#CNameEditSupplier' + index).val())
 
     $('#editSupplierModalForm' + index).modal('toggle');
 }
+
 // Updating an item
 function updateItemAjax(itemId, index) {
     console.log("The item id is:" + itemId);
+    console.log("The index is: " + index);
+    let data = { updatedData: JSON.stringify({
+                    title: $('#titleEditItem' + index).val(),
+                    description: $('#descEditItem' + index).val(),
+                    kind: $('#kindEditItem' + index).val(),
+                    price: $('#priceEditItem' + index).val()
+                    // Adding all fields
+                })
+        }
     $.ajax({
-        url: '/api/item/updateItem/' + itemId,
-        type: 'update'       
-    });
+        url: '/api/item/updateItemById/' + itemId,
+        type: 'post' ,
+        dataType: 'json',
+        data: data,
+        success: function(res){
+            console.log("item updated");
+            // Adding render the file!
+        }
+    }); 
 
+    console.log($('#titleEditItem' + index).val())
+    console.log($('#priceEditItem' + index).val())
+    
     $('#editItemModalForm' + index).modal('toggle');
 }
+
+// Updating a Warehouse
+function updateWarehouseAjax(warehouseId, index) {
+    console.log("The Warehouse id is:" + warehouseId);
+    console.log("The index is: " + index);
+    let data = { updatedData: JSON.stringify({
+                    name: $('#nameEditWarehouse' + index).val(),
+                    city: $('#cityEditWarehouse' + index).val(),
+                    street: $('#streetEditWarehouse' + index).val(),
+                    houseNumber: $('#houseNumberEditWarehouse' + index).val()
+                    // Adding all fields
+                })
+        }
+    $.ajax({
+        url: '/api/warehouse/updateWarehouseById/' + warehouseId,
+        type: 'post' ,
+        dataType: 'json',
+        data: data,
+        success: function(res){
+            console.log("warehouse updated");
+            // Adding render the file!
+        }
+    }); 
+
+    console.log($('#nameEditWarehouse' + index).val())
+    console.log($('#houseNumberEditWarehouse' + index).val())
+    
+    $('#editWarehouseModalForm' + index).modal('toggle');
+}
+
 
 // ADD VALIDATION OR EDIT
 // ONLY AFTER VALIDATION ---> CALLING THE RELEVANT UPDATE FUNC!!!

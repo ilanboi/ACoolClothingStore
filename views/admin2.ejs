@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     
+    <script src="../public/js/admin.js"></script>
     <!-- Favicon-->
     <link rel="icon" href="../public/img/favicon.ico" type="image/icon type">
     
@@ -40,6 +41,9 @@
             <li class="nav-item" role="presentation" action="item" method="get">
                 <button class="nav-link" id="pills-items-tab" data-bs-toggle="pill" data-bs-target="#pills-items" type="button" role="tab" aria-controls="pills-items" aria-selected="false" >Items</button>
             </li>
+            <li class="nav-warehouse" role="presentation" action="warehouse" method="get">
+                <button class="nav-link" id="pills-items-tab" data-bs-toggle="pill" data-bs-target="#pills-warehouses" type="button" role="tab" aria-controls="pills-warehouses" aria-selected="false" >Warehouses</button>
+            </li>
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
@@ -60,8 +64,10 @@
                     <span><%=data.users.data[i].password%></span>
                     <span><%=data.users.data[i].telephone%></span>
 
+                    <!-- Delete User -->
                     <button id="deleteUserBtn<%= i %>" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
 
+                    <!-- Edit User -->
                     <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModalForm<%= i %>">Edit</button>
                     
                     <div class="modal fade" id="editUserModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -69,38 +75,26 @@
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">Edit Employee</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <!-- Action and method of "Edit" request -->
-                            <!-- <form action="/updateUser" method="post"> -->
                             <form >
                               <div class="modal-body text-start">
                                 <label class="form-label">First Name:</label>
                                 <input id="firstNameEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].fname%>">
-                                <!-- <label class="form-label">Age:</label>
-                                <input id="ageEdit" name="age" type="number" class="form-control" placeholder="Enter age"> -->
                                 <label class="form-label">Phone Number:</label>
                                 <input id="phoneNumberEditUser<%= i %>" name="phoneNumber" type="number" class="form-control" value="<%=data.users.data[i].telephone%>">
                                 <label class="form-label">Email:</label>
                                 <input id="emailEditUser<%= i %>" name="email" type="email" class="form-control" value="<%=data.users.data[i].email%>">
-                                <!-- <label class="form-label">Level:</label>
-                                <input id="levelEdit" name="level" class="form-control" placeholder="Enter level">
-                                <label class="form-label">Job Description:</label>
-                                <input id="jobDescEdit" name="jobDesc" class="form-control" placeholder="Enter job description"> -->
                               </div>
                               <div class="invalidError" id="invalidErrorEditUser<%= i %>"></div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <!-- <button id="editBtn<%= i %>" type="submit" class="btn btn-primary">Edit</button> -->
                                 <button id="editUserBtn<%= i %>" type="button" class="btn btn-primary" onclick="updateUserAjax(`<%=data.users.data[i].id%>`, `<%= i %>`)">Edit</button>
                               </div>
                             </form>
                           </div>
                         </div>
                     </div>
-                
-                
                 </article>
                 <% } %>
                 <br>
@@ -119,7 +113,37 @@
                         <span><%=data.suppliers.data[i].cname%></span>
                         <span><%=data.suppliers.data[i].telephone%></span>  
                         
+                        <!-- Delete Supplier -->
                         <button id="deleteSuppliersBtn<%= i %>" onclick="deleteSupplierAjax(`<%=data.suppliers.data[i]._id%>`)">delete</button>
+
+                        <!-- Edit Supplier -->
+                        <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editSupplierModalForm<%= i %>">Edit</button>
+                        
+                        <div class="modal fade" id="editSupplierModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form >
+                                  <div class="modal-body text-start">
+                                    <label class="form-label">Supplier Name:</label>
+                                    <input id="CNameEditSupplier<%= i %>" name="CName" class="form-control" value="<%=data.suppliers.data[i].cname%>">
+                                    <label class="form-label">Phone Number:</label>
+                                    <input id="phoneNumberEditSupplier<%= i %>" name="phoneNumber" type="number" class="form-control" value="<%=data.suppliers.data[i].telephone%>">
+                                    <label class="form-label">Email:</label>
+                                    <input id="emailEditSupplier<%= i %>" name="email" type="email" class="form-control" value="<%=data.suppliers.data[i].email%>">
+                                  </div>
+                                  <div class="invalidError" id="invalidErrorEditSuppliers<%= i %>"></div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button id="editSuppliersBtn<%= i %>" type="button" class="btn btn-primary" onclick="updateSupplierAjax(`<%=data.suppliers.data[i].id%>`, `<%= i %>`)">Edit</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                        </div>
                     </article>
                 <% } %>
             </div>
@@ -137,7 +161,85 @@
                     <span><%=data.items.data[i].title%></span>
                     <span><%=data.items.data[i].description%></span>
                     
-                    <button id="deleteItemBtn<%= i %>" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>  
+                    <!-- Delete Item -->
+                    <button id="deleteItemBtn<%= i %>" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>
+                    
+                    <!-- Edit Item -->
+                    <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editItemModalForm<%= i %>">Edit</button>
+                    
+                    <div class="modal fade" id="editItemModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form >
+                              <div class="modal-body text-start">
+                                <label class="form-label">Item Title:</label>
+                                <input id="titleEditItem<%= i %>" name="ItemTitle" class="form-control" value="<%=data.items.data[i].title%>">
+                                <label class="form-label">Item Description:</label>
+                                <input id="descEditItem<%= i %>" name="ItemDesc" class="form-control" value="<%=data.items.data[i].description%>">
+                                <label class="form-label">Price:</label>
+                                <input id="priceEditItem<%= i %>" name="ItemPrice" type="number" class="form-control" value="<%=data.items.data[i].price%>">
+                                <label class="form-label">Kind:</label>
+                                <input id="kindEditItem<%= i %>" name="ItemKind" class="form-control" value="<%=data.items.data[i].kind%>">
+                              </div>
+                              <div class="invalidError" id="invalidErrorEditItem<%= i %>"></div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="editItemBtn<%= i %>" type="button" class="btn btn-primary" onclick="updateItemAjax(`<%=data.items.data[i].id%>`, `<%= i %>`)">Edit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+                </article>
+                <% } %>
+            </div>
+            <div class="tab-pane fade" id="pills-warehouses" role="tabpanel" aria-labelledby="pills-warehouses-tab">
+                Warehouses page
+
+                <% for (var i = 0; i < data.warehouses.data.length; i++) { %>
+                <article>    
+                    <span><%=data.warehouses.data[i]._id%></span>
+                    <span><%=data.warehouses.data[i].name%></span>
+                    <span><%=data.warehouses.data[i].city%></span>  
+                    
+                    <!-- Delete Warehouse -->
+                    <button id="deleteWarehouseBtn<%= i %>" onclick="deleteWarehouseAjax(`<%=data.warehouses.data[i]._id%>`)">delete</button>
+
+                    <!-- Edit Warehouse -->
+                    <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editWarehouseModalForm<%= i %>">Edit</button>
+                    
+                    <div class="modal fade" id="editWarehouseModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form >
+                              <div class="modal-body text-start">
+                                <label class="form-label">Name:</label>
+                                <input id="nameEditWarehouse<%= i %>" name="warehouseName" class="form-control" value="<%=data.warehouses.data[i].name%>">
+                                <label class="form-label">City:</label>
+                                <input id="cityEditWarehouse<%= i %>" name="warehouseCity" class="form-control" value="<%=data.warehouses.data[i].city%>">
+                                <label class="form-label">Street:</label>
+                                <input id="streetEditWarehouse<%= i %>" name="warehouseStreet"  class="form-control" value="<%=data.warehouses.data[i].street%>">
+                                <label class="form-label">House Number:</label>
+                                <input id="houseNumberEditWarehouse<%= i %>" name="houseNumber" class="form-control" value="<%=data.warehouses.data[i].houseNumber%>">
+                              </div>
+                              <div class="invalidError" id="invalidErrorEditWarehouse<%= i %>"></div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="editWarehouseBtn<%= i %>" type="button" class="btn btn-primary" onclick="updateWarehouseAjax(`<%=data.warehouses.data[i].id%>`, `<%= i %>`)">Edit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+
                 </article>
                 <% } %>
             </div>
@@ -160,67 +262,53 @@
                 </div>
             </div>
             <div class="row g-3">
-                <!--- The loop for each video in the videos array -->
-                <% /* %>
-                <!-- <% for (var i=0; i < videos.length; i++) { %>
-                    <div class="col-md-3 col-4">
-                        <div class="card">
-                            <img src="<%= videos[i].img %>" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= videos[i].title %></h5>
-                                <p class="card-text"><%= videos[i].desc %></p>
-                                <a href="/video?id=<%= videos[i].id %>" class="btn btn-primary">Watch</a>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %> -->
-                <% */ %>
-                <!-- The end of the loop - important -->
+                
             </div>
         </div>
     </div>
 </div>
 </div>
-<script src="../public/js/admin.js"></script>
-<!-- <script>
-    function deleteUserAjax(userId) {
-        $.ajax({
-            url: '/api/user/deleteUser/'+userId,
-            type: 'delete'
-        });
-    }
-</script> -->
-</body>
+
+
 
 <!-- FOOTER -->
-<section class="">
-    <!-- Footer -->
-    <footer class="text-center text-white" style="background-color: #0a4275;">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-            <!-- Section: CTA -->
-            <section class="">
-                <p class="d-flex justify-content-center align-items-center">
-                    <span class="me-3">Register for free</span>
-                    <button type="button" class="btn btn-outline-light btn-rounded">
-                        Sign up!
-                    </button>
-                <div>The current weather:</div>
-                <span id="weatherResult"></span>
-                </p>
-            </section>
-            <!-- Section: CTA -->
-        </div>
-        <!-- Grid container -->
+<!-- <section class=""> -->
+    <!-- <footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
+        <div class="container">
+          <div class="row row-30 columns">
+            <div class="col-lg-6 col-xl-6">
+              <div class="pr-xl-4">
+     -->
+                    <!-- <h3 class="white-text">Quick Tweets</h3> -->
+                    <!-- <h3>Quick Tweets</h3>
+                    <div class="links" id="collapse_1">
+                        <a class="twitter-timeline" data-width="450" data-height="200" data-dnt="true" data-theme="dark"
+                           href="https://twitter.com/StoreShoey?ref_src=twsrc%5Etfw">Tweets by StoreShoey</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        
+                        </li>
+                    </div> -->
 
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2020 Copyright:
-            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+                <!-- Rights-->
+              <!-- </div> -->
+            <!-- </div>
+            <div class="col-md-4">
+              <h5 class="white-text">Contacts</h5>
+              <dl class="contact-list">
+                <dt class="white-text">Address:</dt>
+                <dd class="white-text">Colman <br class="white-text">Rishon Le Zion - IL</dd>
+              </dl>
+              <dl class="contact-list">
+                <dt class="white-text">email:</dt>
+                <dd><a href="mailto:#">info@shoey.com</a></dd>
+              </dl>
+              <dl class="contact-list">
+                <dt class="white-text">phones:</dt>
+                <dd class="white-text">+972 52-8252-<strong>69</strong>9</dd>
+              </dl>
+            </div>
+          </div>
         </div>
-        <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-
-</section>
+      </footer> -->
+<!-- </section> -->
 </html>
