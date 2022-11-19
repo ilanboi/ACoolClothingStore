@@ -20,7 +20,7 @@
     
     <!-- CSS Files-->
     <link rel="stylesheet" href="../public/css/admin.css">
-    <!-- <link href="../public/css/footer.css" rel="stylesheet"> -->
+    <link href="../public/css/footer.css" rel="stylesheet">
 
 </head>
 
@@ -28,7 +28,7 @@
 
 <div class="container-fluid">
     <div class="row jusify-content-center">
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <ul class="navClass nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
             </li>
@@ -65,7 +65,7 @@
                     <span><%=data.users.data[i].telephone%></span>
 
                     <!-- Delete User -->
-                    <button id="deleteUserBtn<%= i %>" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
+                    <button id="deleteUserBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
 
                     <!-- Edit User -->
                     <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModalForm<%= i %>">Edit</button>
@@ -114,7 +114,7 @@
                         <span><%=data.suppliers.data[i].telephone%></span>  
                         
                         <!-- Delete Supplier -->
-                        <button id="deleteSuppliersBtn<%= i %>" onclick="deleteSupplierAjax(`<%=data.suppliers.data[i]._id%>`)">delete</button>
+                        <button id="deleteSuppliersBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteSupplierAjax(`<%=data.suppliers.data[i]._id%>`)">delete</button>
 
                         <!-- Edit Supplier -->
                         <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editSupplierModalForm<%= i %>">Edit</button>
@@ -162,7 +162,7 @@
                     <span><%=data.items.data[i].description%></span>
                     
                     <!-- Delete Item -->
-                    <button id="deleteItemBtn<%= i %>" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>
+                    <button id="deleteItemBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>
                     
                     <!-- Edit Item -->
                     <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editItemModalForm<%= i %>">Edit</button>
@@ -205,9 +205,9 @@
                     <span><%=data.warehouses.data[i]._id%></span>
                     <span><%=data.warehouses.data[i].name%></span>
                     <span><%=data.warehouses.data[i].city%></span>  
-                    
+            
                     <!-- Delete Warehouse -->
-                    <button id="deleteWarehouseBtn<%= i %>" onclick="deleteWarehouseAjax(`<%=data.warehouses.data[i]._id%>`)">delete</button>
+                    <button type="button" class="btn btn-primary" id="deleteWarehouseBtn<%= i %>" onclick="deleteWarehouseAjax(`<%=data.warehouses.data[i]._id%>`)">delete</button>
 
                     <!-- Edit Warehouse -->
                     <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editWarehouseModalForm<%= i %>">Edit</button>
@@ -272,26 +272,21 @@
 
 
 <!-- FOOTER -->
-<!-- <section class=""> -->
-    <!-- <footer class="section footer-classic context-dark bg-image" style="background: #343a40;">
+    <!-- <footer class="section footer-classic context-dark bg-image " style="background: #343a40;">
         <div class="container">
           <div class="row row-30 columns">
             <div class="col-lg-6 col-xl-6">
               <div class="pr-xl-4">
-     -->
-                    <!-- <h3 class="white-text">Quick Tweets</h3> -->
-                    <!-- <h3>Quick Tweets</h3>
+                    <h3>Quick Tweets</h3>
                     <div class="links" id="collapse_1">
                         <a class="twitter-timeline" data-width="450" data-height="200" data-dnt="true" data-theme="dark"
                            href="https://twitter.com/StoreShoey?ref_src=twsrc%5Etfw">Tweets by StoreShoey</a>
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         
                         </li>
-                    </div> -->
-
-                <!-- Rights-->
-              <!-- </div> -->
-            <!-- </div>
+                    </div>
+              </div>
+            </div>
             <div class="col-md-4">
               <h5 class="white-text">Contacts</h5>
               <dl class="contact-list">
@@ -310,5 +305,4 @@
           </div>
         </div>
       </footer> -->
-<!-- </section> -->
 </html>
