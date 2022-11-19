@@ -165,9 +165,9 @@ const getCartItems = async function (req, res) {
         itemsData.push(await Item.findById(item.item_id));
     }
     res.status(200).json({
-        "Cart": itemsData
-    });
+        "cart": itemsData
 
+    });
 }
 
 module.exports = {

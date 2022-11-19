@@ -1,7 +1,7 @@
 function showCartItem(userId) {
     let result = get_request(`/api/user/getCartItemsOfUser/${userId}`)
     let sum = 0;
-    let items = result.Cart
+    let items = result.cart
     if (!items.length) {
         $("#checkoutBTN").prop('disabled', true)
     }
@@ -27,9 +27,9 @@ function showItems(item_name, item_price, item_image, item_desc) {
                         <div class="row">${item_desc}</div>
                     </div>
                     <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                        <a href="#"></a><a href="#" class="border">1</a><a href="#"></a>
                     </div>
-                    <div class="col">${item_price}₪ <span class="close">&#10005;</span></div>
+                    <div class="col">${item_price}₪</div>
                 </div>
             </div>`
     div_cart_items.innerHTML += data;
