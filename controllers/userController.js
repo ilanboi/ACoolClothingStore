@@ -26,17 +26,14 @@ const createUser = async function (req, res) {
 }
 
 const innerDeleteUser = async function (userId, currentUserId) {
-    //todo validation - current user capable of deleting
     return await deleteUserModel(userId, currentUserId)
 }
 
 const deleteUser = async function (req, res) {
-    //todo validation - current user capable of deleting
-    
     console.log(req.params.userId)
     //await innerDeleteUser(req.params.userId, req.body.currentUserId)
     //! Change later --> to "req.body.currentUserId"
-    const result = await innerDeleteUser(req.params.userId, "636eec1c8d3a32a33b6a8c44")
+    const result = await innerDeleteUser(req.params.userId, "6377a7f6356ff1ad98754a73")
     console.log("result: " + result.success);
     
     if(result.success == false)
@@ -100,7 +97,6 @@ const removeItemFromCart = function (req, res) {
 }
 
 const updateUserByEmail = function (req, res) {
-    //module.exports
     console.log(req.body)
     console.log(JSON.parse(req.body.updatedData))
     console.log(req.body.email)
@@ -120,6 +116,26 @@ const updateUserByEmail = function (req, res) {
             });
         })
 }
+
+const updateUserById = function (req, res) {  
+    console.log(req.body)
+    console.log(JSON.parse(req.body.updatedData))
+    User.findOneAndUpdate({_id: req.params.userId}, JSON.parse(req.body.updatedData), {new: true},
+        function (err, obj) {
+            if (err || obj.modifiedCount === 0) {
+                return res.status(301).json({
+                    success: false,
+                    message: 'Error.',
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'User updated',
+                userDetails: obj
+            });
+        })
+}
+
 const getAllUsers = async function () {
     return await getAllUsersModel()
 }
@@ -163,5 +179,6 @@ module.exports = {
     addItemToCart,
     loginUser,
     getCartItems,
-    clearCart
+    clearCart,
+    updateUserById
 }

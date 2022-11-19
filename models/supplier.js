@@ -29,37 +29,32 @@ const supplierSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-
 });
 
 const Supplier = mongoose.model('Supplier', supplierSchema);
+const { User } = require("../models/user");
 
 // Deleting a specific supplier
 const deleteSupplierModel = async function (supplierId, currentUserId) {
-    await Supplier.deleteOne({_id: supplierId})
-
-   // ---- After ---
-   // Adding the USER MODEL here or sending ALL params of the current user from te controller
-  
-//    const all = await User.findById(currentUserId);
-//    console.log(all);
-//    if(all.isAdmin !== true)
-//    {
-//        console.log("You are not admin");
-//        return {
-//            success: false,
-//            message: 'No permissions to delete',
-//            data: all
-//        };
-//    }
-//    else
-//    {
-//       // await Supplier.deleteOne({_id: supplierId})
-//        return {
-//            success: true,
-//            message: 'The supplier was deleted'
-//        };
-//    }   
+   const all = await User.findById(currentUserId);
+   console.log(all);
+   if(all.isAdmin !== true)
+   {
+       console.log("You are not admin");
+       return {
+           success: false,
+           message: 'No permissions to delete',
+           data: all
+       };
+   }
+   else
+   {
+       await Supplier.deleteOne({_id: supplierId})
+       return {
+           success: true,
+           message: 'The supplier was deleted'
+       };
+   }   
 }
 
 // Getting all suppliers

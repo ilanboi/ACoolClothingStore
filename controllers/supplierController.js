@@ -1,11 +1,10 @@
-const {Supplier, deleteSupplierModel, getAllSuppliersModel, createSupplierModel} = require("../models/supplier");
+const { Supplier, deleteSupplierModel, getAllSuppliersModel, createSupplierModel } = require("../models/supplier");
 
 const innerCreateSupplier = (email, password, cname, telephone, callback) => {
     return createSupplierModel(email, password, cname, telephone, callback);
 }
 
 const createSupplier = async function (req, res) {
-    //module.exports.createUser = async function (req, res) {
     return innerCreateSupplier(
         req.body.email,
         req.body.password,
@@ -14,46 +13,6 @@ const createSupplier = async function (req, res) {
         res.status(200)
     );
 }
-
-//module.exports.createSupplier = function (req, res) {
-// const createSupplier = function (req, res) {
-//     console.log(req.body)
-//     const supplier = new Supplier({
-//         _id: mongoose.Types.ObjectId(),
-//         email: req.body.email,
-//         password: req.body.password,
-//         cname: req.body.cname,
-//         isAdmin: req.body.isAdmin ?? false,
-//         telephone: req.body.ctelephone,
-//         publishedItems: []
-//     });
-//
-//     Supplier.findOne({email: req.body.email}, async function (err, obj) {
-//         if (!err && !obj) {
-//             return supplier
-//                 .save()
-//                 .then((newSupplier) => {
-//                     return res.status(201).json({
-//                         success: true,
-//                         message: 'New supplier created successfully',
-//                         supplier: newSupplier,
-//                     });
-//                 })
-//                 .catch((error) => {
-//                     res.status(500).json({
-//                         success: false,
-//                         message: 'Server error. Please try again.',
-//                         error: error.message,
-//                     });
-//                 });
-//         } else {
-//             return res.status(301).json({
-//                 success: false,
-//                 message: 'Supplier already exist with this mail. \n' + err + ' ' + obj,
-//             });
-//         }
-//     });
-// }
 
 const loginSupplier = function (req, res) {
     Supplier.findOne({email: req.body.email}, function (err, obj) {
@@ -95,6 +54,7 @@ const addToPublishedItems = function (req, res) {
             });
         })
 }
+
 const removeFromPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$pull: {publishedItems: {item_id: req.body.item_id}}}, {},
         function (err, obj) {
@@ -112,46 +72,50 @@ const removeFromPublishedItems = function (req, res) {
         })
 }
 
+const updateSupplierById = function (req, res) {  
+    console.log(req.body)
+    console.log(JSON.parse(req.body.updatedData))
+    console.log("id: "+req.params.supplierId)
+    Supplier.findOneAndUpdate({_id: req.params.supplierId}, JSON.parse(req.body.updatedData), {new: true},
+        function (err, obj) {
+            if (err || obj.modifiedCount === 0) {
+                return res.status(301).json({
+                    success: false,
+                    message: 'Error.',
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'Supplier updated',
+                userDetails: obj
+            });
+        })
+}
+
 // Deleting supplier
 const innerDeleteSupplier = async function (supplierId, currentUserId) {
-    // validation - current user capable of deleting
     return await deleteSupplierModel(supplierId, currentUserId)
 }
 
 const deleteSupplier = async function (req, res) {
-    //todo validation - current user capable of deleting
-    // ---- Before ----
-    console.log(req.params.supplierId)
-    await innerDeleteSupplier(req.params.supplierId, "636eec1c8d3a32a33b6a8c44")
+    console.log(req.params.currentUserId)
+
     //! Change later --> to "req.body.currentUserId"
-    //await deleteSupplierModel(req.params.supplierId, "636eec1c8d3a32a33b6a8c44")
-   
-    return res.status(200).json({
-        success: true,
-        message: 'Supplier deleted'
-    })
-
-
-    // ---- After ----
-    // console.log(req.params.supplierId)
-    // //console.log(req.params.currentUserId)
-    // //await innerDeleteSupplier(req.params.supplierId, req.params.currentUserId)
-    // //! Change later --> to "req.body.currentUserId"
-    // const result = await innerDeleteSupplier(req.params.supplierId, "636eec1c8d3a32a33b6a8c44")
-    // console.log("result: " + result.success);
-    // if(result.success == false)
-    // {
-    //     return res.status(400).json({ 
-    //         success: false,
-    //         message: 'Error - No permissions',
-    //     });
-    // }
-    // else{
-    //     return res.status(200).json({
-    //         success: true,
-    //         message: 'Supplier deleted'
-    //     })
-    // }  
+    const result = await innerDeleteSupplier(req.params.supplierId, "6377a7f6356ff1ad98754a73")
+    console.log("result: " + result.success);
+    if(result.success == false)
+    {
+        return res.status(400).json({ 
+            success: false,
+            message: 'Error - No permissions',
+        });
+    }
+    else{
+        return res.status(200).json({
+            success: true,
+            message: 'Supplier deleted'
+        })
+    }  
 }
 
 // Getting all supplier
@@ -165,8 +129,6 @@ module.exports = {
     removeFromPublishedItems,
     addToPublishedItems,
     loginSupplier,
-    createSupplier
+    createSupplier,
+    updateSupplierById
 }
-
-
-
