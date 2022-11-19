@@ -96,3 +96,6 @@ body{
     margin-bottom: -15%;
     color: #495057;
 }
+.invalidError{
+    color: red;
+}

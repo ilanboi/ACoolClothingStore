@@ -343,16 +343,16 @@ function ItemValidation(title, image_url, rating, desc, kind, price, size, compa
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const sizeRgx = /[0-9\.]+/
-   
+    const onlyLettersAndNumbers = /^[A-Za-z0-9\.\s]*$/
     
     if(title == "")
     {
         $(errorDiv).text("Invalid input - Title is required");
         return false;
     }
-    else if(!onlyLettersAndSpaces.test(title))
+    else if(!onlyLettersAndNumbers.test(title))
     {
-        $(errorDiv).text("Invalid input - Title must have only letters and spaces");
+        $(errorDiv).text("Invalid input - Title must have only letters, numbers and spaces");
         return false;
     }
     if(desc == "")
