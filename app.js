@@ -1,5 +1,9 @@
-const express = require('express');
 const bodyParser = require('body-parser');
+let express = require('express');
+let app = express();
+let http = require('http').createServer(app);
+let io = require('socket.io')(http);
+
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const supplierRoutes = require('./routes/supplierRoutes');
@@ -7,13 +11,15 @@ const userRoutes = require('./routes/userRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const warehouseRoutes = require('./routes/warehouseRoutes');
 const itemController = require('./controllers/itemController')
+
 const userController = require('./controllers/userController')
 const supplierController = require('./controllers/supplierController')
 const warehouseController = require('./controllers/warehouseController')
 
 
 const path = require("path");
-const app = express();
+
+
 const port = 8080;
 
 app.use(bodyParser.json());
@@ -34,7 +40,7 @@ mongoose.connect('mongodb+srv://shoey:shoey@cluster0.nnc8yow.mongodb.net/shoey?r
         console.log('Database connected');
     })
     .catch((error) => {
-        console.log('Error connecting to database');
+        console.log('Error connecting to database', error);
 
     });
 
@@ -67,7 +73,7 @@ app.get('/items', (req, res) => {
 });
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + '/views/about.html');
-});   
+});
 app.get('/thankyou', (req, res) => {
     res.sendFile(__dirname + '/views/thankyou.html');
 });
@@ -107,9 +113,20 @@ app.get('/admin2', async (req, res) => {
 app.get('*', (req, res) => {
     res.status(404).sendFile(__dirname + '/views/404.html');
 });
+// Emit welcome message on connection
+io.on('connection', (socket) => {
+    console.log('new connection');
+    socket.emit('filteredData', {"aaa": "AAA"})
+    socket.on('filteredRequest', (data) => {
+        console.log(data)
+    })
 
-app.listen(port, () => {
-    console.log(`Our server is running on port ${port}`);
+    socket.on('disconnect', () => {
+        console.log('client disconnected');
+    });
 });
+
+
+http.listen(port);
 
 // https://medium.com/fbdevclagos/developing-basic-crud-operations-with-node-express-and-mongodb-e754acb9cc15

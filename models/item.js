@@ -78,7 +78,6 @@ const getItemById = async function (itemId) {
 const getGenderItemsModel = async function (gender) {
     const filter = {"kind": gender};
     const all = await Item.find(filter);
-    console.log(all);
     return {
         success: true,
         message: 'All items are found.',

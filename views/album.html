@@ -21,12 +21,14 @@
 <body>
 <script src="../public/js/handlers/itemsHandler.js"></script>
 <script src="../public/js/handlers/requestsHandler.js"></script>
+<script src="../public/js/handlers/cookiesHandler.js"></script>
+<script src="../public/js/handlers/loginHandler.js"></script>
 
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand flip" href="/">Shoey</a>
+            <a class="navbar-brand flip logo" href="/">Shoey</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,6 +43,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
+
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -50,7 +53,7 @@
                             onclick="window.location.href = '/items?searchText='+$('#searchInput').val()">Search
                     </button>
                 </form>
-                <button class="btn btn-outline-primary" type="button" onclick="window.location = '/login'">Login
+                <button class="btn btn-outline-primary" type="button" id="login-btn" onclick="window.location = '/login'">Login
                 </button>
                 <button class="btn btn-outline-primary" type="button" onclick="window.location = '/cart'">Cart
                 </button>
