@@ -92,9 +92,6 @@ const createUserModel = function (email, password, fname, lname, address, city, 
 }
 const loginUserModel = function (email, password, callback) {
     User.findOne({email: email}, function (err, obj) {
-        console.log("obj ", obj)
-        console.log("email ", email)
-        console.log("pass ", password)
         if (err || !obj) {
             console.log("err ", err)
             return callback.json({
@@ -129,19 +126,6 @@ const getAllUsersModel = async function () {
 }
 
 const deleteUserModel = async function (userId, currentUserId) {
-    // const filter = {_id: currentUserId, isAdmin: true}
-    // User.find(filter, async (error, response)=> {
-    //     if (!error && response)
-    //     {
-    //        // await User.deleteOne({_id: userId})
-    //         console.log("he gone")
-    //         console.log("response: " + response)
-    //         console.log("error:" + error)
-    //     }
-    //     else
-    //         console.log("u aint no admin")
-    // })
-
     // ---- WORKING -----
     const all = await User.findById(currentUserId);
     console.log(all);
