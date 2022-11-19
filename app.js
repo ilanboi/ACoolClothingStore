@@ -67,6 +67,7 @@ app.get('/items', (req, res) => {
 });
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + '/views/about.html');
+});   
 app.get('/thankyou', (req, res) => {
     res.sendFile(__dirname + '/views/thankyou.html');
 });
@@ -96,7 +97,8 @@ app.get('/admin2', async (req, res) => {
         data: {
             users: await userController.getAllUsers(),
             items: await itemController.innerGetAllItems(),
-            suppliers: await supplierController.getAllSuppliers()
+            suppliers: await supplierController.getAllSuppliers(),
+            warehouses: await warehouseController.innerGetAllWarehouses()
         }
     });
 
