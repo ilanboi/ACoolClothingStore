@@ -9,3 +9,23 @@ footer{
     padding-bottom: 8px ;
     text-align: center;
 }
+.navClass{
+    background-color: #212529 !important;
+    height: 54px;
+    padding-top: 7px ;
+}
+.nav-link{
+    background-color:  212529 !important;
+    /* color: #6c757d; */
+    color: #adb5bd;
+}
+.nav-link:hover{
+    background-color:  212529 !important;
+    color: #ced4da;
+}
+.nav-pills .nav-link.active{
+    background-color:  #212529
+}
+/* .container-fluid{
+
+} */
