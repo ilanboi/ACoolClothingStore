@@ -52,23 +52,35 @@
             </div>
 
             <!-- USERS -->
+            
             <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
-              
-                users page
+            <table class="table"> 
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First name</th>
+                  <th scope="col">Last name</th>
+                  <th scope="col">email</th>
+                  <th scope="col">telephone</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead> 
+              <tbody>
                 <% for (var i = 0; i < data.users.data.length; i++) { %>
-                <article>
-                    <span id=""><%=data.users.data[i].id%></span>
-                    <span><%=data.users.data[i].fname%></span>
-                    <span><%=data.users.data[i].lname%></span>
-                    <span>email: <%=data.users.data[i].email%></span>
-                    <span><%=data.users.data[i].password%></span>
-                    <span><%=data.users.data[i].telephone%></span>
+                  <tr>
+                    <th scope="row"><%= i %></th>
+                    <td><%=data.users.data[i].fname%></td>
+                    <td><%=data.users.data[i].lname%></td>
+                    <td><%=data.users.data[i].email%></td>
+                    <td><%=data.users.data[i].telephone%></td>
+       
 
                     <!-- Delete User -->
-                    <button id="deleteUserBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button>
+                    <td><button id="deleteUserBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteUserAjax(`<%=data.users.data[i].id%>`)">delete</button></td>
 
                     <!-- Edit User -->
-                    <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModalForm<%= i %>">Edit</button>
+                    <td><button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModalForm<%= i %>">Edit</button></td>
                     
                     <div class="modal fade" id="editUserModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -103,29 +115,43 @@
                           </div>
                         </div>
                     </div>
-                </article>
+                  </tr>
                 <% } %>
+              </tbody>
+            </table>
                 <br>
             </div>
-
+   
             <!-- SUPPLIERS -->
             <div class="tab-pane fade" id="pills-suppliers" role="tabpanel" aria-labelledby="pills-suppliers-tab">
-                suppliers page
+              <table class="table"> 
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">telephone</th>
+                    <th scope="col">email</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead> 
+                <tbody>
                 <% /* %>
                 <span><%=JSON.stringify(data.suppliers)%></span>
                 <% */ %>
 
                 <% for (var i = 0; i < data.suppliers.data.length; i++) { %>
-                    <article>
-                        <span><%=data.suppliers.data[i]._id%></span>
-                        <span><%=data.suppliers.data[i].cname%></span>
-                        <span><%=data.suppliers.data[i].telephone%></span>  
+                  <tr>
+                    <th scope="row"><%= i %></th>
+                        <td><%=data.suppliers.data[i].cname%></td>
+                        <td><%=data.suppliers.data[i].telephone%></td> 
+                        <td><%=data.suppliers.data[i].email%></td>  
                         
                         <!-- Delete Supplier -->
-                        <button id="deleteSuppliersBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteSupplierAjax(`<%=data.suppliers.data[i]._id%>`)">delete</button>
+                       <td><button id="deleteSuppliersBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteSupplierAjax(`<%=data.suppliers.data[i]._id%>`)">delete</button></td>
 
                         <!-- Edit Supplier -->
-                        <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editSupplierModalForm<%= i %>">Edit</button>
+                        <td><button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editSupplierModalForm<%= i %>">Edit</button></td>
                         
                         <div class="modal fade" id="editSupplierModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -152,28 +178,45 @@
                               </div>
                             </div>
                         </div>
-                    </article>
-                <% } %>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
             </div>
 
             <!-- ITEMS -->
             <div class="tab-pane fade" id="pills-items" role="tabpanel" aria-labelledby="pills-contact-tab" >
+              <table class="table"> 
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">company</th>
+                    <th scope="col">size</th>
+                    <th scope="col">price</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead> 
+                <tbody>
                 <% /* %>
                 <span><%=JSON.stringify(data.items)%></span>
                 <% */ %>
                 <br>
                 
                 <% for (var i = 0; i < data.items.data.length; i++) { %>
-                <article>
-                    <span><%=data.items.data[i]._id%></span>
-                    <span><%=data.items.data[i].title%></span>
-                    <span><%=data.items.data[i].description%></span>
+                  <tr>
+                    <th scope="row"><%= i %></th>
+                    <td><%=data.items.data[i].title%></td>
+                    <td><%=data.items.data[i].company%></td>
+                    <td><%=data.items.data[i].size%></td>
+                    <td><%=data.items.data[i].price%></td>
                     
                     <!-- Delete Item -->
-                    <button id="deleteItemBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button>
+                    <td><button id="deleteItemBtn<%= i %>" type="button" class="btn btn-primary" onclick="deleteItemAjax(`<%=data.items.data[i]._id%>`)">delete</button></td>
                     
                     <!-- Edit Item -->
-                    <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editItemModalForm<%= i %>">Edit</button>
+                    <td><button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editItemModalForm<%= i %>">Edit</button></td>
                     
                     <div class="modal fade" id="editItemModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -198,10 +241,8 @@
                                 <input id="ratingEditItem<%= i %>" name="ItemRating" class="form-control" value="<%=data.items.data[i].rating%>">
                                 <label class="form-label">Size:</label>
                                 <input id="sizeEditItem<%= i %>" name="ItemSize" class="form-control" value="<%=data.items.data[i].size%>">
-                                <% /* %>
                                 <label class="form-label">Company:</label>
                                 <input id="companyEditItem<%= i %>" name="ItemSize" class="form-control" value="<%=data.items.data[i].company%>">
-                                <% */ %>
                               </div>
                               <div class="invalidError" id="invalidErrorEditItem<%= i %>"></div>
                               <div class="modal-footer">
@@ -212,8 +253,10 @@
                           </div>
                         </div>
                     </div>
-                </article>
-                <% } %>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade" id="pills-warehouses" role="tabpanel" aria-labelledby="pills-warehouses-tab">
                 Warehouses page
@@ -253,18 +296,30 @@
                     </div>
                 </div>
                 <!-- Add Warehouse -End -->
-
+                <table class="table"> 
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">street</th>
+                      <th scope="col">city</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead> 
+                  <tbody>
                 <% for (var i = 0; i < data.warehouses.data.length; i++) { %>
-                <article>    
-                    <span><%=data.warehouses.data[i]._id%></span>
-                    <span><%=data.warehouses.data[i].name%></span>
-                    <span><%=data.warehouses.data[i].city%></span>  
+                  <tr>
+                    <th scope="row"><%= i %></th>
+                    <td><%=data.warehouses.data[i].name%></td>
+                    <td><%=data.warehouses.data[i].street%></td>  
+                    <td><%=data.warehouses.data[i].city%></td> 
             
                     <!-- Delete Warehouse -->
-                    <button type="button" class="btn btn-primary" id="deleteWarehouseBtn<%= i %>" onclick="deleteWarehouseAjax(`<%=data.warehouses.data[i]._id%>`)">delete</button>
+                    <td><button type="button" class="btn btn-primary" id="deleteWarehouseBtn<%= i %>" onclick="deleteWarehouseAjax(`<%=data.warehouses.data[i]._id%>`)">delete</button></td>
 
                     <!-- Edit Warehouse -->
-                    <button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editWarehouseModalForm<%= i %>">Edit</button>
+                    <td><button type="button" class="btn editBtn btn-primary" data-bs-toggle="modal" data-bs-target="#editWarehouseModalForm<%= i %>">Edit</button></td>
                     
                     <div class="modal fade" id="editWarehouseModalForm<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -298,8 +353,10 @@
                         </div>
                     </div>
                     <!-- Edit Warehouse - End -->
-                </article>
-                <% } %>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
         </div>
 
