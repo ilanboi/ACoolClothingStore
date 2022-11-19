@@ -1,6 +1,9 @@
-const userData = JSON.parse(getCookie('userdata'))
-
-userData.isAdmin ? '' : window.location = '/404'
+const userData = getCookie('userdata')
+if (userData){
+    JSON.parse(userData).isAdmin ? '' : window.location = '/404'
+}else {
+    window.location = '/404'
+}
 
 function drawCircle() {
     let result = get_request('/api/item/getGroupByItem')

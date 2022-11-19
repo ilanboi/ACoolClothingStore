@@ -7,7 +7,12 @@ main {
     color: white;
 }
 
+footer {
+    margin: 0;
+    width: 100%;
+    /*position: fixed;*/
 
+}
 h3 {
     color: skyblue;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -92,7 +97,7 @@ h3 {
     position: relative;
     padding: 40px 10%;
     border-radius: 20px;
-    background: var(--text_light);
+    background: aquamarine;
     color: var(--text_med);
 }
 
@@ -158,7 +163,7 @@ h3 {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 @media screen and (max-width: 1000px) {
     body {
-        padding: 30px;
+        /*padding: 30px;*/
     }
 
     .ajax-section .cities {
@@ -204,7 +209,7 @@ h3 {
 
 @media screen and (max-width: 500px) {
     body {
-        padding: 15px;
+        /*padding: 15px;*/
     }
 
     .ajax-section .cities {
