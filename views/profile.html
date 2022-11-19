@@ -402,7 +402,13 @@
         }
     } else if (getCookie(userTypeCookieName) === 'supplier') {
         if (entitydata) {
-            document.getElementById("account_menu").href = "/profile.html";
+            $('#fname').val(entitydata.cname)
+            // $('#lname').val(entitydata.lname)
+            $('#email').val(entitydata.email)
+            $('#phone').val(entitydata.telephone)
+            $('#Address').val(entitydata.address)
+            $('#ciTy').val(entitydata.city)
+            $('#zIp').val(entitydata.postal)
             // supplier logged in
         }
     }

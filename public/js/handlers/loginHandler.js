@@ -12,6 +12,7 @@ $('#loginForm').submit(function (e) {
             type: 'post',
             data: $('#loginForm').serialize(),
             success: function (res) {
+                console.log(res)
                 const supplier_details = JSON.stringify(res['supplierDetails'])
                 addToCookies("userdata", supplier_details, addYears(new Date(), 1))
                 addToCookies("usertype", 'supplier', addYears(new Date(), 1))
@@ -90,7 +91,7 @@ function execSupplierLogin() {
         success: function (res) {
             if (res.success) {
                 // console.log(res);
-                const user_details = JSON.stringify(res['supplier'])
+                const user_details = JSON.stringify(res['supplierDetails'])
                 addToCookies("userdata", user_details, addYears(new Date(), 1))
                 addToCookies("usertype", 'supplier', addYears(new Date(), 1))
                 alert("works")
