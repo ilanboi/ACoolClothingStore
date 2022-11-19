@@ -74,28 +74,40 @@
     </section>
     
     <div class="container album py-5 bg-light">
-        <div class="itemadd-box container">
-            <h1>Add new item</h1>
-        
-            <label for="shoe_name"><b>Shoe name</b></label>
-            <input type="text" placeholder="Enter shoes name" name="shoes_name" required>
-        
-            <label for="size"><b>Shoe size</b></label>
-            <input type="text" placeholder="Enter shoes size" name="size" required>
-    
-            <label for="gender"><b>Shoe gender</b></label>
-            <input type="text" placeholder="Enter shoes gender" name="gender" required>
-    
-            <label for="image"><b>Shoe image url</b></label>
-            <input type="text" placeholder="Enter shoes image url" name="img" required>
-    
-            <label for="price"><b>Shoe price</b></label>
-            <input type="text" placeholder="Enter shoes price" name="price" required>
-    
-            <label for="desc"><b>Shoe description</b></label>
-            <input type="text" placeholder="Enter shoes description" name="desc" required>
-        
-            <button type="submit" class="btn btn-primary">Add Item</button>
+        <button type="button" class="btn addBtn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewItemModalForm">Add New item</button>
+                    
+        <div class="modal fade" id="addNewItemModalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form >
+                    <div class="modal-body text-start">
+                            <label class="form-label">Title:</label>
+                            <input id="titleItem" name="ItemTitle" class="form-control" >
+                            <label class="form-label">Description:</label>
+                            <input id="descItem" name="ItemDesc" class="form-control">
+                            <label class="form-label">Price:</label>
+                            <input id="priceItem" name="ItemPrice" type="number" class="form-control" >
+                            <label class="form-label">Kind:</label>
+                            <input id="kindItem" name="ItemKind" class="form-control" >
+                            <label class="form-label">Image Url:</label>
+                            <input id="imgUrlItem" name="ItemImgUrl" class="form-control" >
+                            <label class="form-label">Size:</label>
+                            <input id="sizeItem" name="ItemSize" class="form-control" >
+                            <label class="form-label">Company:</label>
+                            <input id="companyItem" name="ItemSize" class="form-control" >
+                     </div>
+                    <div class="invalidError" id="invalidErrorItem"></div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button id="additemBtn" type="button" class="btn btn-primary" onclick="createItemAjax()">Add</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
         </div>
         <div class="container">
             

@@ -196,3 +196,120 @@ function addToCartRequest() {
         }
     });
 }
+
+function createItemAjax() {
+    
+    title = $('#titleItem').val();
+    desc = $('#descItem').val();
+    kind = $('#kindItem').val();
+    price = $('#priceItem').val();
+    size = $('#sizeItem').val();
+    image_url = $('#imgUrlItem').val();
+    company = $('#companyItem').val();
+    
+    errorDiv= '#invalidErrorItem';
+
+    if(ItemValidation(title, image_url, desc, kind, price, size, company,  errorDiv))
+    {
+        let data = { 
+                        title: $('#titleItem').val(),
+                        description: $('#descItem' ).val(),
+                        kind: $('#kindItem').val(),
+                        price: $('#priceItem').val(),
+                        image_url: $('#imgUrlItem' ).val(),
+                        size: $('#sizeItem').val(),
+                        company: $('#companyItem' ).val()
+                    
+            }
+            console.log(data)
+        $.ajax({
+            url: '/api/item/createItem/',
+            type: 'post' ,
+            dataType: 'json',
+            data: data,
+            success: function(res){
+                console.log("item created");
+                // Adding render the file!
+            }
+        }); 
+
+        console.log($('#titleItem').val())
+        console.log($('#priceItem' ).val())
+    
+        $('#addNewItemModalForm').modal('toggle');
+    }
+}
+
+function ItemValidation(title, image_url,  desc, kind, price, size, company,  errorDiv){
+    const onlyLettersAndNumbers = /^[A-Za-z0-9.\s]*$/
+    const onlyNumbers = /[0-9]+/
+    const sizeRgx = /[0-9\.]+/
+   
+    
+    if(title == "")
+    {
+        $(errorDiv).text("Invalid input - Title is required");
+        return false;
+    }
+    else if(!onlyLettersAndNumbers.test(title))
+    {
+        $(errorDiv).text("Invalid input - Title must have only letters and numbers");
+        return false;
+    }
+
+    if(desc == "")
+    {
+        $(errorDiv).text("Invalid input - Description is required");
+        return false;
+    }
+    if(price == "")
+    {
+        $(errorDiv).text("Invalid input - Price is required");
+        return false;
+    }
+    else if (!onlyNumbers.test(price))
+    {
+        $(errorDiv).text("Invalid input - Price must have only numbers");
+        return false;
+    }
+    if(kind == "")
+    {
+        $(errorDiv).text("Invalid input - Kind is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(kind))
+    {
+        $(errorDiv).text("Invalid input - Kind must have only letters and spaces");
+        return false;
+    }
+    else if(kind.toLowerCase() != "women" && kind.toLowerCase() != "men")
+    {
+        $(errorDiv).text("Invalid input - Kind must be women/men ");
+        return false;
+    }
+    if(image_url == "")
+    {
+        $(errorDiv).text("Invalid input - Image Url is required");
+        return false;
+    }
+    if(size == "")
+    {
+        $(errorDiv).text("Invalid input - Size is required");
+        return false;
+    }
+    else if (!sizeRgx.test(size))
+    {
+        $(errorDiv).text("Invalid input - Size must have only numbers and a .");
+        return false;
+    }
+    if(company == "")
+    {
+        $(errorDiv).text("Invalid input - Company is required");
+        return false;
+    }
+    else
+    {
+        $(errorDiv).text("");
+        return true;
+    }
+}

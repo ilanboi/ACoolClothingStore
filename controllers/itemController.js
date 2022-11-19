@@ -15,6 +15,8 @@ const createItem = function (req, res) {
         description: req.body.description,
         kind: req.body.kind,
         price: req.body.price,
+        size: req.body.size,
+        image_url: req.body.image_url,
         date: req.body.date,
         company: req.body.company
     });
