@@ -1,4 +1,10 @@
-const { Supplier, deleteSupplierModel, getAllSuppliersModel, createSupplierModel } = require("../models/supplier");
+const {
+    Supplier,
+    deleteSupplierModel,
+    getAllSuppliersModel,
+    createSupplierModel,
+    loginSupplierModel
+} = require("../models/supplier");
 
 const innerCreateSupplier = (email, password, cname, telephone, callback) => {
     return createSupplierModel(email, password, cname, telephone, callback);
@@ -14,29 +20,37 @@ const createSupplier = async function (req, res) {
     );
 }
 
-const loginSupplier = function (req, res) {
-    Supplier.findOne({email: req.body.email}, function (err, obj) {
-        if (err || !obj) {
-            return res.status(301).json({
-                success: false,
-                message: 'No supplier found.',
-            });
-        } else {
-            if (obj.password === req.body.password) {
-                return res.status(200).json({
-                    success: true,
-                    message: 'Supplier found',
-                    supplierDetails: obj
-                });
-            } else {
-                return res.status(301).json({
-                    success: false,
-                    message: 'Password is incorrect'
-                });
-            }
-        }
-    });
+const innerLoginSupplier = function (email, password, callback) {
+    return loginSupplierModel(email, password, callback)
 }
+
+const loginSupplier = function (req, res) {
+    return innerLoginSupplier(req.body.email, req.body.password, res.status(200))
+}
+
+// const loginSupplier = function (req, res) {
+//     Supplier.findOne({email: req.body.email}, function (err, obj) {
+//         if (err || !obj) {
+//             return res.status(301).json({
+//                 success: false,
+//                 message: 'No supplier found.',
+//             });
+//         } else {
+//             if (obj.password === req.body.password) {
+//                 return res.status(200).json({
+//                     success: true,
+//                     message: 'Supplier found',
+//                     supplierDetails: obj
+//                 });
+//             } else {
+//                 return res.status(301).json({
+//                     success: false,
+//                     message: 'Password is incorrect'
+//                 });
+//             }
+//         }
+//     });
+// }
 
 const addToPublishedItems = function (req, res) {
     Supplier.updateOne({email: req.body.email}, {$push: {publishedItems: {item_id: req.body.item_id}}}, {},
@@ -72,10 +86,10 @@ const removeFromPublishedItems = function (req, res) {
         })
 }
 
-const updateSupplierById = function (req, res) {  
+const updateSupplierById = function (req, res) {
     console.log(req.body)
     console.log(JSON.parse(req.body.updatedData))
-    console.log("id: "+req.params.supplierId)
+    console.log("id: " + req.params.supplierId)
     Supplier.findOneAndUpdate({_id: req.params.supplierId}, JSON.parse(req.body.updatedData), {new: true},
         function (err, obj) {
             if (err || obj.modifiedCount === 0) {
@@ -89,7 +103,7 @@ const updateSupplierById = function (req, res) {
                 message: 'Supplier updated',
                 userDetails: obj
             });
-    })
+        })
 }
 
 // Deleting supplier
@@ -103,19 +117,17 @@ const deleteSupplier = async function (req, res) {
     //! Change later --> to "req.body.currentUserId"
     const result = await innerDeleteSupplier(req.params.supplierId, "6377a7f6356ff1ad98754a73")
     console.log("result: " + result.success);
-    if(result.success == false)
-    {
-        return res.status(400).json({ 
+    if (result.success == false) {
+        return res.status(400).json({
             success: false,
             message: 'Error - No permissions',
         });
-    }
-    else{
+    } else {
         return res.status(200).json({
             success: true,
             message: 'Supplier deleted'
         })
-    }  
+    }
 }
 
 // Getting all supplier

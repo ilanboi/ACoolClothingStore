@@ -104,10 +104,36 @@ const createSupplierModel = function (email, password, cname, telephone, callbac
         }
     });
 }
+const loginSupplierModel = function (email, password, callback) {
+    Supplier.findOne({email: email}, function (err, obj) {
+        if (err || !obj) {
+            console.log("err ", err)
+            return callback.json({
+                success: false,
+                message: 'No user found.',
+            });
+        } else {
+            if (obj.password === password) {
+                return callback.json({
+                    success: true,
+                    message: 'Supplier found',
+                    supplierDetails: obj
+                });
+            } else {
+                return callback.json({
+                    success: false,
+                    message: 'Password is incorrect'
+                });
+            }
+        }
+    });
+
+}
 
 module.exports = {
     Supplier,
     deleteSupplierModel,
     getAllSuppliersModel,
-    createSupplierModel
+    createSupplierModel,
+    loginSupplierModel
 }
