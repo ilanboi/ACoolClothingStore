@@ -24,11 +24,12 @@ justify-content: center;
   background: white;
   border-radius: 40px;
   padding: 20px;
+  margin: auto;
   box-shadow: 5px 6px;
   width: 70%;
 }
 
 #map {
-  height: 100px;
+  height: 150px;
   width: 100%;
 }
