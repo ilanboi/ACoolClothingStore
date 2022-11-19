@@ -39,40 +39,48 @@ function deleteWarehouseAjax(warehouseId) {
 
 // Updating a user
 function updateUserAjax(userId, index) {
-    console.log("The user id is:" + userId);
-    console.log("The index is: " + index);
-    let data = { updatedData: JSON.stringify({
-                    fname: $('#firstNameEditUser' + index).val(),
-                    email: $('#emailEditUser' + index).val(),
-                    telephone: $('#phoneNumberEditUser' + index).val()
-                    // Adding all fields
-                })
-        }
-    $.ajax({
-        url: '/api/user/updateUserById/' + userId,
-        type: 'post' ,
-        dataType: 'json',
-        data: data,
-        success: function(res){
-            console.log("user updated");
-            // Adding render the file!
-        }
-    }); 
     
     // The relevant DATA to send in the req!
     fname= $('#firstNameEditUser' + index).val()
+    lname= $('#lastNameEditUser' + index).val()
     email= $('#emailEditUser' + index).val()
     telephone= $('#phoneNumberEditUser' + index).val()
-    errorDiv= '#invalidErrorEditUser'+ index
+    city= $('#cityEditUser' + index).val()
+    address= $('#addressEditUser' + index).val()
+    postal= $('#postalEditUser' + index).val()
     
-    console.log('#invalidErrorEditUser'+ index)
+    errorDiv= '#invalidErrorEditUser'+ index
 
-    // Validation
-    // if(validation(fname, telephone, email, errorDiv))
-    // {
-    //     $('#editUserModalForm' + index).modal('toggle');
-    //     // And send the request!!!
-    // }       
+    console.log('#invalidErrorEditUser'+ index)
+    
+    if(UserValidation(fname, lname, telephone, email, city, address, postal, errorDiv))
+    {
+        console.log("The user id is:" + userId);
+        console.log("The index is: " + index);
+        let data = { updatedData: JSON.stringify({
+                        fname: $('#firstNameEditUser' + index).val(),
+                        lname: $('#lastNameEditUser' + index).val(),
+                        email: $('#emailEditUser' + index).val(),
+                        telephone: $('#phoneNumberEditUser' + index).val(),
+                        city: $('#cityEditUser' + index).val(),
+                        address: $('#addressEditUser' + index).val(),
+                        postal: $('#postalEditUser' + index).val()
+                        
+                    })
+            }
+        $.ajax({
+            url: '/api/user/updateUserById/' + userId,
+            type: 'post' ,
+            dataType: 'json',
+            data: data,
+            success: function(res){
+                console.log("user updated");
+                // Adding render the file!
+            }
+        }); 
+
+        $('#editUserModalForm' + index).modal('toggle');
+    }       
 }
 
 // Updating a supplier
@@ -133,31 +141,79 @@ function updateItemAjax(itemId, index) {
 
 // Updating a Warehouse
 function updateWarehouseAjax(warehouseId, index) {
-    console.log("The Warehouse id is:" + warehouseId);
-    console.log("The index is: " + index);
-    let data = { updatedData: JSON.stringify({
+    
+
+    console.log($('#nameEditWarehouse' + index).val())
+    console.log($('#houseNumberEditWarehouse' + index).val())
+   
+    wName = $('#nameEditWarehouse' + index).val();
+    street = $('#streetEditWarehouse' + index).val();
+    city = $('#cityEditWarehouse' + index).val();
+    houseNumber = $('#houseNumberEditWarehouse' + index).val();
+    lat = $('#latEditWarehouse' + index).val();
+    lng = $('#lngEditWarehouse' + index).val();
+    errorDiv = '#invalidErrorEditWarehouse' + index;
+    
+    if(WarehouseValidation(wName, street, city, houseNumber, lat, lng, errorDiv))
+    {   
+        console.log("The Warehouse id is:" + warehouseId);
+        console.log("The index is: " + index);
+        let data = { updatedData: JSON.stringify({
                     name: $('#nameEditWarehouse' + index).val(),
                     city: $('#cityEditWarehouse' + index).val(),
                     street: $('#streetEditWarehouse' + index).val(),
-                    houseNumber: $('#houseNumberEditWarehouse' + index).val()
-                    // Adding all fields
+                    houseNumber: $('#houseNumberEditWarehouse' + index).val(),
+                    lat: $('#latEditWarehouse' + index).val(),
+                    lng: $('#lngEditWarehouse' + index).val()       
+                })
+            }
+        $.ajax({
+            url: '/api/warehouse/updateWarehouseById/' + warehouseId,
+            type: 'post' ,
+            dataType: 'json',
+            data: data,
+            success: function(res){
+                console.log("warehouse updated");
+            // Adding render the file!
+            }
+        }); 
+
+        $('#editWarehouseModalForm' + index).modal('toggle');
+        
+    }       
+    
+    
+}
+
+// doesn't really work!!
+function createWarehouseAjax() {
+    let data = { updatedData: JSON.stringify({
+                    name: $('#nameEditWarehouse').val(),
+                    city: $('#cityEditWarehouse').val(),
+                    street: $('#streetEditWarehouse').val(),
+                    houseNumber: $('#houseNumberEditWarehouse').val(),
+                    lat: $('#latEditWarehouse').val(),
+                    lng: $('#lngEditWarehouse').val()
                 })
         }
     $.ajax({
-        url: '/api/warehouse/updateWarehouseById/' + warehouseId,
+        url: '/api/warehouse/createWarehouse/' ,
         type: 'post' ,
         dataType: 'json',
         data: data,
         success: function(res){
-            console.log("warehouse updated");
+            console.log("warehouse created");
             // Adding render the file!
         }
     }); 
 
-    console.log($('#nameEditWarehouse' + index).val())
-    console.log($('#houseNumberEditWarehouse' + index).val())
+    console.log($('#nameAddWarehouse').val())
+    console.log($('#cityAddWarehouse').val())
+    console.log($('#streetAddWarehouse').val())
+    console.log($('#latAddWarehouse').val())
+    console.log($('#lngAddWarehouse').val())
     
-    $('#editWarehouseModalForm' + index).modal('toggle');
+    $('#addWarehouseModalForm').modal('toggle');
 }
 
 
@@ -165,7 +221,108 @@ function updateWarehouseAjax(warehouseId, index) {
 // ONLY AFTER VALIDATION ---> CALLING THE RELEVANT UPDATE FUNC!!!
 
 // Validation
-function validation(fName,  phoneNumber, email, errorDiv){
+function UserValidation(fName, lName, phoneNumber, email, city, address, postal, errorDiv){
+    const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
+    const onlyNumbers = /[0-9]+/
+    const PhoneStart = /(050|054|053|052)\d+/
+    const emailRgx = /^[a-zA-Z0-9~#%\$\*+-\.!?]+@[a-zA-Z0-9~#%\$\*+-\.!?]+\.[a-zA-Z0-9~#%\$\*+-\.!?]+/
+    
+    const addressRgx = /^[A-Za-z]+\s[A-Za-z0-9\s]+$/
+
+    if(fName == "")
+    {
+        $(errorDiv).text("Invalid input - First Name is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(fName))
+    {
+        $(errorDiv).text("Invalid input - First Name must have only letters and spaces");
+        return false;
+    }
+    if(lName == "")
+    {
+        $(errorDiv).text("Invalid input - Last Name is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(lName))
+    {
+        $(errorDiv).text("Invalid input - Last Name must have only letters and spaces");
+        return false;
+    }
+    if(phoneNumber == "")
+    {
+        $(errorDiv).text("Invalid input - Phone Number is required");
+        return false;
+    }
+    else if(!onlyNumbers.test(phoneNumber))
+    {
+        $(errorDiv).text("Invalid input - Phone Number must have only numbers");
+        return false;
+    }
+    else if(onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber))
+    {
+        $(errorDiv).text("Invalid input - Phone Number must start with one of the following: 050/052/053/054");
+        return false;
+    }
+    else if(onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10))
+    {
+        $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
+        return false;
+    }
+    if(email == "")
+    {
+        $(errorDiv).text("Invalid input - Email is required");
+        return false;
+    }
+    else if(!emailRgx.test(email))
+    {
+        $(errorDiv).text("Invalid input - Email must contain @ and a .");
+        return false;
+    }
+    if(address == "")
+    {
+        $(errorDiv).text("Invalid input - Address is required");
+        return false;
+    }
+    else if(!addressRgx.test(address))
+    {
+        $(errorDiv).text("Invalid input - Address must start with letters and contains only letters and numbers");
+        return false;
+    }
+    if(city == "")
+    {
+        $(errorDiv).text("Invalid input - City is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(city))
+    {
+        $(errorDiv).text("Invalid input - City must have only letters and spaces");
+        return false;
+    }
+    if(postal == "")
+    {
+        $(errorDiv).text("Invalid input - Postal is required");
+        return false;
+    }
+    else if(!onlyNumbers.test(postal))
+    {
+        $(errorDiv).text("Invalid input - Postal must have only numbers");
+        return false;
+    }
+    else if((postal.length == 5) || (postal.length == 7 ) )
+    {
+        $(errorDiv).text("Invalid input - Postal must have 5 or 7 digits");
+        return false;
+    }
+    else
+    {
+        $(errorDiv).text("");
+        return true;
+    }
+}
+
+
+function ItemValidation(title, image_url, rating, desc, kind, price, size, company,  errorDiv){
     const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
     const onlyNumbers = /[0-9]+/
     const PhoneStart = /(050|054|053|052)\d+/
@@ -201,6 +358,123 @@ function validation(fName,  phoneNumber, email, errorDiv){
         $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
         return false;
     }
+    else
+    {
+        $(errorDiv).text("");
+        return true;
+    }
+}
+
+function SupplierValidation(cName,  phoneNumber, email, errorDiv){
+    const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
+    const onlyNumbers = /[0-9]+/
+    const PhoneStart = /(050|054|053|052)\d+/
+    
+    if(fName == "")
+    {
+        $(errorDiv).text("Invalid input - Full Name is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(fName))
+    {
+        $(errorDiv).text("Invalid input - Name must have only letters and spaces");
+        return false;
+    }
+    
+    if(phoneNumber == "")
+    {
+        $(errorDiv).text("Invalid input - Phone Number is required");
+        return false;
+    }
+    else if(!onlyNumbers.test(phoneNumber))
+    {
+        $(errorDiv).text("Invalid input - Phone Number must have only numbers");
+        return false;
+    }
+    else if(onlyNumbers.test(phoneNumber) && !PhoneStart.test(phoneNumber))
+    {
+        $(errorDiv).text("Invalid input - Phone Number must start with one of the following: 050/052/053/054");
+        return false;
+    }
+    else if(onlyNumbers.test(phoneNumber) && PhoneStart.test(phoneNumber) && (phoneNumber.length != 10))
+    {
+        $(errorDiv).text("Invalid input - Phone Number must have 10 digits");
+        return false;
+    }
+    else
+    {
+        $(errorDiv).text("");
+        return true;
+    }
+}
+
+function WarehouseValidation(name,  street, city, houseNumber, lat, lng, errorDiv){
+    const onlyLettersAndSpaces = /^[A-Za-z\s]*$/
+    const onlyNumbers = /[0-9]+/
+    const coordinates = /^[-+]?[0-9]+$/
+    
+    if(name == "")
+    {
+        $(errorDiv).text("Invalid input - Warehouse Name is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(name))
+    {
+        $(errorDiv).text("Invalid input - Name must have only letters and spaces");
+        return false;
+    }
+    if(street == "")
+    {
+        $(errorDiv).text("Invalid input - Warehouse street is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(street))
+    {
+        $(errorDiv).text("Invalid input - Street must have only letters and spaces");
+        return false;
+    }
+    if(city == "")
+    {
+        $(errorDiv).text("Invalid input - Warehouse city is required");
+        return false;
+    }
+    else if(!onlyLettersAndSpaces.test(city))
+    {
+        $(errorDiv).text("Invalid input - City must have only letters and spaces");
+        return false;
+    }
+    
+    if(houseNumber == "")
+    {
+        $(errorDiv).text("Invalid input - House Number is required");
+        return false;
+    }
+    else if(!onlyNumbers.test(houseNumber))
+    {
+        $(errorDiv).text("Invalid input - house Number must have only numbers");
+        return false;
+    }
+    if(lat == "")
+    {
+        $(errorDiv).text("Invalid input - Latitude is required");
+        return false;
+    }
+    else if(!coordinates.test(lat))
+    {
+        $(errorDiv).text("Invalid input - Latitude must have only numbers and -+");
+        return false;
+    }
+    if(lng == "")
+    {
+        $(errorDiv).text("Invalid input - Longitude is required");
+        return false;
+    }
+    else if(!coordinates.test(lng))
+    {
+        $(errorDiv).text("Invalid input - Longitude must have only numbers -+");
+        return false;
+    }
+   
     else
     {
         $(errorDiv).text("");

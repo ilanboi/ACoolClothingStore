@@ -19,7 +19,7 @@ const warehouseSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-     lat: {
+    lat: {
         type: String,
         required: true,
     },
@@ -67,13 +67,14 @@ const getAllWarehousesModel = async function () {
     };
 }
 
-const createWarehouseModel = function (name, city, street, country, lat , houseNumber , lng) {
+//const createWarehouseModel = function (name, city, street, country, lat , houseNumber , lng) {
+const createWarehouseModel = function (name, city, street, lat , houseNumber , lng, callback) {
     const warehouse = new Warehouse({
         _id: mongoose.Types.ObjectId(),
         name: name,
         city: city,
         street: street,
-        country: country,
+        // country: country,
         houseNumber: houseNumber,
         lat: lat,
         lng: lng

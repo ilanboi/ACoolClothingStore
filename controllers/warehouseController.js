@@ -1,7 +1,9 @@
 const {Warehouse, deleteWarehouseModel, getAllWarehousesModel, createWarehouseModel} = require("../models/warehouse");
 
-const innerCreateWarehouse = (name, city, street, houseNumber, country, lat ,lng ) => {
-    return createWarehouseModel(name, city, street, houseNumber, country, lat ,lng);
+//const innerCreateWarehouse = (name, city, street, houseNumber, country, lat ,lng, callback) => {
+const innerCreateWarehouse = (name, city, street, houseNumber, lat ,lng, callback ) => {
+    // return createWarehouseModel(name, city, street, houseNumber, country, lat ,lng, callback);
+    return createWarehouseModel(name, city, street, houseNumber, lat ,lng, callback);
 }
 
 const createWarehouse = async function (req, res) {
@@ -10,7 +12,7 @@ const createWarehouse = async function (req, res) {
         req.body.city,
         req.body.street,
         req.body.houseNumber,
-        req.body.country,
+       // req.body.country,
         req.body.lat,
         req.body.lng,
         res.status(200)

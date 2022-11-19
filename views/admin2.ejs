@@ -81,10 +81,18 @@
                               <div class="modal-body text-start">
                                 <label class="form-label">First Name:</label>
                                 <input id="firstNameEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].fname%>">
+                                <label class="form-label">Last Name:</label>
+                                <input id="lastNameEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].lname%>">
                                 <label class="form-label">Phone Number:</label>
                                 <input id="phoneNumberEditUser<%= i %>" name="phoneNumber" type="number" class="form-control" value="<%=data.users.data[i].telephone%>">
                                 <label class="form-label">Email:</label>
                                 <input id="emailEditUser<%= i %>" name="email" type="email" class="form-control" value="<%=data.users.data[i].email%>">
+                                <label class="form-label">City:</label>
+                                <input id="cityEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].city%>">
+                                <label class="form-label">Address:</label>
+                                <input id="addressEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].address%>">
+                                <label class="form-label">Postal:</label>
+                                <input id="postalEditUser<%= i %>" name="fullName" class="form-control" value="<%=data.users.data[i].postal%>">
                               </div>
                               <div class="invalidError" id="invalidErrorEditUser<%= i %>"></div>
                               <div class="modal-footer">
@@ -184,6 +192,16 @@
                                 <input id="priceEditItem<%= i %>" name="ItemPrice" type="number" class="form-control" value="<%=data.items.data[i].price%>">
                                 <label class="form-label">Kind:</label>
                                 <input id="kindEditItem<%= i %>" name="ItemKind" class="form-control" value="<%=data.items.data[i].kind%>">
+                                <label class="form-label">Image Url:</label>
+                                <input id="imgUrlEditItem<%= i %>" name="ItemImgUrl" class="form-control" value="<%=data.items.data[i].image_url%>">
+                                <label class="form-label">Rating:</label>
+                                <input id="ratingEditItem<%= i %>" name="ItemRating" class="form-control" value="<%=data.items.data[i].rating%>">
+                                <label class="form-label">Size:</label>
+                                <input id="sizeEditItem<%= i %>" name="ItemSize" class="form-control" value="<%=data.items.data[i].size%>">
+                                <% /* %>
+                                <label class="form-label">Company:</label>
+                                <input id="companyEditItem<%= i %>" name="ItemSize" class="form-control" value="<%=data.items.data[i].company%>">
+                                <% */ %>
                               </div>
                               <div class="invalidError" id="invalidErrorEditItem<%= i %>"></div>
                               <div class="modal-footer">
@@ -199,6 +217,42 @@
             </div>
             <div class="tab-pane fade" id="pills-warehouses" role="tabpanel" aria-labelledby="pills-warehouses-tab">
                 Warehouses page
+                  
+                <!-- Add Warehouse -->
+                <button type="button" class="btn addBtn btn-primary" data-bs-toggle="modal" data-bs-target="#addWarehouseModalForm">Add New Warehouse</button>
+                    
+                <div class="modal fade" id="addWarehouseModalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <form >
+                            <div class="modal-body text-start">
+                              <label class="form-label">Name:</label>
+                              <input id="nameAddWarehouse" name="warehouseName" class="form-control" >
+                              <label class="form-label">City:</label>
+                              <input id="cityAddWarehouse" name="warehouseCity" class="form-control">
+                              <label class="form-label">Street:</label>
+                              <input id="streetAddWarehouse" name="warehouseStreet"  class="form-control" >
+                              <label class="form-label">House Number:</label>
+                              <input id="houseNumberAddWarehouse" type="number" name="houseNumber" class="form-control">
+                              <label class="form-label">Latitude:</label>
+                              <input id="latAddWarehouse" name="houseNumber" class="form-control">
+                              <label class="form-label">Longitude:</label>
+                              <input id="lngAddWarehouse" name="houseNumber" class="form-control">
+                            </div>
+                            <div class="invalidError" id="invalidErrorAddWarehouse"></div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button id="addWarehouseBtn" type="button" class="btn btn-primary" onclick="createWarehouseAjax()">Add</button>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Warehouse -End -->
 
                 <% for (var i = 0; i < data.warehouses.data.length; i++) { %>
                 <article>    
@@ -223,13 +277,17 @@
                               <div class="modal-body text-start">
                                 <label class="form-label">Name:</label>
                                 <input id="nameEditWarehouse<%= i %>" name="warehouseName" class="form-control" value="<%=data.warehouses.data[i].name%>">
-                                <label class="form-label">City:</label>
-                                <input id="cityEditWarehouse<%= i %>" name="warehouseCity" class="form-control" value="<%=data.warehouses.data[i].city%>">
                                 <label class="form-label">Street:</label>
                                 <input id="streetEditWarehouse<%= i %>" name="warehouseStreet"  class="form-control" value="<%=data.warehouses.data[i].street%>">
+                                <label class="form-label">City:</label>
+                                <input id="cityEditWarehouse<%= i %>" name="warehouseCity" class="form-control" value="<%=data.warehouses.data[i].city%>">
                                 <label class="form-label">House Number:</label>
-                                <input id="houseNumberEditWarehouse<%= i %>" name="houseNumber" class="form-control" value="<%=data.warehouses.data[i].houseNumber%>">
-                              </div>
+                                <input id="houseNumberEditWarehouse<%= i %>" name="houseNumber" type="number" class="form-control" value="<%=data.warehouses.data[i].houseNumber%>">
+                                <label class="form-label">Latitude:</label>
+                                <input id="latEditWarehouse<%= i %>" name="houseNumber" type="number" class="form-control" value="<%=data.warehouses.data[i].houseNumber%>">
+                                <label class="form-label">Longitude:</label>
+                                <input id="lngEditWarehouse<%= i %>" name="houseNumber" type="number" class="form-control" value="<%=data.warehouses.data[i].houseNumber%>">
+                            </div>
                               <div class="invalidError" id="invalidErrorEditWarehouse<%= i %>"></div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -239,7 +297,7 @@
                           </div>
                         </div>
                     </div>
-
+                    <!-- Edit Warehouse - End -->
                 </article>
                 <% } %>
             </div>
